@@ -14,13 +14,22 @@ const UserRegisterOTPService = async (req) => {
     const EmailText = `Your Verification Code is ${code}. Please use this code to verify your email and do not share your OTP with others`;
     const EmailSubject = "Email Verification";
 
-    await UserModel.create({
-      name: name,
-      email: email,
-      phone: phone,
-      address: address,
-      otp: code,
-    });
+    await UserModel.updateOne(
+      {
+        email: email,
+      },
+      {
+        $set: {
+          name: name,
+          phone: phone,
+          address: address,
+          otp: code.toString(),
+        },
+      },
+      {
+        upsert: true,
+      }
+    );
 
     await EmailSend(email, EmailText, EmailSubject);
     return {

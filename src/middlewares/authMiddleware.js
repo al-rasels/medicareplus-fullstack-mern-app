@@ -1,4 +1,4 @@
-const { DecodeToken } = require("../utility/TokenHelper");
+const { DecodeToken } = require("../utilities/tokenHelper");
 module.exports = (req, res, next) => {
   let token = req.headers["token"];
   if (!token) {
