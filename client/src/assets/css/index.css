@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@import "tailwindcss";
+
+:root {
+  /* Main Color */
+  --themeColor: #21bf73;
+  --themeColor2: #ff9136;
+
+  --themeColorDark: #39b27b;
+  --themeLightColor: #56d598;
+  --secondaryColor: #b0eacd;
+  --themeDarkColor: #2e374f;
+  --themeWhiteColor: #ffffff;
+
+  /* Greyscale Color */
+  --lightColor: #9ea3ae;
+  --lightDeepColor-1: #9ea3ae;
+  --lightDeepColor-2: #faf8f6;
+  --lightDeepColor-3: #d3d5da;
+  --lightDeepColor-4: #9ea3ae;
+  --darkColor: #6c727f;
+  --darkDeepColor-1: #4d5461;
+  --darkDeepColor-2: #394150;
+  --darkDeepColor-3: #212936;
+  --darkDeepColor-4: #0b0a0f;
+  /* --text-gray: #848484; */
+  --bg-gray: #323333;
+  /* Typography */
+
+  --headline-1: 52px;
+  --headline-2: 40px;
+  --headline-3: 32px;
+  --headline-4: 24px;
+  --bodyXLarge: 20px;
+  --bodyLarge: 18px;
+  --bodyMedium: 16px;
+  --bodySmal: 14px;
+  --bodyXSmal: 10px;
+}
+
+html {
+  scrollbar-color: #dddddd #dddddd;
+  scrollbar-width: thin;
+  font-family: "Poppins", sans-serif !important;
+}
+html::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+html::-webkit-scrollbar-track-piece {
+  background-color: #dddddd;
+}
+html::-webkit-scrollbar-thumb:vertical {
+  height: 30px;
+  border-radius: 4px;
+  background: #dddddd;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background: var(--lightDeepColor-2);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--themeColor2);
+}
+
+.nav-link:hover,
+.active {
+  color: var(--themeColor);
+  transition: color 0.5s ease;
+}
+
+.nav-link::after {
+  content: "";
+  display: block;
+  width: 0%;
+  border-radius: 100px;
+  height: 3px;
+  background-color: var(--themeColor);
+  transition: width 0.4s ease-in-out;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nav-link:hover::after,
+.active::after {
+  width: 100%;
+}
+
+#background-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}

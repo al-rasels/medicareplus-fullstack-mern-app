@@ -3,6 +3,7 @@ const DoctorsController = require("../controllers/doctorsController");
 const Authenticator = require("../middlewares/authMiddleware");
 const WishController = require("../controllers/wishController");
 const AppointementController = require("../controllers/appointmentController");
+const ClinicController = require("../controllers/clinicController");
 const express = require("express");
 
 const router = express.Router();
@@ -56,11 +57,22 @@ router.get(
   AppointementController.RemoveAppointment
 );
 //Clinics
-router.get("/clinic-list");
-router.get("/clinic-details/:clinicID");
-router.get("/clinic-list/:cityID");
-router.get("/clinic-list/:keyword");
-
+router.get("/clinic-list", Authenticator, ClinicController.ClinicList);
+router.get(
+  "/clinic-details/:clinicID",
+  Authenticator,
+  ClinicController.ClinicDetails
+);
+router.get(
+  "/clinic-list/:cityID",
+  Authenticator,
+  ClinicController.ClinicByCity
+);
+router.get(
+  "/clinic-list/:keyword",
+  Authenticator,
+  ClinicController.ClinicByKeyword
+);
 // wish list
 router.post("/save-wish", Authenticator, WishController.SaveWish);
 router.post("/remove-wish", Authenticator, WishController.RemoveWish);

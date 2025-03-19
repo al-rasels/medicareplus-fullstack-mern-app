@@ -1,7 +1,13 @@
 import React from "react";
+import Layout from "../laylout/Layout";
+import HeroSection from "../components/HeroSection";
 
 function HomePage() {
-  return <div className="text-green-600 text-3xl">HomePage</div>;
+  return (
+    <Layout>
+      <HeroSection />
+    </Layout>
+  );
 }
 
 export default HomePage;
