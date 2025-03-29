@@ -1,0 +1,33 @@
+import React, { useEffect } from "react";
+import Layout from "../laylout/Layout";
+import FilterDoctors from "../components/FilterDoctors";
+import DoctorsSection from "../components/DoctorsSection";
+import useDoctorsStore from "../store/doctorStore";
+
+function DoctorPage() {
+  const {
+    CityList,
+    DoctorsByFilterList,
+    SpecialityList,
+    SpecialityListRequest,
+    CityListRequest,
+  } = useDoctorsStore();
+
+  useEffect(() => {
+    (async () => {
+      SpecialityList === null ? await SpecialityListRequest() : null;
+      CityList === null ? await CityListRequest() : null;
+    })();
+  }, []);
+
+  return (
+    <Layout>
+      <FilterDoctors />
+      <DoctorsSection Doctors={DoctorsByFilterList} />
+    </Layout>
+  );
+}
+
+export default DoctorPage;
+
+// TODO Set Filter to Working

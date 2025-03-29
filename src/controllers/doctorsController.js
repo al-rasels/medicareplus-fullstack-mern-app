@@ -6,6 +6,8 @@ const {
   ListedByKeywordService,
   DoctorsDetailsService,
   CreateReviewService,
+  DoctorsService,
+  ListedByFilterService,
 } = require("../services/doctorsService");
 
 exports.DoctorsSpecialites = async (req, res) => {
@@ -22,8 +24,8 @@ exports.DoctorsListedBySpeciality = async (req, res) => {
   const result = await ListedBySpecialityService(req);
   return res.status(200).json(result);
 };
-exports.DoctorsListedByCity = async (req, res) => {
-  const result = await ListedByCityService(req);
+exports.Doctors = async (req, res) => {
+  const result = await DoctorsService(req);
   return res.status(200).json(result);
 };
 exports.DoctorsListedByCity = async (req, res) => {
@@ -33,6 +35,10 @@ exports.DoctorsListedByCity = async (req, res) => {
 
 exports.DoctorsListedByKeyword = async (req, res) => {
   const result = await ListedByKeywordService(req);
+  return res.status(200).json(result);
+};
+exports.DoctorsListedByFilter = async (req, res) => {
+  const result = await ListedByFilterService(req);
   return res.status(200).json(result);
 };
 exports.DoctorsDetails = async (req, res) => {

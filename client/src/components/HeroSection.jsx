@@ -4,7 +4,7 @@ import heroP from "../assets/images/hero-p.webp";
 
 function HeroSection() {
   return (
-    <section className="relative w-full md:h-[80vh] flex items-center justify-center">
+    <section className="relative bg-white w-full md:h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background Video */}
       <video
         src={bgVideo}
@@ -13,15 +13,14 @@ function HeroSection() {
         loop
         muted
         className="absolute top-0 left-0 w-full h-full object-cover contrast-75"></video>
-
       {/* Content Wrapper */}
       <div className="relative z-10 flex flex-col items-center max-w-screen-xl px-4 mx-auto md:flex-row sm:px-6 p-8 text-white">
         {/* Left Section */}
-        <div className="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pr-10 rounded-2xl bg-white/10 border-x-10 border-y-1 px-10">
+        <div className="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pr-10 rounded-2xl bg-[var(--themeColor)]/10 border-x-10 border-y-1 px-10 ">
           <div className="text-left">
             <h2 className="text-4xl font-extrabold leading-10 tracking-tight sm:text-5xl sm:leading-none md:text-6xl">
               Search for your favorite
-              <span className="font-bold text-[var(--themeColor2)] hover:text-[var(--themeColor)]">
+              <span className="font-bold text-[var(--themeColor2)] hover:text-[var(--themeColor)]  transition-colors duration-500">
                 {" "}
                 Doctors
               </span>
@@ -31,10 +30,10 @@ function HeroSection() {
               doctor for your needs.
             </p>
             <div className="mt-5 sm:flex md:mt-8">
-              <div className="relative w-full max-w-xl mx-auto bg-white rounded-full">
+              <div className="relative w-full max-w-xl mx-auto bg-white rounded-full hover:scale-[103%] transition-transform duration-300">
                 <input
-                  placeholder="e.g. Blog"
-                  className="rounded-full w-full h-16 bg-transparent py-2 pl-8 pr-32 outline-none border-2 border-gray-100 shadow-md hover:outline-none focus:ring-[var(--themeColor2)] focus:border-[var(--themeColor2)]"
+                  placeholder="e.g. Blob "
+                  className="rounded-full w-full h-16 bg-transparent py-2 pl-8 pr-32 outline-none text-gray-600 text-lg order-gray-100 shadow-md hover:outline-none focus:ring-[var(--themeColor)] focus:border-[var(--themeColor)] "
                   type="text"
                   name="query"
                   id="query"
@@ -67,7 +66,7 @@ function HeroSection() {
           <img
             src={heroP}
             alt="doctor"
-            className="inset-shadow-white shadow-4xl border-y-10 border-x-1 px-2 border-white/75 rounded-2xl"
+            className="inset-shadow-white shadow-4xl border-y-10 border-x-1 px-2 border-white/75 bg-[var(--themeColor2)]/15 rounded-2xl"
           />
         </div>
       </div>

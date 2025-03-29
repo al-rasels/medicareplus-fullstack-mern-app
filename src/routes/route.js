@@ -25,10 +25,15 @@ router.get(
   "/doctors-listed-by-city/:cityID",
   DoctorsController.DoctorsListedByCity
 );
+router.get("/doctors", DoctorsController.Doctors);
 
 router.get(
   "/doctors-listed-by-keyword/:keyword",
   DoctorsController.DoctorsListedByKeyword
+);
+router.post(
+  "/doctors-listed-by-filter",
+  DoctorsController.DoctorsListedByFilter
 );
 router.get("/doctors-details/:doctorID", DoctorsController.DoctorsDetails);
 
@@ -57,7 +62,8 @@ router.get(
   AppointementController.RemoveAppointment
 );
 //Clinics
-router.get("/clinic-list", Authenticator, ClinicController.ClinicList);
+router.get("/clinics", Authenticator, ClinicController.Clinics);
+router.get("/clinics", Authenticator, ClinicController.Clinics);
 router.get(
   "/clinic-details/:clinicID",
   Authenticator,

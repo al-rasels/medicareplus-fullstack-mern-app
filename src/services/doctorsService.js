@@ -18,7 +18,7 @@ const DoctorsSpecialitiesService = async () => {
 const DoctorsCitiesService = async () => {
   try {
     const data = await CityModel.find();
-    return { status: "success", data: "data" };
+    return { status: "success", data: data };
   } catch (err) {
     return { status: "fail", data: err }.toString();
   }
@@ -110,6 +110,47 @@ const ListedByCityService = async (req) => {
     return { status: "fail", data: err }.toString();
   }
 };
+
+const DoctorsService = async (req) => {
+  try {
+    const MatchStage = {
+      $match: {},
+    };
+    const JoinWithCityStage = {
+      $lookup: {
+        from: "cities",
+        localField: "city", // current field
+        foreignField: "_id", // cities field
+        as: "city",
+      },
+    };
+    const JoinWithSpecialityStage = {
+      $lookup: {
+        from: "specialities",
+        localField: "speciality",
+        foreignField: "_id",
+        as: "speciality",
+      },
+    };
+    const UnwindCityStage = { $unwind: "$city" };
+    const UnwindSpecialityStage = { $unwind: "$speciality" };
+    const ProjectionStage = {
+      $project: { city: { _id: 0 }, speciality: { _id: 0 } },
+    };
+
+    const data = await DoctorsModel.aggregate([
+      MatchStage,
+      JoinWithCityStage,
+      JoinWithSpecialityStage,
+      UnwindCityStage,
+      UnwindSpecialityStage,
+      ProjectionStage,
+    ]);
+    return { status: "success", data: data };
+  } catch (err) {
+    return { status: "fail", data: err }.toString();
+  }
+};
 const ListedByKeywordService = async (req) => {
   try {
     const SearchRegex = { $regex: req.params.keyword, $options: "i" };
@@ -118,6 +159,68 @@ const ListedByKeywordService = async (req) => {
 
     const MatchStage = {
       $match: SearchQuery,
+    };
+    const JoinWithCityStage = {
+      $lookup: {
+        from: "cities",
+        localField: "city", // current field
+        foreignField: "_id", // cities field
+        as: "city",
+      },
+    };
+    const JoinWithSpecialityStage = {
+      $lookup: {
+        from: "specialities",
+        localField: "speciality",
+        foreignField: "_id",
+        as: "speciality",
+      },
+    };
+    const UnwindCityStage = { $unwind: "$city" };
+    const UnwindSpecialityStage = { $unwind: "$speciality" };
+    const ProjectionStage = {
+      $project: { city: { _id: 0 }, speciality: { _id: 0 } },
+    };
+
+    const data = await DoctorsModel.aggregate([
+      MatchStage,
+      JoinWithCityStage,
+      JoinWithSpecialityStage,
+      UnwindCityStage,
+      UnwindSpecialityStage,
+      ProjectionStage,
+    ]);
+    return {
+      status: "success",
+      data: data,
+    };
+  } catch (err) {
+    return { status: "fail", data: err }.toString();
+  }
+};
+const ListedByFilterService = async (req) => {
+  try {
+    let matchConditions = {};
+    if (req.body["cityID"]) {
+      matchConditions.city = new ObjectId(req.body["cityID"]);
+    }
+    if (req.body["specialityID"]) {
+      matchConditions.speciality = new ObjectId(req.body["specialityID"]);
+    }
+    if (req.body["keyword"]) {
+      const SearchRegex = { $regex: req.body["keyword"], $options: "i" };
+      const SearchParams = [
+        { name: SearchRegex },
+        { location: SearchRegex },
+        { clinic: SearchRegex },
+      ];
+
+      // Use $or for multiple search fields
+      matchConditions.$or = SearchParams;
+    }
+
+    const MatchStage = {
+      $match: matchConditions,
     };
     const JoinWithCityStage = {
       $lookup: {
@@ -242,6 +345,8 @@ module.exports = {
   ListedBySpecialityService,
   ListedByCityService,
   ListedByKeywordService,
+  ListedByFilterService,
   DoctorsDetailsService,
   CreateReviewService,
+  DoctorsService,
 };

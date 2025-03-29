@@ -1,0 +1,27 @@
+import React, { useEffect } from "react";
+import Layout from "../laylout/Layout";
+import FilterDoctors from "../components/FilterDoctors";
+import DoctorsSection from "../components/DoctorsSection";
+import useDoctorsStore from "../store/doctorStore";
+import { useParams } from "react-router-dom";
+
+function DoctorBySpecialityPage() {
+  const { ListBySpecialityRequest, DoctorsListBySpeciality } =
+    useDoctorsStore();
+  const { id } = useParams();
+
+  useEffect(() => {
+    (async () => {
+      await ListBySpecialityRequest(id);
+    })();
+  }, []);
+
+  return (
+    <Layout>
+      <FilterDoctors />
+      <DoctorsSection Doctors={DoctorsListBySpeciality} />
+    </Layout>
+  );
+}
+
+export default DoctorBySpecialityPage;

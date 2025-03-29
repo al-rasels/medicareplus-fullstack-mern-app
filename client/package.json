@@ -21,7 +21,8 @@
     "react-loading-skeleton": "^3.5.0",
     "react-router-dom": "^7.3.0",
     "react-star-ratings": "^2.3.0",
-    "sweetalert2": "^11.17.2"
+    "sweetalert2": "^11.17.2",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
