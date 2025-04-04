@@ -1,4 +1,5 @@
 import React from "react";
+import PatternBackground from "../laylout/PatternBackground";
 
 function ContactSection() {
   return (
@@ -7,41 +8,7 @@ function ContactSection() {
         <div className="mx-auto max-w-screen-xl grid grid-cols-1 lg:grid-cols-2">
           <div className="relative px-6 pb-20 pt-24 sm:pt-32 lg:static lg:px-8 lg:py-32">
             <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
-              <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden bg-gray-100 ring-1 ring-gray-900/10 lg:w-full">
-                <svg
-                  className="absolute inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
-                  aria-hidden="true">
-                  <defs>
-                    <pattern
-                      id="83fd4e5a-9d52-42fc-97b6-718e5d7ee527"
-                      width={200}
-                      height={200}
-                      x="100%"
-                      y={-1}
-                      patternUnits="userSpaceOnUse">
-                      <path d="M130 200V.5M.5 .5H200" fill="none" />
-                    </pattern>
-                  </defs>
-                  <rect
-                    width="100%"
-                    height="100%"
-                    strokeWidth={0}
-                    fill="white"
-                  />
-                  <svg
-                    x="100%"
-                    y={-1}
-                    className="overflow-visible fill-gray-50">
-                    <path d="M-470.5 0h201v201h-201Z" strokeWidth={0} />
-                  </svg>
-                  <rect
-                    width="100%"
-                    height="100%"
-                    strokeWidth={0}
-                    fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
-                  />
-                </svg>
-              </div>
+              <PatternBackground />
               <h2 className="text-3xl font-bold tracking-tight text-[var(--themeColor2)]">
                 Contact Us
               </h2>
@@ -50,6 +17,7 @@ function ContactSection() {
                 We're here to help!
               </p>
               <dl className="mt-10 space-y-4 text-base leading-7 text-gray-600">
+                {/* Email */}
                 <div className="flex gap-x-4">
                   <dt className="flex-none">
                     <span className="sr-only">Email</span>
@@ -70,11 +38,40 @@ function ContactSection() {
                   <dd>
                     <a
                       className="hover:text-[var(--themeColor2)]"
-                      href="mailto:contact@yourcompany.com">
-                      contact@yourcompany.com
+                      href="mailto:support@medicareplus.com">
+                      support@medicareplus.com
                     </a>
                   </dd>
                 </div>
+
+                {/* Phone */}
+                <div className="flex gap-x-4">
+                  <dt className="flex-none">
+                    <span className="sr-only">Phone</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                      className="h-7 w-6 text-gray-400">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 4.5l2.25 1.5m0 0l3 2.25m-3-2.25L3 7.5M21 4.5v15M3 10.5h18M3 14.25h18M3 18h18"></path>
+                    </svg>
+                  </dt>
+                  <dd>
+                    <a
+                      className="hover:text-[var(--themeColor2)]"
+                      href="tel:+8801234567890">
+                      +880 1234 567 890
+                    </a>
+                  </dd>
+                </div>
+
+                {/* Address */}
                 <div className="flex gap-x-4">
                   <dt className="flex-none">
                     <span className="sr-only">Address</span>
@@ -92,7 +89,82 @@ function ContactSection() {
                         d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"></path>
                     </svg>
                   </dt>
-                  <dd>123 Main Street, Cityville, Country</dd>
+                  <dd>
+                    Keraniganj, Dhaka 1313, Bangladesh <br />
+                    <a
+                      className="hover:text-[var(--themeColor2)]"
+                      href="https://maps.google.com?q=Keraniganj,Dhaka"
+                      target="_blank"
+                      rel="noopener noreferrer">
+                      View on Google Maps
+                    </a>
+                  </dd>
+                </div>
+
+                {/* Working Hours */}
+                <div className="flex gap-x-4">
+                  <dt className="flex-none">
+                    <span className="sr-only">Working Hours</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                      className="h-7 w-6 text-gray-400">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 6v6h4.5M21 12A9 9 0 113 12a9 9 0 0118 0z"></path>
+                    </svg>
+                  </dt>
+                  <dd>
+                    Sunday – Friday: 9:00 AM – 8:00 PM <br /> Saturday: Closed
+                  </dd>
+                </div>
+
+                {/* Social Media */}
+                <div className="flex gap-x-4">
+                  <dt className="flex-none">
+                    <span className="sr-only">Follow Us</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                      className="h-7 w-6 text-gray-400">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 2.25a9.75 9.75 0 110 19.5 9.75 9.75 0 010-19.5zm0 3.75a1.5 1.5 0 00-1.5 1.5v3h-3a1.5 1.5 0 00-1.5 1.5v6a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5v-6a1.5 1.5 0 00-1.5-1.5h-3v-3a1.5 1.5 0 011.5-1.5h3"></path>
+                    </svg>
+                  </dt>
+                  <dd className="inline-flex gap-3">
+                    <a
+                      className="hover:text-[var(--themeColor2)]"
+                      href="https://facebook.com/medicareplus"
+                      target="_blank"
+                      rel="noopener noreferrer">
+                      Facebook
+                    </a>{" "}
+                    <a
+                      className="hover:text-[var(--themeColor2)]"
+                      href="https://twitter.com/medicareplus"
+                      target="_blank"
+                      rel="noopener noreferrer">
+                      Twitter
+                    </a>{" "}
+                    <a
+                      className="hover:text-[var(--themeColor2)]"
+                      href="https://linkedin.com/company/medicareplus"
+                      target="_blank"
+                      rel="noopener noreferrer">
+                      LinkedIn
+                    </a>
+                  </dd>
                 </div>
               </dl>
             </div>

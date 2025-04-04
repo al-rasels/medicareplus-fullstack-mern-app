@@ -1,8 +1,11 @@
 import React from "react";
 import bgVideo from "../assets/video/hero-bg.mp4";
 import heroP from "../assets/images/hero-p.webp";
+import useDoctorsStore from "../store/useDoctorStore";
+import { Link } from "react-router-dom";
 
 function HeroSection() {
+  const { SetSearchKeyword, SearchKeyword } = useDoctorsStore();
   return (
     <section className="relative bg-white w-full md:h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background Video */}
@@ -32,13 +35,21 @@ function HeroSection() {
             <div className="mt-5 sm:flex md:mt-8">
               <div className="relative w-full max-w-xl mx-auto bg-white rounded-full hover:scale-[103%] transition-transform duration-300">
                 <input
-                  placeholder="e.g. Blob "
+                  placeholder="e.g. Dr Shanto Islam"
+                  onChange={(e) => {
+                    SetSearchKeyword(e.target.value);
+                  }}
                   className="rounded-full w-full h-16 bg-transparent py-2 pl-8 pr-32 outline-none text-gray-600 text-lg order-gray-100 shadow-md hover:outline-none focus:ring-[var(--themeColor)] focus:border-[var(--themeColor)] "
                   type="text"
                   name="query"
                   id="query"
                 />
-                <button
+                <Link
+                  to={
+                    SearchKeyword.length > 0
+                      ? `/doctors-by-keyword/${SearchKeyword}`
+                      : `/`
+                  }
                   type="submit"
                   className="absolute inline-flex items-center h-10 px-4 py-2 text-sm text-white transition duration-150 ease-in-out rounded-full outline-none right-3 top-3 bg-[var(--themeColor2)] sm:px-6 sm:text-base sm:font-medium hover:bg-[var(--themeColor)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                   <svg
@@ -55,7 +66,7 @@ function HeroSection() {
                     />
                   </svg>
                   Search
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -66,7 +77,7 @@ function HeroSection() {
           <img
             src={heroP}
             alt="doctor"
-            className="inset-shadow-white shadow-4xl border-y-10 border-x-1 px-2 border-white/75 bg-[var(--themeColor2)]/15 rounded-2xl"
+            className="inset-shadow-white shadow-4xl border-y-10 border-x-1 px-2 border-white bg-[var(--themeColor2)]/15 rounded-2xl"
           />
         </div>
       </div>

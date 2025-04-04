@@ -1,24 +1,26 @@
 import React from "react";
+import StarRatings from "react-star-ratings";
 
 function ReviewCard() {
   return (
-    <div className="flex flex-col gap-3 justify-center items-center">
+    <div className="flex flex-col gap-3 border bg-white border-gray-200 px-5 py-5 justify-center items-center rounded-md shadow-sm max-w-full">
       <div className="flex flex-col gap-4">
         {/* Profile and Rating */}
-        <div className="flex justify justify-between">
+        <div className="flex justify justify-between items-center">
           <div className="flex gap-2">
-            <div className="w-7 h-7 text-center rounded-full bg-red-500">J</div>
+            <div className="w-7 h-7 text-center font-medium rounded-full bg-gray-200">
+              J
+            </div>
             <span>Jess Hopkins</span>
           </div>
-          <div className="flex p-1 gap-1 text-orange-600">
-            <ion-icon name="star" />
-            <ion-icon name="star" />
-            <ion-icon name="star" />
-            <ion-icon name="star" />
-            <ion-icon name="star-half" />
-          </div>
+          <StarRatings
+            size={20}
+            rating={5}
+            starDimension="20px"
+            starRatedColor="var(--themeColor2)"
+          />{" "}
         </div>
-        <div>
+        <div className="text-gray-600 font-light">
           Gorgeous design! Even more responsive than the previous version. A
           pleasure to use!
         </div>

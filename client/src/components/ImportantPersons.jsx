@@ -1,121 +1,97 @@
 import React from "react";
+import PatternBackground from "../laylout/PatternBackground";
 
 function ImportantPersons() {
   return (
     <section className="relative">
-      <div className="absolute inset-y-0 top-0 -z-10 w-full overflow-hidden bg-gray-100 ring-1 ring-gray-900/10 lg:full">
-        <svg
-          className="absolute inset-0 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
-          aria-hidden="true">
-          <defs>
-            <pattern
-              id="83fd4e5a-9d52-42fc-97b6-718e5d7ee527"
-              width={200}
-              height={200}
-              x="100%"
-              y={-1}
-              patternUnits="userSpaceOnUse">
-              <path d="M130 200V.5M.5 .5H200" fill="none" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" strokeWidth={0} fill="white" />
-          <svg x="100%" y={-1} className="overflow-visible fill-gray-50">
-            <path d="M-470.5 0h201v201h-201Z" strokeWidth={0} />
-          </svg>
-          <rect
-            width="100%"
-            height="100%"
-            strokeWidth={0}
-            fill="url(#83fd4e5a-9d52-42fc-97b6-718e5d7ee527)"
-          />
-        </svg>
-      </div>
+      <PatternBackground />
       {/* Container */}
       <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-20">
         {/* Title */}
-        <h2 className="text-center text-3xl font-bold md:text-5xl">
-          Our Team Members
+        <h2 className="text-center text-[var(--themeColor2)] text-3xl font-bold md:text-5xl">
+          Brains Behind Medicare+
         </h2>
         <p className="mx-auto mb-8 mt-4 text-center text-sm text-gray-500 sm:text-base md:mb-12 lg:mb-16">
-          Lorem ipsum dolor sit amet elit ut aliquam
+          Meet the people who are driving innovation at MediCare+
         </p>
         {/* Content */}
         <div className="grid grid-cols-2 justify-center justify-items-center gap-5 sm:justify-items-stretch  md:gap-8 md:grid-cols-2">
-          {/* Item */}
+          {/* CEO */}
           <div className="grid w-full grid-flow-row justify-center gap-6 rounded-md border border-solid border-gray-300 p-8 md:grid-cols-2">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/flowspark-1f3e0.appspot.com/o/Tailspark%20Images%2FPlaceholder%20Image.svg?alt=media&token=375a1ea3-a8b6-4d63-b975-aac8d0174074"
-              alt=""
+              src="https://placehold.co/400"
+              alt="John Doe"
               className="inline-block h-72 w-full object-cover"
             />
             <div>
-              <p className="text-xl font-semibold">John</p>
-              <p className="mb-4 font-semibold text-gray-500">
-                Webflow Developer
-              </p>
+              <p className="text-xl font-semibold">John Doe</p>
+              <p className="mb-4 font-semibold text-gray-500">Founder & CEO</p>
               <p className="text-sm text-gray-500 sm:text-base">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit ut
-                aliquam, purus sit. Lorem ipsum dolor sit amet, elit ut aliquam,
-                purus sit amet luctus venenatis elit ut aliquam, purus sit amet
-                luctus venenatis
+                John is a visionary entrepreneur with over 15 years of
+                experience in healthcare and technology. He founded MediCare+ to
+                make healthcare more accessible and efficient for everyone,
+                utilizing technology to bridge the gap between providers and
+                patients.
               </p>
             </div>
           </div>
-          {/* Item */}
+          {/* CTO */}
           <div className="grid w-full grid-flow-row justify-center gap-6 rounded-md border border-solid border-gray-300 p-8 md:grid-cols-2">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/flowspark-1f3e0.appspot.com/o/Tailspark%20Images%2FPlaceholder%20Image.svg?alt=media&token=375a1ea3-a8b6-4d63-b975-aac8d0174074"
-              alt=""
+              src="https://placehold.co/400"
+              alt="Sarah Smith"
               className="inline-block h-72 w-full object-cover"
             />
             <div>
-              <p className="text-xl font-semibold">Anniyah</p>
+              <p className="text-xl font-semibold">Sarah Smith</p>
               <p className="mb-4 font-semibold text-gray-500">
-                Webflow Developer
+                Chief Technology Officer
               </p>
               <p className="text-sm text-gray-500 sm:text-base">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit ut
-                aliquam, purus sit. Lorem ipsum dolor sit amet, elit ut aliquam,
-                purus sit amet luctus venenatis elit ut aliquam, purus sit amet
-                luctus venenatis
+                Sarah is an experienced CTO with expertise in building scalable,
+                secure healthcare platforms. She is passionate about using
+                cutting-edge technology to improve healthcare delivery and the
+                patient experience.
               </p>
             </div>
           </div>
-          {/* Item */}
+          {/* Medical Advisor */}
           <div className="grid w-full grid-flow-row justify-center gap-6 rounded-md border border-solid border-gray-300 p-8 md:grid-cols-2">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/flowspark-1f3e0.appspot.com/o/Tailspark%20Images%2FPlaceholder%20Image.svg?alt=media&token=375a1ea3-a8b6-4d63-b975-aac8d0174074"
-              alt=""
+              src="https://placehold.co/400"
+              alt="Dr. Emily Johnson"
               className="inline-block h-72 w-full object-cover"
             />
             <div>
-              <p className="text-xl font-semibold">Kevin</p>
+              <p className="text-xl font-semibold">Dr. Emily Johnson</p>
               <p className="mb-4 font-semibold text-gray-500">
-                Webflow Developer
+                Medical Advisor
               </p>
               <p className="text-sm text-gray-500 sm:text-base">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit ut
-                aliquam, purus sit. Lorem ipsum dolor sit amet, elit ut aliquam,
-                purus sit amet luctus venenatis elit ut aliquam, purus sit amet
-                luctus venenatis
+                Dr. Johnson is a board-certified family physician with over 10
+                years of experience. She provides expert guidance on medical
+                practices to ensure MediCare+ meets the highest standards of
+                healthcare quality.
               </p>
             </div>
           </div>
-          {/* Item */}
+          {/* Product Manager */}
           <div className="grid w-full grid-flow-row justify-center gap-6 rounded-md border border-solid border-gray-300 p-8 md:grid-cols-2">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/flowspark-1f3e0.appspot.com/o/Tailspark%20Images%2FPlaceholder%20Image.svg?alt=media&token=375a1ea3-a8b6-4d63-b975-aac8d0174074"
-              alt=""
+              src="https://placehold.co/400"
+              alt="Michael Lee"
               className="inline-block h-72 w-full object-cover"
             />
             <div>
-              <p className="text-xl font-semibold">Tamara</p>
-              <p className="mb-4 font-semibold">Webflow Developer</p>
+              <p className="text-xl font-semibold">Michael Lee</p>
+              <p className="mb-4 font-semibold text-gray-500">
+                Product Manager
+              </p>
               <p className="text-sm text-gray-500 sm:text-base">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit ut
-                aliquam, purus sit. Lorem ipsum dolor sit amet, elit ut aliquam,
-                purus sit amet luctus venenatis elit ut aliquam, purus sit amet
-                luctus venenatis
+                Michael is a product manager with a background in healthcare and
+                technology. He ensures that MediCare+ delivers a seamless user
+                experience and meets the needs of both patients and healthcare
+                providers.
               </p>
             </div>
           </div>

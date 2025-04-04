@@ -23,6 +23,9 @@ exports.UserLogin = async (req, res) => {
     };
     // Set Cookie to the Browser
     res.cookie("token", result["token"], cookieOption);
+    res.cookie("user_id", result["user_id"], cookieOption);
+    
+      
   }
   return res.status(200).json(result);
 };

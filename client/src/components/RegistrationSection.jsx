@@ -1,9 +1,41 @@
 import React from "react";
 import Logo from "../assets/images/medicare+2.webp";
+import { Link, useNavigate } from "react-router-dom";
+import useUserAccessStore from "../store/userAccessStore";
+import ValidationHelper from "../utilities/ValidationHelper";
+import toast from "react-hot-toast";
+import { FailAlert } from "../utilities/utility";
 
 function RegisterSection() {
+  const navigate = useNavigate();
+  const { RegisterFormData, RegisterFormChange, UserRegisterRequest } =
+    useUserAccessStore();
+
+  const handleRegisterFormSubmit = async (e) => {
+    e.preventDefault();
+    if (!ValidationHelper.IsLater(RegisterFormData.name)) {
+      toast.error("Valid Name Required");
+    } else if (!ValidationHelper.IsEmail(RegisterFormData.email)) {
+      toast.error("Valid Email Address Required");
+    } else if (!ValidationHelper.IsMobile(RegisterFormData.phone)) {
+      toast.error("Valid Phone Number Required");
+    } else if (ValidationHelper.IsEmpty(RegisterFormData.address)) {
+      toast.error("Valid Address Required");
+    }
+    const res = await UserRegisterRequest(RegisterFormData);
+    if (res) {
+      navigate("/verify");
+      RegisterFormChange("name", "");
+      RegisterFormChange("email", "");
+      RegisterFormChange("phone", "");
+      RegisterFormChange("address", "");
+    } else {
+      FailAlert("Account information already Exist");
+    }
+  };
+
   return (
-    <div className="py-6">
+    <div>
       <div>
         <img src={Logo} className="w-32 mx-auto" />
       </div>
@@ -24,7 +56,6 @@ function RegisterSection() {
           </div>
         </div>
       </div>
-
       <div className="mx-auto">
         <div className="py-5 px-4 sm:rounded-lg md:px-10">
           <form>
@@ -34,23 +65,35 @@ function RegisterSection() {
                   className="mb-6 w-full px-8 py-4 rounded-xl font-medium bg-gray-100 border focus:scale-[102%] transition-transform duration-300 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-[var(--themeColor2)] focus:bg-white"
                   type="email"
                   placeholder="Full Name"
+                  value={RegisterFormData.name}
+                  onChange={(e) => RegisterFormChange("name", e.target.value)}
                 />
                 <input
                   className="w-full px-8 py-4 rounded-xl font-medium focus:scale-[102%] transition-transform duration-300 bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-[var(--themeColor2)] focus:bg-white"
                   type="email"
                   placeholder="Email Address"
+                  onChange={(e) => RegisterFormChange("email", e.target.value)}
+                  value={RegisterFormData.email}
                 />
                 <input
                   className=" mt-6 py-4 w-full px-8  focus:scale-[102%] transition-transform duration-300 rounded-xl font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-[var(--themeColor2)] focus:bg-white"
                   type="text"
                   placeholder="Phone Number"
+                  onChange={(e) => RegisterFormChange("phone", e.target.value)}
+                  value={RegisterFormData.phone}
                 />
                 <input
                   className=" mt-6 py-4 w-full px-8  rounded-xl focus:scale-[102%] transition-transform duration-300 font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-[var(--themeColor2)] focus:bg-white"
                   type="Address"
                   placeholder="Address"
+                  onChange={(e) =>
+                    RegisterFormChange("address", e.target.value)
+                  }
+                  value={RegisterFormData.address}
                 />
-                <button className="mt-5 tracking-wide font-semibold  bg-[var(--themeColor2)] text-gray-100 w-full py-4 rounded-lg hover:bg-[var(--themeColor)] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                <button
+                  onClick={(e) => handleRegisterFormSubmit(e)}
+                  className="mt-5 tracking-wide font-semibold  bg-[var(--themeColor2)] text-gray-100 w-full py-4 rounded-lg hover:bg-[var(--themeColor)] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                   <svg
                     className="w-6 h-6 -ml-2"
                     fill="none"
@@ -77,6 +120,14 @@ function RegisterSection() {
                     className="border-b border-gray-500 border-dotted">
                     Privacy Policy
                   </a>
+                </p>
+                <p className="mt-12 text-md  text-center font-light text-gray-500">
+                  Already have an account?{" "}
+                  <Link
+                    to="/access"
+                    className="text-[var(--themeColor2)] font-medium ml-2">
+                    Back to login
+                  </Link>
                 </p>
               </div>
             </div>

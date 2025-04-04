@@ -1,9 +1,9 @@
 import React from "react";
-import useDoctorsStore from "../../store/doctorStore";
+import useDoctorsStore from "../../store/useDoctorStore";
 
 function SearchBar() {
   const { FilterSelect, FilterChange } = useDoctorsStore();
-  // const [Search, setSearch] = useState("");
+
   return (
     <div>
       <div className="relative w-full max-w-xl mx-auto border hover:scale-[102%] border-gray-200 bg-white rounded-xl text-lg transition-all duration-300">

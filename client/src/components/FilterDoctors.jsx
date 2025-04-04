@@ -1,7 +1,7 @@
 import SearchBar from "./microComponents/SearchBar";
 import SpecialitySelect from "./microComponents/SpecialitySelect";
 import CitySelect from "./microComponents/CitySelect";
-import useDoctorsStore from "../store/doctorStore";
+import useDoctorsStore from "../store/useDoctorStore";
 import { useEffect } from "react";
 
 function FilterDoctors() {

@@ -3,6 +3,7 @@ import StarRatings from "react-star-ratings";
 import { CiLocationOn } from "react-icons/ci";
 import { LiaClinicMedicalSolid } from "react-icons/lia";
 import { FaRegHeart } from "react-icons/fa";
+import { MdPreview } from "react-icons/md";
 import { Link } from "react-router-dom";
 function DoctorsCard({ item }) {
   return (
@@ -16,7 +17,7 @@ function DoctorsCard({ item }) {
               className="w-full h-64 object-cover"
             />
             <span className="absolute top-2 left-2 bg-[var(--themeColor)]  text-white text-xs font-bold px-2 py-1 rounded">
-              popular
+              Available
             </span>
             <button className="absolute top-2 right-2 bg-white p-2 text-lg rounded-full shadow-md hover:bg-gray-100 transition-colors duration-200">
               <FaRegHeart />
@@ -26,7 +27,7 @@ function DoctorsCard({ item }) {
             <div className="flex justify-between items-start px-2 ">
               <div>
                 <div>
-                  <h1 className="text-xl text-center  my-3 font-bold  text-gray-500">
+                  <h1 className="text-xl text-center  my-3 font-semibold  text-gray-500">
                     {item?.name}
                   </h1>
                 </div>
@@ -66,7 +67,7 @@ function DoctorsCard({ item }) {
                   9:00 AM to 6:00 PM
                 </p>
               </span>
-              <Link to={item?.["_id"]}>
+              <Link to={`/doctors-detail/${item?.["_id"]}`}>
                 <button className="bg-[var(--themeColor2)] text-white py-2 px-4 rounded-full font-semibold hover:bg-[var(--themeColor)] transition-colors duration-300">
                   Visit Now
                 </button>

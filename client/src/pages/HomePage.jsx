@@ -5,7 +5,8 @@ import SpecialitySection from "../components/SpecialitySection";
 import PopularSection from "../components/PopularSection";
 import HowItWork from "./../components/HowItWork";
 import FeaturesSection from "../components/FeaturesSection";
-import useDoctorsStore from "../store/doctorStore";
+import useDoctorsStore from "../store/useDoctorStore";
+
 
 function HomePage() {
   const { SpecialityList, SpecialityListRequest } = useDoctorsStore();

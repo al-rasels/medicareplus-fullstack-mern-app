@@ -1,6 +1,9 @@
+import PatternBackground from "../laylout/PatternBackground";
+
 function FactsSection() {
   return (
-    <section className="bg-white border-b border-gray-200">
+    <section className="relative border-b  border-gray-200">
+      <PatternBackground />
       {/* Container */}
       <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-20">
         {/* Title */}
@@ -15,8 +18,9 @@ function FactsSection() {
               1.5M
             </h3>
             <p className="text-sm text-gray-500">
-              Lorem ipsum dolor sit amet, elit ut aliquam, purus sit amet luctus
-              venenatis elit ut aliquam, purus sit amet luctus
+              Over 1.5 million patients have successfully used MediCare+ for
+              online consultations, finding the right doctors and healthcare
+              solutions.
             </p>
             <div className="absolute right-0 top-1/3 hidden h-2/5 border-r border-gray-300 md:block"></div>
           </div>
@@ -26,8 +30,8 @@ function FactsSection() {
               41%
             </h3>
             <p className="text-sm text-gray-500">
-              Lorem ipsum dolor sit amet, elit ut aliquam, purus sit amet luctus
-              venenatis elit ut aliquam, purus sit amet luctus
+              41% of our users have reported faster recovery times due to the
+              convenience of remote consultations and tailored healthcare plans.
             </p>
             <div className="absolute right-0 top-1/3 hidden h-2/5 border-r border-gray-300 md:block"></div>
           </div>
@@ -37,8 +41,9 @@ function FactsSection() {
               3657+
             </h3>
             <p className="text-sm text-gray-500">
-              Lorem ipsum dolor sit amet, elit ut aliquam, purus sit amet luctus
-              venenatis elit ut aliquam, purus sit amet luctus
+              Over 3,657 healthcare professionals, including doctors,
+              specialists, and consultants, are available for virtual
+              consultations on MediCare+.
             </p>
           </div>
         </div>

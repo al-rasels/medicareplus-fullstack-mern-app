@@ -1,27 +1,32 @@
 import React from "react";
-import DoctorsCard from "./microComponents/DoctorCard";
 import Pagination from "./microComponents/Pagination";
-import ClinicCard from "./microComponents/ClinicCard";
+import BlogCard from "./microComponents/BlogCard.jsx";
+import PatternBackground from "../laylout/PatternBackground";
+import useBlogStore from "../store/useBlogStore.js";
 
-function ClinicSection() {
+function BlogSection() {
+  const { BlogList } = useBlogStore();
   return (
-    <section className="bg-white border-y  border-gray-200">
+    <section className="relative border-y  border-gray-200">
+      <PatternBackground />
       {/* Container */}
       <div className="mx-auto max-w-screen-xl px-5 py-8 md:px-10 md:py-12 lg:py-20 ">
         {/* Title */}
         <h2 className="text-center text-3xl font-bold md:text-5xl text-[var(--themeColor2)]">
-          Our Clinic
+          Latest Updates & Health News
         </h2>
         <p className="mx-auto mb-8 mt-4 text-center text-sm text-gray-500 sm:text-base md:mb-12 lg:mb-16">
-          we have a wide range of Clinic to choose from. Find the best doctor
-          for your needs.
+          Get insights on innovative treatments, expert advice, and health
+          trends—all in one place!
         </p>
         {/* Content */}
+
         <div className="mx-auto grid justify-items-center gap-5 sm:grid-cols-1 sm:gap-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:justify-items-stretch">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <ClinicCard key={i} />
+          {BlogList?.map((item, i) => (
+            <BlogCard item={item} key={i} />
           ))}
         </div>
+
         {/* Pagination */}
         <div className="w-100 mx-auto md:my-20 my-10">
           <Pagination />
@@ -31,4 +36,4 @@ function ClinicSection() {
   );
 }
 
-export default ClinicSection;
+export default BlogSection;

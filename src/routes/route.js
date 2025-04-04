@@ -3,7 +3,7 @@ const DoctorsController = require("../controllers/doctorsController");
 const Authenticator = require("../middlewares/authMiddleware");
 const WishController = require("../controllers/wishController");
 const AppointementController = require("../controllers/appointmentController");
-const ClinicController = require("../controllers/clinicController");
+const BlogController = require("../controllers/blogController");
 const express = require("express");
 
 const router = express.Router();
@@ -11,7 +11,7 @@ const router = express.Router();
 router.post("/register-user", UserController.UserRegisterOTP);
 router.post("/verify-user", UserController.VerifyRegistration);
 router.post("/login-user", UserController.UserLogin);
-router.post("/logout-user", Authenticator, UserController.UserLogout);
+router.get("/logout-user", UserController.UserLogout);
 
 //  filter Routes
 router.get("/doctors-specialities", DoctorsController.DoctorsSpecialites);
@@ -61,24 +61,14 @@ router.get(
   Authenticator,
   AppointementController.RemoveAppointment
 );
+
 //Clinics
-router.get("/clinics", Authenticator, ClinicController.Clinics);
-router.get("/clinics", Authenticator, ClinicController.Clinics);
-router.get(
-  "/clinic-details/:clinicID",
-  Authenticator,
-  ClinicController.ClinicDetails
-);
-router.get(
-  "/clinic-list/:cityID",
-  Authenticator,
-  ClinicController.ClinicByCity
-);
-router.get(
-  "/clinic-list/:keyword",
-  Authenticator,
-  ClinicController.ClinicByKeyword
-);
+router.get("/blog-list", BlogController.BlogList);
+router.get("/blog-categories", BlogController.BlogCategories);
+
+router.get("/blog-detail/:blogID", BlogController.BlogDetails);
+router.get("/blog-by-category/:category", BlogController.BlogByCategory);
+router.get("/blog-by-keyword/:keyword", BlogController.BlogByKeyword);
 // wish list
 router.post("/save-wish", Authenticator, WishController.SaveWish);
 router.post("/remove-wish", Authenticator, WishController.RemoveWish);

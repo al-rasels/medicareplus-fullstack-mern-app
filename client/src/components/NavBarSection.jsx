@@ -1,24 +1,33 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/images/medicare+2.webp";
+import { FaPhoneVolume } from "react-icons/fa6";
+import { IoMail } from "react-icons/io5";
+import JoinUsButton from "./microComponents/JoinUsButton";
+import useUserAccessStore from "../store/userAccessStore";
+import UserMenu from "./microComponents/UserMenu";
 
 function NavBarSection() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { IsLogin } = useUserAccessStore();
+ 
   return (
     <header>
-      <div className="bg-[var(--bg-gray)] py-2 text-sm text-gray-400 border-b border-gray-50">
+      {/* className="fixed w-full z-50 top-0" */}
+      <div className="bg-[var(--themeColor2)] font-medium py-2 text-sm text-white border-b border-gray-50">
         <div className="flex items-center justify-between max-w-screen-xl mx-auto px-4">
           <div className="flex flex-wrap space-x-4">
             <Link
-              to="tel:+1234567890"
-              className="hover:text-white transition-colors duration-300 ease-in-out">
-              +88 01763 788733
+              to="tel:+88 01763 788733"
+              className="hover:text-white transition-colors duration-300 ease-in-out inline-flex items-center gap-1">
+              <FaPhoneVolume />
+              <span> +88 01763 788733</span>
             </Link>
             <Link
               to="mailto:info@medicare.com"
-              className="hover:text-white transition-colors duration-300 ease-in-out">
-              info@medicareplus.com
+              className="hover:text-white transition-colors duration-300 ease-in-out inline-flex items-center gap-1">
+              <IoMail />
+              <span>info@medicareplus.com</span>
             </Link>
           </div>
 
@@ -26,7 +35,7 @@ function NavBarSection() {
             <li>
               <Link
                 to="#"
-                className="text-gray-500 hover:text-white transition-colors duration-300 ease-in-out">
+                className="text-white hover:animate-pulse transition-colors duration-[50ms] ease-in-out">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -42,7 +51,7 @@ function NavBarSection() {
             <li>
               <Link
                 to="#"
-                className="text-gray-500 hover:text-white transition-colors duration-300 ease-in-out">
+                className="text-white hover:animate-pulse transition-colors duration-[50ms] ease-in-out">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -58,7 +67,7 @@ function NavBarSection() {
             <li>
               <Link
                 to="#"
-                className="text-gray-500 hover:text-white transition-colors duration-300 ease-in-out">
+                className="text-white hover:animate-pulse transition-colors duration-[50ms] ease-in-out">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -71,7 +80,7 @@ function NavBarSection() {
             <li>
               <Link
                 to="#"
-                className="text-gray-500 hover:text-white transition-colors duration-300 ease-in-out">
+                className="text-white hover:animate-pulse transition-colors duration-[50ms] ease-in-out">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -87,7 +96,7 @@ function NavBarSection() {
             <li>
               <a
                 to="#"
-                className="text-gray-500 hover:text-white transition-colors duration-300 ease-in-out">
+                className="text-white hover:animate-pulse transition-colors duration-[50ms] ease-in-out">
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -103,33 +112,26 @@ function NavBarSection() {
           </ul>
         </div>
       </div>
-      <nav className="bg-white py-5 shadow-xl shadow-gray-200/10 border-gray-200 border-y-2">
+      <nav className="bg-white py-3 shadow-xl  shadow-gray-200/10 border-gray-200 border-y-2">
         <div className="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
           <Link to="/" className="flex items-center">
             <span className="self-center md:ml-5 text-[var(--themeColor2)] hover:border-[var(--themeColor)] border-[var(--themeColor2)] text-xl hover:text-[var(--themeColor)]  border-y-3  py-2 px-1 rounded-2xl font-semibold whitespace-nowrap transition-all duration-300 ">
               <img src={logo} className="w-20" />
-
-              {/* <span className="">MediCare</span>{" "}
-              <span className="text-red-600 hover:text-green-600">+</span> */}
             </span>
           </Link>
           <div className="flex items-center lg:order-2">
             <div className="hidden mt-2 mr-4 sm:inline-block">
               <span />
             </div>
-            <Link
-              to="/access"
-              className="text-white hover:bg-[var(--themeColor)] bg-[var(--themeColor2)] focus:ring-4 font-medium rounded-3xl text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 focus:outline-none transition-colors duration-300 ease-in-out">
-              Join us now
-            </Link>
+            {IsLogin() ? <UserMenu /> : <JoinUsButton />}
 
             <button
               onClick={() => {
                 setIsOpen(!isOpen);
               }}
               type="button"
-              className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-              aria-expanded={isOpen}>
+              className="ml-5 inline-flex items-center p-2  text-sm text-[var(--themeColor2)] lg:hidden rounded-lg [var(--themeColr2)]:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              aria-expanded={!isOpen}>
               <span className="sr-only">Open main menu</span>
               {isOpen ? (
                 <svg
@@ -160,14 +162,14 @@ function NavBarSection() {
           </div>
 
           <div
-            className={`items-center justify-between w-full lg:flex lg:w-auto lg:order-1 
+            className={`items-center justify-between w-full lg:max-h-full lg:flex lg:w-auto lg:order-1 
               ${
                 isOpen
                   ? "max-h-screen opacity-100 scale-100"
-                  : "max-h-0 opacity-0 scale-95 lg:max-h-full lg:opacity-100 lg:scale-100"
+                  : "max-h-0 opacity-0 scale-95  lg:opacity-100 lg:scale-100"
               } 
-              overflow-hidden transition-all duration-300 ease-in-out lg:overflow-visible`}>
-            <ul className="flex flex-col mt-4 text-md font-semibold lg:flex-row lg:space-x-8 lg:mt-0">
+              overflow-hidden transition-all duration-300 ease-in-out `}>
+            <ul className="flex flex-col  mt-4 text-md font-semibold lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
                 <NavLink
                   to="/"
@@ -192,9 +194,9 @@ function NavBarSection() {
               </li>
               <li>
                 <NavLink
-                  to="/clinics"
+                  to="/newsfeed"
                   className="block py-2 pl-3 pr-4 nav-link rounded lg:bg-transparent lg:p-0">
-                  Clinics
+                  NewsFeed
                 </NavLink>
               </li>
               <li>

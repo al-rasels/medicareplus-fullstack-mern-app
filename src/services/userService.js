@@ -83,23 +83,31 @@ const UserLoginService = async (req) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    const user_id = await UserModel.findOne({
+    const user_data = await UserModel.findOne({
       email: email,
       password: password,
-    }).select("_id");
+    }).select({
+      _id: 1,
+      email: 1,
+      name: 1,
+      phone: 1,
+      address: 1,
+      img: 1,
+    });
 
-    if (user_id === null) {
+    if (user_data === null) {
       return {
         status: "error",
         message: "No user found. Please register first",
       };
     }
-    const token = EncodeToken(email, user_id["_id"].toString());
+    const token = EncodeToken(email, user_data["_id"].toString());
 
     return {
       status: "success",
       token: token,
-
+      user_id: user_data["_id"].toString(),
+      data: user_data,
       message: "User logged in successfully",
     };
   } catch (err) {

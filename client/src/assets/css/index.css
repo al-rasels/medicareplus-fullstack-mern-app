@@ -95,6 +95,7 @@ body {
   margin-right: auto;
 }
 
+
 .nav-link:hover::after,
 .active::after {
   width: 100%;

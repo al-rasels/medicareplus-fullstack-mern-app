@@ -84,21 +84,8 @@ const useDoctorsStore = create((set) => ({
       console.error(error);
     }
   },
-  ListByKeywordRequest: async (keyword) => {
-    try {
-      const res = await axios.get(
-        `/api/v1/doctors-listed-by-keyword${keyword}`
-      );
 
-      if (res.data["status"] === "success") {
-        set({ DoctorsList: res.data["data"] });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  },
   //List By Filter
-
   DoctorsByFilterList: null,
   IsFilterLoading: false,
   ListByFilterRequest: async (postBody) => {
@@ -115,6 +102,47 @@ const useDoctorsStore = create((set) => ({
       console.error(error);
     } finally {
       set({ IsFilterLoading: false });
+    }
+  },
+  //DoctorsDetails
+  DoctorsDetail: null,
+  IsDoctorsDetailLoading: false,
+  DoctorsDetailRequest: async (id) => {
+    try {
+      set({ IsDoctorsDetailsLoading: true });
+      const res = await axios.get(`/api/v1/doctors-details/${id}`);
+
+      if (res.data["status"] === "success") {
+        set({ DoctorsDetail: res.data["data"][0] });
+      }
+      console.log(res.data["data"][0]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      set({ IsDoctorsDetailLoading: false });
+    }
+  },
+
+  SearchKeyword: "",
+  SetSearchKeyword: async (keyword) => set({ SearchKeyword: keyword }),
+
+  DoctorsListByKeyword: null,
+  IsDoctorsListByKeywordLoading: false,
+  ListByKeywordRequest: async (keyword) => {
+    try {
+      set({ IsDoctorsListByKeywordsLoading: true });
+      const res = await axios.get(
+        `/api/v1/doctors-listed-by-keyword/${keyword}`
+      );
+
+      if (res.data["status"] === "success") {
+        set({ DoctorsListByKeyword: res.data["data"] });
+      }
+      console.log(res.data["data"]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      set({ IsDoctorsListByKeywordLoading: false });
     }
   },
 }));
