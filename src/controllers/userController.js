@@ -24,17 +24,11 @@ exports.UserLogin = async (req, res) => {
     // Set Cookie to the Browser
     res.cookie("token", result["token"], cookieOption);
     res.cookie("user_id", result["user_id"], cookieOption);
-    
-      
   }
   return res.status(200).json(result);
 };
 
 exports.UserLogout = async (req, res) => {
-  const cookieOption = {
-    expires: new Date(Date.now() - 1000 * 60 * 60 * 24),
-    httpOnly: false,
-  };
-  res.cookie("token", "", cookieOption);
+  res.clearCookie("token");
   return res.status(200).json({ status: "success" });
 };

@@ -5,8 +5,10 @@ import SpecialityCard from "./microComponents/SpecialityCard";
 import PrimaryButton from "./microComponents/PrimaryButton";
 import { Link } from "react-router-dom";
 import SqureCard from "./../skeletons/SqureCard";
+import useDoctorsStore from "../store/useDoctorStore";
 
-function SpecialitySection({ SpecialityList, buttonVisible }) {
+function SpecialitySection({ SpecialityList, buttonVisible, shimmer }) {
+  const { SpecialityLoading } = useDoctorsStore();
   return (
     <section className="relative py-5">
       <div className="absolute inset-y-0 top-0 -z-10 w-full overflow-hidden bg-gray-100 ring-1 ring-gray-900/10 lg:full">
@@ -47,7 +49,7 @@ function SpecialitySection({ SpecialityList, buttonVisible }) {
           for your needs.
         </p>
         {/* Content */}
-        {SpecialityList !== null ? (
+        {SpecialityLoading === false ? (
           <div className="mx-auto grid justify-items-center gap-3 sm:grid-cols-2 md:grid-cols-4 md:gap-5 lg:grid-cols-6 lg:justify-items-stretch">
             {SpecialityList?.map((item, i) => {
               return <SpecialityCard key={i} item={item} />;
@@ -55,7 +57,7 @@ function SpecialitySection({ SpecialityList, buttonVisible }) {
           </div>
         ) : (
           <div className="mx-auto grid justify-items-center gap-3 sm:grid-cols-2 md:grid-cols-4 md:gap-5 lg:grid-cols-6 lg:justify-items-stretch">
-            {SpecialityList?.map((_, i) => {
+            {Array.from({ length: shimmer }).map((_, i) => {
               return <SqureCard key={i} />;
             })}
           </div>

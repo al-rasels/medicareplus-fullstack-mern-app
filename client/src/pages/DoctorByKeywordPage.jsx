@@ -13,7 +13,7 @@ function DoctorByKeywordPage() {
     (async () => {
       await ListByKeywordRequest(keyword);
     })();
-  }, []);
+  }, [keyword]);
 
   return (
     <Layout>

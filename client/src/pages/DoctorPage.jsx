@@ -12,12 +12,15 @@ function DoctorPage() {
     SpecialityList,
     SpecialityListRequest,
     CityListRequest,
+    DoctorsRequest,
+    Doctors,
   } = useDoctorsStore();
 
   useEffect(() => {
     (async () => {
       SpecialityList === null ? await SpecialityListRequest() : null;
       CityList === null ? await CityListRequest() : null;
+      Doctors === null && (await DoctorsRequest());
     })();
   }, []);
 

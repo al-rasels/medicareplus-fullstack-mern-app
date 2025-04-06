@@ -1,14 +1,8 @@
 import React from "react";
-import DoctorsCard from "./microComponents/DoctorCard";
-import DocCardSkeleton from "../skeletons/DocCardSkeleton";
-import { Link } from "react-router-dom";
-import PrimaryButton from "./microComponents/PrimaryButton";
-import { FaArrowRight } from "react-icons/fa";
-import useDoctorsStore from "../store/useDoctorStore";
+import DoctorWishCard from "./microComponents/DoctorWishCard";
+import ErrorSection from "./ErrorSection";
 
-function PopularSection({ Doctors, buttonVisible }) {
-  const { DoctorsLoading } = useDoctorsStore();
-
+function WishListSection({ Doctors }) {
   return (
     <section className="relative border-t border-b py-12 md:pb-36 border-gray-200">
       <div className="absolute inset-y-0 top-0 -z-10 w-full overflow-hidden bg-gray-100 ring-1 ring-gray-900/10 lg:full">
@@ -42,14 +36,13 @@ function PopularSection({ Doctors, buttonVisible }) {
       <div className="mx-auto w-full max-w-screen-xl px-5 py-12 md:px-10 md:py-24 lg:py-16 ">
         {/* Title */}
         <h2 className="text-center text-3xl font-bold md:text-5xl text-[var(--themeColor2)]">
-          Popular Doctors in our community
+          Wish List
         </h2>
         <p className="mx-auto mb-8 mt-4 text-center text-sm text-gray-500 sm:text-base md:mb-12 lg:mb-16">
-          we have a wide range of doctors to choose from. Find the best doctor
-          for your needs.
+          Here are the doctors you've saved for future visits
         </p>
         {/* Content */}
-        {DoctorsLoading === true ? (
+        {Doctors === null ? (
           <div className="mx-auto grid justify-items-center gap-5 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-4 lg:justify-items-stretch">
             {Array.from({ length: 8 }).map((_, i) => (
               <DocCardSkeleton key={i} />
@@ -58,24 +51,23 @@ function PopularSection({ Doctors, buttonVisible }) {
         ) : (
           <div className="mx-auto grid justify-items-center gap-5 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-7 lg:grid-cols-4 lg:justify-items-stretch">
             {Doctors?.map((item, i) => (
-              <DoctorsCard item={item} key={i} />
+              <DoctorWishCard item={item} key={i} />
             ))}
           </div>
         )}
-      </div>
-      <div
-        className={`flex flex-col ${buttonVisible} justify-center items-center `}>
-        <Link to="/doctors">
-          <PrimaryButton>
-            <div className="transition-all flex gap-2 hover:gap-5 items-center duration-300">
-              <span className="inline-block">View More</span>
-              <FaArrowRight className="inline-block" />
-            </div>
-          </PrimaryButton>
-        </Link>
+        {Doctors?.length === 0 && (
+          <ErrorSection
+            title={"No Doctors Found"}
+            description={
+              "Your wish list is empty try searching for a doctor and adding them to your wish list"
+            }
+            to={"/doctors"}
+            buttonText={"Go to Doctors Page"}
+          />
+        )}
       </div>
     </section>
   );
 }
 
-export default PopularSection;
+export default WishListSection;

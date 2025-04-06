@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useUserAccessStore from "../store/userAccessStore";
 import ValidationHelper from "./../utilities/ValidationHelper";
 import { toast } from "react-hot-toast";
-import { FailAlert } from "../utilities/utility";
+import { FailAlert, SuccessAlert } from "../utilities/utility";
 function LoginSection() {
   const navigate = useNavigate();
   const { LoginFormData, LoginFormChange, UserLoginRequest } =
@@ -19,6 +19,7 @@ function LoginSection() {
     } else {
       const res = await UserLoginRequest(LoginFormData);
       res ? navigate("/") : FailAlert("Login Failed");
+      SuccessAlert("Welcome Back to MediCare+");
       LoginFormChange("email", "");
       LoginFormChange("password", e.target.value);
     }

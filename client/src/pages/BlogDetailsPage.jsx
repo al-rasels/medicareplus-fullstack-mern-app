@@ -4,18 +4,25 @@ import BlogDetails from "../components/microComponents/BlogDetail.jsx";
 import CommentSection from "../components/CommentSection.jsx";
 import useBlogStore from "../store/useBlogStore.js";
 import { useParams } from "react-router-dom";
+import BlogDetailSketeon from "../skeletons/BlogDetailSketeon.jsx";
 
 function BlogDetailsPage() {
   const { id } = useParams();
-  const { BlogDetailRequest, BlogDetail, BlogList } = useBlogStore();
+  const { BlogDetailRequest, BlogDetail, BlogList, BlogListRequest } =
+    useBlogStore();
   useEffect(() => {
     (async () => {
-      await BlogDetailRequest(id);
+      BlogDetail === null && (await BlogDetailRequest(id));
+      BlogList === null && (await BlogListRequest());
     })();
   }, [id]);
   return (
     <Layout>
-      <BlogDetails BlogDetail={BlogDetail} BlogList={BlogList} />
+      {BlogDetail === null ? (
+        <BlogDetailSketeon />
+      ) : (
+        <BlogDetails BlogDetail={BlogDetail} BlogList={BlogList} />
+      )}
       <CommentSection BlogDetail={BlogDetail} />
     </Layout>
   );

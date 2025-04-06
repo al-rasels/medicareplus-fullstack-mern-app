@@ -1,28 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import StarRatings from "react-star-ratings";
 import { FaPhone } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbCurrencyTaka } from "react-icons/tb";
-import useDoctorsStore from "../../store/useDoctorStore";
-import { useParams } from "react-router-dom";
+
 import { LiaClinicMedicalSolid } from "react-icons/lia";
+import { FaHeartCirclePlus } from "react-icons/fa6";
 
-function DoctorDetail() {
-  const { id } = useParams();
-  const { DoctorsDetail, DoctorsDetailRequest } = useDoctorsStore();
-
-  useEffect(() => {
-    (async () => {
-      await DoctorsDetailRequest(id);
-    })();
-  }, [id]);
-
+function DoctorDetail({ DoctorsDetail }) {
   return (
     <section className=" py-10 px-5">
       {/* Doctor Profile Section */}
       <div className="flex flex-wrap bg-gray-50 rounded-2xl shadow-sm py-6 px-4 hover:scale-[102%] transition-transform duration-300">
         {/* Doctor Image */}
-        <div className="w-full md:w-2/5 px-4 mb-5 md:mb-0 ">
+        <div className="w-full md:w-2/5 px-4 mb-5 md:mb-0 relative ">
           <img
             src={DoctorsDetail?.doctor?.img}
             alt="Doctor-Name"
@@ -37,6 +28,11 @@ function DoctorDetail() {
               {DoctorsDetail?.workDay}
             </p>
           </div>
+          <button
+            onClick={() => console.log("clicked")}
+            className="absolute top-4 text-[var(--themeColor)] right-8 bg-white p-2 text-lg rounded-full shadow-md hover:bg-gray-100 hover:text-red-500 transition-colors duration-200">
+            <FaHeartCirclePlus size={25} />
+          </button>
         </div>
 
         {/* Doctor Details */}

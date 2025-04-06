@@ -2,25 +2,20 @@ import React from "react";
 import StarRatings from "react-star-ratings";
 import { CiLocationOn } from "react-icons/ci";
 import { LiaClinicMedicalSolid } from "react-icons/lia";
-import { FaHeartCirclePlus } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { FaHeartCircleXmark } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 import useWishStore from "../../store/useWishlistStore";
-import useUserAccessStore from "../../store/userAccessStore";
-import { SuccessAlert } from "../../utilities/utility";
+
 import toast from "react-hot-toast";
-function DoctorsCard({ item }) {
-  const navigate = useNavigate();
-  const { WishSaveRequest } = useWishStore();
-  const { IsLogin } = useUserAccessStore();
+function DoctorWishCard({ item }) {
+  const { RemoveWishListRequest, WishListRequest } = useWishStore();
+
   const handleWishList = async () => {
-    if (!IsLogin()) {
-      navigate("/access");
-    } else {
-      const res = await WishSaveRequest(item?._id);
-      if (res) {
-        toast.success("Added to wishlist");
-      }
+    const res = await RemoveWishListRequest(item?._id);
+    if (res) {
+      toast.success("Removed from wishlist");
     }
+    await WishListRequest();
   };
 
   return (
@@ -40,8 +35,8 @@ function DoctorsCard({ item }) {
               onClick={() => {
                 handleWishList();
               }}
-              className="absolute top-2 right-2 text-[var(--themeColor)] bg-white p-2 text-lg rounded-full shadow-md hover:bg-gray-100 hover:text-red-500 transition-colors duration-200 cursor-pointer">
-              <FaHeartCirclePlus size={25} />
+              className="absolute top-2 right-2 text-red-500 bg-white p-2 text-lg rounded-full shadow-md hover:bg-gray-100 hover:text-[var(--themeColor)] transition-colors duration-200 cursor-pointer">
+              <FaHeartCircleXmark size={25} />
             </button>
           </div>
           <div className="px-2 py-2">
@@ -101,4 +96,4 @@ function DoctorsCard({ item }) {
   );
 }
 
-export default DoctorsCard;
+export default DoctorWishCard;

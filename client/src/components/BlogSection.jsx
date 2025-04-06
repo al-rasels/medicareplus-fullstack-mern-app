@@ -3,9 +3,10 @@ import Pagination from "./microComponents/Pagination";
 import BlogCard from "./microComponents/BlogCard.jsx";
 import PatternBackground from "../laylout/PatternBackground";
 import useBlogStore from "../store/useBlogStore.js";
+import BlogCardSkeleton from "../skeletons/BlogCardSkeleton.jsx";
 
 function BlogSection() {
-  const { BlogList } = useBlogStore();
+  const { BlogList, BlogListLoading } = useBlogStore();
   return (
     <section className="relative border-y  border-gray-200">
       <PatternBackground />
@@ -22,14 +23,16 @@ function BlogSection() {
         {/* Content */}
 
         <div className="mx-auto grid justify-items-center gap-5 sm:grid-cols-1 sm:gap-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:justify-items-stretch">
-          {BlogList?.map((item, i) => (
-            <BlogCard item={item} key={i} />
-          ))}
+          {BlogListLoading === false
+            ? BlogList?.map((item, i) => <BlogCard item={item} key={i} />)
+            : Array.from({ length: 12 }).map((_, i) => (
+                <BlogCardSkeleton key={i} />
+              ))}
         </div>
 
         {/* Pagination */}
         <div className="w-100 mx-auto md:my-20 my-10">
-          <Pagination />
+          {/* <Pagination /> */}
         </div>
       </div>
     </section>

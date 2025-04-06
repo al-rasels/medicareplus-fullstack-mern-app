@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PatternBackground from "../../laylout/PatternBackground.jsx";
 import ValidationHelper from "../../utilities/ValidationHelper.js";
 import SideBlogCard from "./SideBlogCard.jsx";
 import useBlogStore from "../../store/useBlogStore.js";
 
 const BlogDetails = ({ BlogDetail, BlogList }) => {
-  const [relatedExit, setRelatedExit] = useState(true);
   const { BlogListRequest } = useBlogStore();
+  const relatedBlogs = BlogList?.filter(
+    (blog) =>
+      blog?.category === BlogDetail?.category &&
+      blog?.detail !== BlogDetail?._id
+  );
   useEffect(() => {
     (async () => {
       await BlogListRequest();
@@ -22,7 +26,7 @@ const BlogDetails = ({ BlogDetail, BlogList }) => {
           {/* Main Blog Content */}
           <div
             className={`w-full md:w-8/12 mb-8 px-5 py-8 ${
-              !relatedExit ? "mx-auto" : ""
+              relatedBlogs?.length === 0 && "mx-auto"
             }  md:px-8 backdrop-blur bg-white/50 rounded-2xl  shadow-sm`}>
             <img
               src={BlogDetail?.img}
@@ -51,17 +55,12 @@ const BlogDetails = ({ BlogDetail, BlogList }) => {
           {/* Sidebar */}
           <div
             className={`w-full md:w-4/12  mb-8   ${
-              !relatedExit ? "hidden" : "block"
-            } mt-6  self-start`}>
+              relatedBlogs?.length === 0 && "hidden"
+            }  mt-6  self-start`}>
             <h2 className="text-2xl text-[var(--themeColor2)] font-semibold text-center mb-4">
               Related Blogs
             </h2>
-            {BlogList?.filter(
-              (item) =>
-                item?.category === BlogDetail?.category &&
-                item?.detail !== BlogDetail?._id
-            ).map((item, i) => {
-              item?.length > 0 && setRelatedExit(true);
+            {relatedBlogs?.map((item, i) => {
               return <SideBlogCard item={item} key={i} />;
             })}
           </div>

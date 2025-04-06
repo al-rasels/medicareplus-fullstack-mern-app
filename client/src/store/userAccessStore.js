@@ -7,6 +7,8 @@ const useUserAccessStore = create((set) => ({
     return !!Cookies.get("token");
   },
 
+  UserProfile: JSON.parse(localStorage.getItem("user_data")),
+
   // Login form
   LoginFormData: { email: "", password: "" },
   LoginFormChange(name, value) {
@@ -41,7 +43,9 @@ const useUserAccessStore = create((set) => ({
       });
 
       if (res.data["status"] === "success") {
-        sessionStorage.setItem("user_data", JSON.stringify(res.data["data"]));
+        set({ UserProfile: res.data["data"] });
+        localStorage.setItem("user_data", JSON.stringify(res.data["data"]));
+        set({ UserProfile: res.data["data"] });
       }
 
       set({ IsLoginSubmitting: false });
@@ -90,8 +94,9 @@ const useUserAccessStore = create((set) => ({
       const res = await axios.get(`/api/v1/logout-user`, {
         withCredentials: true,
       });
-      console.log(res);
+
       if (res.data["status"] === "success") {
+        localStorage.removeItem("user_data");
         return res.data["status"] === "success";
       }
     } catch (error) {

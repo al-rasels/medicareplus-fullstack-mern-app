@@ -13,9 +13,9 @@ function DoctorBySpecialityPage() {
 
   useEffect(() => {
     (async () => {
-      await ListBySpecialityRequest(id);
+      DoctorsListBySpeciality === null && (await ListBySpecialityRequest(id));
     })();
-  }, []);
+  }, [id]);
 
   return (
     <Layout>

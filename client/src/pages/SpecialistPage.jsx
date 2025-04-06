@@ -9,7 +9,7 @@ function SpecialistPage() {
 
   useEffect(() => {
     (async () => {
-      await SpecialityListRequest();
+      SpecialityList === null && (await SpecialityListRequest());
     })();
   }, []);
   return (
@@ -17,6 +17,7 @@ function SpecialistPage() {
       <SpecialitySection
         SpecialityList={SpecialityList}
         buttonVisible={"hidden"}
+        shimmer={30}
       />
     </Layout>
   );

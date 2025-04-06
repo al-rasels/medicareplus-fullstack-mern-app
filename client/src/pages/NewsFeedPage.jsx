@@ -5,11 +5,12 @@ import FilterBlogs from "../components/FilterBlogs.jsx";
 import useBlogStore from "../store/useBlogStore.js";
 
 function NewsFeedPage() {
-  const { BlogListRequest, BlogCategoryListRequest } = useBlogStore();
+  const { BlogListRequest, BlogCategoryListRequest, BlogList, Categories } =
+    useBlogStore();
   useEffect(() => {
     (async () => {
-      await BlogListRequest();
-      await BlogCategoryListRequest();
+      BlogList === null && (await BlogListRequest());
+      Categories === null && (await BlogCategoryListRequest());
     })();
   }, []);
 

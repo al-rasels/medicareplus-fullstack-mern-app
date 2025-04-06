@@ -10,15 +10,15 @@ const useDoctorsStore = create((set) => ({
   },
 
   // Getting Speciality list
-  IsSLLoading: false,
+  SpecialityLoading: false,
   SpecialityList: null,
   SpecialityListRequest: async () => {
     try {
-      set({ IsSLLoading: true });
+      set({ SpecialityLoading: true });
       const res = await axios.get(`/api/v1/doctors-specialities`);
       if (res.data["status"] === "success") {
         set({ SpecialityList: res.data["data"] });
-        set({ IsSLLoading: false });
+        set({ SpecialityLoading: false });
       }
     } catch (error) {
       console.error(error);
@@ -26,16 +26,16 @@ const useDoctorsStore = create((set) => ({
   },
 
   // Getting City List
-  IsCLLoading: false,
+  CityLoading: false,
   CityList: null,
   CityListRequest: async () => {
     try {
-      set({ IsCLLoading: true });
+      set({ CityLoading: true });
       const res = await axios.get(`/api/v1/doctors-cities`);
 
       if (res.data["status"] === "success") {
         set({ CityList: res.data["data"] });
-        set({ IsCLLoading: false });
+        set({ CityLoading: false });
       }
     } catch (error) {
       console.error(error);
@@ -43,16 +43,16 @@ const useDoctorsStore = create((set) => ({
   },
 
   // Getting All Doctors
-  IsDLLoading: false,
+  DoctorsLoading: false,
   Doctors: null,
   DoctorsRequest: async () => {
     try {
-      set({ IsDLLoading: true });
+      set({ DoctorsLoading: true });
       const res = await axios.get(`/api/v1/doctors`);
 
       if (res.data["status"] === "success") {
         set({ Doctors: res.data["data"] });
-        set({ IsDLLoading: false });
+        set({ DoctorsLoading: false });
       }
     } catch (error) {
       console.error(error);
@@ -62,10 +62,12 @@ const useDoctorsStore = create((set) => ({
   //List By Filtering Name
 
   DoctorsListBySpeciality: null,
+
   ListBySpecialityRequest: async (id) => {
     try {
+      // set({ DoctorsLoading: true });
       const res = await axios.get(`/api/v1/doctors-listed-by-speciality/${id}`);
-
+      // set({ DoctorsLoading: false });
       if (res.data["status"] === "success") {
         set({ DoctorsListBySpeciality: res.data["data"] });
       }
@@ -75,8 +77,9 @@ const useDoctorsStore = create((set) => ({
   },
   ListByCityRequest: async (id) => {
     try {
+      // set({ DoctorsLoading: true });
       const res = await axios.get(`/api/v1/doctors-listed-by-city/${id}`);
-
+      // set({ DoctorsLoading: false });
       if (res.data["status"] === "success") {
         set({ DoctorsList: res.data["data"] });
       }
@@ -87,10 +90,10 @@ const useDoctorsStore = create((set) => ({
 
   //List By Filter
   DoctorsByFilterList: null,
-  IsFilterLoading: false,
+
   ListByFilterRequest: async (postBody) => {
     try {
-      set({ IsFilterLoading: true });
+      // set({ DoctorsLoading: true });
       const res = await axios.post(
         `/api/v1/doctors-listed-by-filter`,
         postBody
@@ -101,7 +104,7 @@ const useDoctorsStore = create((set) => ({
     } catch (error) {
       console.error(error);
     } finally {
-      set({ IsFilterLoading: false });
+      // set({ DoctorsLoading: false });
     }
   },
   //DoctorsDetails
@@ -115,7 +118,6 @@ const useDoctorsStore = create((set) => ({
       if (res.data["status"] === "success") {
         set({ DoctorsDetail: res.data["data"][0] });
       }
-      console.log(res.data["data"][0]);
     } catch (error) {
       console.error(error);
     } finally {
@@ -127,10 +129,10 @@ const useDoctorsStore = create((set) => ({
   SetSearchKeyword: async (keyword) => set({ SearchKeyword: keyword }),
 
   DoctorsListByKeyword: null,
-  IsDoctorsListByKeywordLoading: false,
+
   ListByKeywordRequest: async (keyword) => {
     try {
-      set({ IsDoctorsListByKeywordsLoading: true });
+      set({ DoctorsLoading: true });
       const res = await axios.get(
         `/api/v1/doctors-listed-by-keyword/${keyword}`
       );
@@ -138,11 +140,10 @@ const useDoctorsStore = create((set) => ({
       if (res.data["status"] === "success") {
         set({ DoctorsListByKeyword: res.data["data"] });
       }
-      console.log(res.data["data"]);
     } catch (error) {
       console.error(error);
     } finally {
-      set({ IsDoctorsListByKeywordLoading: false });
+      set({ DoctorsLoading: false });
     }
   },
 }));

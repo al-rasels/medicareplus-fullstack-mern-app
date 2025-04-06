@@ -31,14 +31,7 @@ const WishListService = async (req) => {
         as: "doctor.speciality",
       },
     };
-    // const JoinWithUserStage = {
-    //   $lookup: {
-    //     from: "users",
-    //     localField: "user",
-    //     foreignField: "_id",
-    //     as: "user",
-    //   },
-    // };
+
     const UnwindCityStage = { $unwind: "$doctor.city" };
     const UnwindDoctorStage = { $unwind: "$doctor" };
     const UnwindSpecialityStage = { $unwind: "$doctor.speciality" };

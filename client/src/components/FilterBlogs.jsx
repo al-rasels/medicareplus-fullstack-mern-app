@@ -2,6 +2,7 @@ import React from "react";
 
 import useBlogStore from "../store/useBlogStore";
 import SearchBarBlog from "./microComponents/BlogsSearchBar";
+import PatternBackground2 from "../laylout/PatternBackground2";
 
 function FilterBlogs() {
   const { Categories, BlogListRequest, BlogByCategoryRequest } = useBlogStore();
@@ -15,15 +16,16 @@ function FilterBlogs() {
   };
 
   return (
-    <section className="bg-gray-100 py-12">
-      <div className="max-w-screen-md   mx-auto">
-        <div className="flex flex-col gap-4 ">
-          <div className="col-span-12">
+    <section className="relative py-12">
+      <PatternBackground2 />
+      <div className="max-w-screen-xl  mx-auto">
+        <div className="flex flex-col gap-4">
+          <div className="">
             <SearchBarBlog />
           </div>
 
-          <div className="col-span-12">
-            <div className="flex flex-wrap justify-center gap-2">
+          <div className="w-full max-w-none px-0 mx-0">
+            <div className="flex flex-wrap justify-evenly gap-2">
               <button
                 onClick={() => {
                   handleClick("All");

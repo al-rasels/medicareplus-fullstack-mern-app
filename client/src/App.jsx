@@ -14,6 +14,10 @@ import DoctorsDetailPage from "./pages/DoctorsDetailPage";
 import DoctorByKeywordPage from "./pages/DoctorByKeywordPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import BlogDetailsPage from "./pages/BlogDetailsPage.jsx";
+import WishlistPage from "./pages/WishlistPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import AppointmentPage from "./pages/AppointmentPage.jsx";
+import EditProfilePage from "./pages/EditProfilePage.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -28,6 +32,10 @@ function App() {
         <Route path="/verify" exact element={<VerificationPage />} />
         <Route path="/newsfeed" exact element={<NewsFeedPage />} />
         <Route path="/newsfeed/:id" exact element={<BlogDetailsPage />} />
+        <Route path="/wishlist" exact element={<WishlistPage />} />
+        <Route path="/profile" exact element={<ProfilePage />} />
+        <Route path="/appointment" exact element={<AppointmentPage />} />
+        <Route path="/edit-profile" exact element={<EditProfilePage />} />
         <Route
           path="/doctors-by-keyword/:keyword"
           exact
