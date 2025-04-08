@@ -7,7 +7,7 @@ import ErrorSection from "./ErrorSection";
 
 function DoctorsSection({ Doctors }) {
   const { DoctorsLoading } = useDoctorsStore();
-  console.log(DoctorsLoading);
+
   return (
     <section className=" border-t border-b relative  border-gray-200">
       <PatternBackground />

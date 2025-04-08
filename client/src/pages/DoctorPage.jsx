@@ -23,7 +23,7 @@ function DoctorPage() {
     (async () => {
       SpecialityList === null ? await SpecialityListRequest() : null;
       CityList === null ? await CityListRequest() : null;
-      Doctors === null && (await DoctorsRequest());
+      Doctors === null ? await DoctorsRequest() : null;
     })();
   }, []);
 
