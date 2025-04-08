@@ -17,7 +17,9 @@ import BlogDetailsPage from "./pages/BlogDetailsPage.jsx";
 import WishlistPage from "./pages/WishlistPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import AppointmentPage from "./pages/AppointmentPage.jsx";
-import EditProfilePage from "./pages/EditProfilePage.jsx";
+import HelpAndSupportPage from "./pages/HelpAndSupportPage.jsx";
+import ReportAndPrescriptionPage from "./pages/ReportAndPrescriptionPage.jsx";
+import PrivetRoutes from "./laylout/PrivetRoutes.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -32,10 +34,19 @@ function App() {
         <Route path="/verify" exact element={<VerificationPage />} />
         <Route path="/newsfeed" exact element={<NewsFeedPage />} />
         <Route path="/newsfeed/:id" exact element={<BlogDetailsPage />} />
-        <Route path="/wishlist" exact element={<WishlistPage />} />
-        <Route path="/profile" exact element={<ProfilePage />} />
-        <Route path="/appointment" exact element={<AppointmentPage />} />
-        <Route path="/edit-profile" exact element={<EditProfilePage />} />
+
+        <Route element={<PrivetRoutes />}>
+          <Route path="/wishlist" exact element={<WishlistPage />} />
+          <Route path="/profile" exact element={<ProfilePage />} />
+          <Route path="/appointment" exact element={<AppointmentPage />} />
+          <Route path="/help-support" exact element={<HelpAndSupportPage />} />
+          <Route
+            path="/prescription"
+            exact
+            element={<ReportAndPrescriptionPage />}
+          />
+        </Route>
+
         <Route
           path="/doctors-by-keyword/:keyword"
           exact

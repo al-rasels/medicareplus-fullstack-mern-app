@@ -12,17 +12,17 @@ function LoginSection() {
     useUserAccessStore();
   const handleLoginFormSubmit = async (e) => {
     e.preventDefault();
-    if (!ValidationHelper.IsEmail(LoginFormData.email)) {
-      toast.error("Valid Email Address Required");
-    } else if (ValidationHelper.IsEmpty(LoginFormData.password)) {
-      toast.error("Valid Password Required");
-    } else {
-      const res = await UserLoginRequest(LoginFormData);
-      res ? navigate("/") : FailAlert("Login Failed");
-      SuccessAlert("Welcome Back to MediCare+");
-      LoginFormChange("email", "");
-      LoginFormChange("password", e.target.value);
-    }
+     if (!ValidationHelper.IsEmail(LoginFormData.email)) {
+       toast.error("Valid Email Address Required");
+     } else if (ValidationHelper.IsEmpty(LoginFormData.password)) {
+       toast.error("Valid Password Required");
+     } else {
+       const res = await UserLoginRequest(LoginFormData);
+       res ? navigate("/") : FailAlert("Login Failed");
+       SuccessAlert("Welcome Back to MediCare+");
+       LoginFormChange("email", "");
+       LoginFormChange("password", "");
+     }
   };
 
   return (

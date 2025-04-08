@@ -5,8 +5,10 @@ import FactsSection from "../components/FactsSection";
 import ImportantPersons from "../components/ImportantPersons";
 import FAQSection from "../components/FAQSection";
 import { Helmet } from "react-helmet";
+import PageTitle from "./../components/utilityComponents/PageTitle";
 
 function AboutPage() {
+  PageTitle("About Us");
   return (
     <Layout>
       <ImportantPersons />

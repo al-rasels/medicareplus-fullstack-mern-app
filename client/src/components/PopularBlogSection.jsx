@@ -3,9 +3,11 @@ import BlogCard from "./microComponents/BlogCard.jsx";
 import PatternBackground from "../laylout/PatternBackground";
 import useBlogStore from "../store/useBlogStore.js";
 import BlogCardSkeleton from "../skeletons/BlogCardSkeleton.jsx";
-
-function BlogSection() {
-  const { BlogList, BlogListLoading } = useBlogStore();
+import { Link } from "react-router-dom";
+import PrimaryButton from "./microComponents/PrimaryButton.jsx";
+import { FaArrowRight } from "react-icons/fa";
+function PopularBlogSection({ BlogList, buttonVisible }) {
+  const { BlogListLoading } = useBlogStore();
   return (
     <section className="relative border-y  border-gray-200">
       <PatternBackground />
@@ -23,12 +25,24 @@ function BlogSection() {
 
         <div className="mx-auto grid justify-items-center gap-5 sm:grid-cols-1 sm:gap-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:justify-items-stretch">
           {BlogListLoading === false
-            ? BlogList?.map((item, i) => <BlogCard item={item} key={i} />)
-            : Array.from({ length: 12 }).map((_, i) => (
+            ? BlogList?.slice(0, 3)?.map((item, i) => (
+                <BlogCard item={item} key={i} />
+              ))
+            : Array.from({ length: 3 }).map((_, i) => (
                 <BlogCardSkeleton key={i} />
               ))}
         </div>
-
+        <div
+          className={`flex flex-col ${buttonVisible} justify-center items-center `}>
+          <Link to="/newsfeed">
+            <PrimaryButton>
+              <div className="transition-all flex gap-2 hover:gap-5 items-center duration-300">
+                <span className="inline-block">View More</span>
+                <FaArrowRight className="inline-block" />
+              </div>
+            </PrimaryButton>
+          </Link>
+        </div>
         {/* Pagination */}
         {/* <div className="w-100 mx-auto md:my-20 my-10">
           <Pagination />
@@ -38,4 +52,4 @@ function BlogSection() {
   );
 }
 
-export default BlogSection;
+export default PopularBlogSection;

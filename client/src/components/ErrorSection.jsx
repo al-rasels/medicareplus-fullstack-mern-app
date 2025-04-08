@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import errImg from "../assets/images/no-results.png";
+import PatternBackground from "../laylout/PatternBackground";
 function ErrorSection({ title, description, buttonText, to }) {
   return (
     <section>
+      <PatternBackground />
       {/* Container */}
       <div className="mx-auto w-full max-w-7xl px-5 py-8 md:px-10 md:py-12">
         {/* Component */}

@@ -2,11 +2,22 @@ const {
   UserRegisterOTPService,
   UserRegisterVerifyService,
   UserLoginService,
+  UpdateUserService,
+  UserDetailsService,
 } = require("../services/userService");
 exports.UserRegisterOTP = async (req, res) => {
   const result = await UserRegisterOTPService(req);
   return res.status(200).json(result);
 };
+exports.UpdateUser = async (req, res) => {
+  const result = await UpdateUserService(req);
+  return res.status(200).json(result);
+};
+exports.UserDetails = async (req, res) => {
+  const result = await UserDetailsService(req);
+  return res.status(200).json(result);
+};
+
 
 exports.VerifyRegistration = async (req, res) => {
   const result = await UserRegisterVerifyService(req);

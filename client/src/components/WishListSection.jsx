@@ -33,7 +33,7 @@ function WishListSection({ Doctors }) {
         </svg>
       </div>
       {/* Container */}
-      <div className="mx-auto w-full max-w-screen-xl px-5 py-12 md:px-10 md:py-24 lg:py-16 ">
+      <div className="mx-auto w-full max-w-screen-xl px-5 py-8 md:px-10 md:py-10 lg:py-12 ">
         {/* Title */}
         <h2 className="text-center text-3xl font-bold md:text-5xl text-[var(--themeColor2)]">
           Wish List

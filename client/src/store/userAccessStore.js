@@ -103,6 +103,36 @@ const useUserAccessStore = create((set) => ({
       console.error(error);
     }
   },
+  IsUpdateLoading: false,
+  UpdateDetails: null,
+  UpdateUserRequest: async (postBody) => {
+    try {
+      console.log(postBody);
+      set({ IsUpdateLoading: true });
+      const res = await axios.post(`/api/v1/update-user`, postBody);
+      console.log(res);
+      set({ IsUpdateLoading: false });
+      if (res.data["status"] === "success") {
+        return res.data["status"] === "success";
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  UserDetails: null,
+  UserDetailsRequest: async () => {
+    try {
+      const res = await axios.get(`/api/v1/user-details`);
+      set({ UserDetails: res.data["data"] });
+      if (res.data["status"] === "success") {
+        return res.data["data"];
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
 }));
+
+
 
 export default useUserAccessStore;

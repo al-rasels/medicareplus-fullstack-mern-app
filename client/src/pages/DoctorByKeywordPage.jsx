@@ -3,9 +3,10 @@ import Layout from "../laylout/Layout";
 import DoctorsSection from "../components/DoctorsSection";
 import useDoctorsStore from "../store/useDoctorStore";
 import { useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import PageTitle from "../components/utilityComponents/PageTitle";
 
 function DoctorByKeywordPage() {
+  PageTitle("Doctors");
   const { ListByKeywordRequest, DoctorsListByKeyword } = useDoctorsStore();
   const { keyword } = useParams();
 

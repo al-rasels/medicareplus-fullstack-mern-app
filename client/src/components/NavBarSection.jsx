@@ -14,7 +14,7 @@ function NavBarSection() {
   return (
     <header>
       {/* className="fixed w-full z-50 top-0" */}
-      <div className="bg-[var(--themeColor2)] font-medium py-2 text-sm text-white border-b border-gray-50">
+      <div className="bg-[var(--themeColor2)] font-medium py-2 text-sm  text-white border-b border-gray-100">
         <div className="flex items-center justify-between max-w-screen-xl mx-auto px-4">
           <div className="flex flex-wrap space-x-4">
             <Link
@@ -112,7 +112,7 @@ function NavBarSection() {
           </ul>
         </div>
       </div>
-      <nav className="bg-white py-3 shadow-xl  shadow-gray-200/10 border-gray-200 border-y-2">
+      <nav className="bg-white py-3 shadow-xl  shadow-gray-200/10 border-gray-200 border-b-2">
         <div className="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
           <Link to="/" className="flex items-center">
             <span className="self-center md:ml-5 text-[var(--themeColor2)] hover:border-[var(--themeColor)] border-[var(--themeColor2)] text-xl hover:text-[var(--themeColor)]  border-y-3  py-2 px-1 rounded-2xl font-semibold whitespace-nowrap transition-all duration-300 ">
@@ -189,7 +189,7 @@ function NavBarSection() {
                 <NavLink
                   to="/specialist"
                   className="block py-2 pl-3 pr-4 nav-link rounded lg:bg-transparent lg:p-0">
-                  Specialist
+                  Specialities
                 </NavLink>
               </li>
               <li>

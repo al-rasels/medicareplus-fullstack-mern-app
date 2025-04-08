@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import UserAvatar from "./UserAvatar";
-import { TbUserEdit } from "react-icons/tb";
+import { FaFilePrescription } from "react-icons/fa6";
 import { IoPeople } from "react-icons/io5";
 import { TbUserHeart } from "react-icons/tb";
 import { IoIosLogOut } from "react-icons/io";
 import useUserAccessStore from "../../store/userAccessStore";
 import { SuccessAlert } from "../../utilities/utility";
 import { Link } from "react-router-dom";
-
+import useWishStore from "../../store/useWishlistStore";
+import { MdSupportAgent } from "react-icons/md";
 function UserMenu() {
+  const { UserDetails, UserDetailsRequest } = useUserAccessStore();
   const { UserLogoutRequest, UserProfile } = useUserAccessStore();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = React.useRef();
+  const { WishSaveRequest, WishList } = useWishStore();
   const onLogout = async () => {
     localStorage.clear();
     const res = await UserLogoutRequest();
@@ -27,23 +30,34 @@ function UserMenu() {
         setIsOpen(false);
       }
     };
+
     // Listen for both mouse and touch events for click outside to close model
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
     document.addEventListener("touchstart", handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
     };
   }, []);
 
+  useEffect(() => {
+    if (WishList?.length > 0) {
+      WishSaveRequest(WishList);
+    }
+  }, [WishList]);
   return (
     <div>
       {/* component */}
       <div className="flex justify-center hover:cursor-pointer">
         <div className="relative inline-block">
           {/* Dropdown toggle button */}
-          <button onClick={() => setIsOpen(!isOpen)}>
+          <button
+            ref={menuRef} // Prevent event propagation [useRef || event.stopPropagation() one needed here i kept it for reference]
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent event propagation [useRef || event.stopPropagation() one needed here i kept it for reference]
+              setIsOpen(!isOpen);
+            }}>
             <UserAvatar img={UserProfile?.img} />
           </button>
           {/* Dropdown menu */}
@@ -69,19 +83,27 @@ function UserMenu() {
             </Link>
             <hr className="border-gray-200" />
             <Link
-              to="/edit-profile"
+              to="/prescription"
               className="flex items-center gap-3 jsu px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform  hover:bg-gray-100 ">
-              <TbUserEdit size={16} /> <span>edit profile</span>
+              <FaFilePrescription size={16} /> <span>Prescriptions</span>
             </Link>
             <Link
               to="/appointment"
               className="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform  hover:bg-gray-100 ">
-              <IoPeople size={16} /> <span>Appointment</span>
+              <IoPeople size={16} /> <span>My Appointments</span>
             </Link>
             <Link
               to={"/wishlist"}
               className="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform  hover:bg-gray-100 ">
               <TbUserHeart size={16} /> <span> Wishlist</span>
+              {/* <span className="bg-[var(--themeColor2)]/80 hover:bg-[var(--themeColor)]  text-white text-xs font-bold px-3 py-1 rounded-lg">
+                {WishList?.length}
+              </span> */}
+            </Link>
+            <Link
+              to={"/help-support"}
+              className="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform  hover:bg-gray-100 ">
+              <MdSupportAgent size={16} /> <span> Help & Support</span>
             </Link>
 
             <hr className="border-gray-200" />

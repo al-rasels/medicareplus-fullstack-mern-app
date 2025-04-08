@@ -9,6 +9,8 @@ const express = require("express");
 const router = express.Router();
 // User Routes
 router.post("/register-user", UserController.UserRegisterOTP);
+router.post("/update-user", Authenticator, UserController.UpdateUser);
+router.get("/user-details", Authenticator, UserController.UserDetails);
 router.post("/verify-user", UserController.VerifyRegistration);
 router.post("/login-user", UserController.UserLogin);
 router.get("/logout-user", UserController.UserLogout);

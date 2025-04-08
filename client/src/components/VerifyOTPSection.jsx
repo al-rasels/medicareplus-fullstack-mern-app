@@ -24,6 +24,9 @@ function VerifyOTPSection() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+       if (formData.password.length < 8) {
+         toast.error("Password must be at least 8 characters long");
+       }
     if (
       ValidationHelper.IsEmpty(formData.password) &&
       ValidationHelper.IsEmpty(formData.confirmPassword)

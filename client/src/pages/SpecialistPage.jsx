@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import Layout from "../laylout/Layout";
 import SpecialitySection from "../components/SpecialitySection";
 import useDoctorsStore from "../store/useDoctorStore";
-import { Helmet } from "react-helmet";
+import PageTitle from "../components/utilityComponents/PageTitle";
 
 function SpecialistPage() {
+  PageTitle("Specialist");
   const { SpecialityList, SpecialityListRequest } = useDoctorsStore();
 
   useEffect(() => {

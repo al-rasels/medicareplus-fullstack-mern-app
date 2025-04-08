@@ -1,8 +1,10 @@
 import ErrorSection from "../components/ErrorSection.jsx"
-import Layout from "../laylout/Layout"
+import PageTitle from "../components/utilityComponents/PageTitle.jsx";
+import Layout from "../laylout/Layout";
 import PatternBackground from "../laylout/PatternBackground.jsx";
 
 function EmptyPage() {
+  PageTitle("Empty Page");
   return (
     <Layout>
       <PatternBackground />

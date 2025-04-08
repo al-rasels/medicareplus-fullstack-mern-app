@@ -44,6 +44,29 @@ const UserRegisterOTPService = async (req) => {
   }
 };
 
+const UserDetailsService = async (req) => {
+  try {
+    const user_id = req.headers.user_id;
+    const data = await UserModel.findOne({ _id: user_id }).select({
+      _id: 1,
+      name: 1,
+      email: 1,
+      phone: 1,
+      address: 1,
+      img: 1,
+      password: 1,
+    });
+    return {
+      status: "success",
+      data: data,
+    };
+  } catch (err) {
+    return {
+      status: "error",
+      message: err.message,
+    };
+  }
+};
 /// VERIFY OTP AND REGISTER USER SET PASSWORD
 const UserRegisterVerifyService = async (req) => {
   try {
@@ -76,6 +99,36 @@ const UserRegisterVerifyService = async (req) => {
     };
   }
 };
+const UpdateUserService = async (req) => {
+  try {
+    const postBody = req.body;
+    const user_id = req.headers.user_id || req.body._id;
+
+    const data = await UserModel.updateOne(
+      { _id: user_id },
+      { $set: postBody },
+      { upsert: true }
+    );
+
+    if (!data) {
+      return {
+        status: "error",
+        message: "User not found",
+      };
+    }
+
+    return {
+      status: "success",
+      message: "User Updated successfully",
+    };
+  } catch (err) {
+    return {
+      status: "error",
+      message: "An error has occurred, failed update user",
+      error: err.message,
+    };
+  }
+};
 
 /// LOGIN USER AND GENERATE TOKEN
 const UserLoginService = async (req) => {
@@ -90,8 +143,6 @@ const UserLoginService = async (req) => {
       _id: 1,
       email: 1,
       name: 1,
-      phone: 1,
-      address: 1,
       img: 1,
     });
 
@@ -119,47 +170,10 @@ const UserLoginService = async (req) => {
   }
 };
 
-// const VerifyService = async (req) => {
-//   try {
-//     const email = req.params.email;
-//     const otp = req.params.otp;
-//     if (otp === 0)
-//       return { status: "error", message: "Invalid verification code" };
-//     // user count
-//     const total = await UserModel.find({
-//       email: email,
-//       otp: otp,
-//     }).countDocuments();
-//     if (total === 1) {
-//       // User id read
-//       const user_id = await UserModel.find({ email: email, otp: otp }).select(
-//         "_id"
-//       );
-//       // Token generated
-//       const token = EncodeToken(email, user_id[0]["_id"].toString());
-//       // update otp
-//       await UserModel.updateOne(
-//         { email: email },
-//         { $set: { otp: "0" } },
-//         { upsert: true }
-//       );
-//       return {
-//         status: "success",
-//         message: "User has been successfully verified",
-//         token: token,
-//       };
-//     } else {
-//       return { status: "error", message: "User verification error verified" };
-//     }
-//   } catch (err) {
-//     return {
-//       status: "error",
-//       message: "Invalid verification code or Email Address",
-//     };
-//   }
-// };
 module.exports = {
   UserRegisterOTPService,
   UserRegisterVerifyService,
   UserLoginService,
+  UpdateUserService,
+  UserDetailsService,
 };

@@ -4,8 +4,11 @@ import FilterDoctors from "../components/FilterDoctors";
 import DoctorsSection from "../components/DoctorsSection";
 import useDoctorsStore from "../store/useDoctorStore";
 import { Helmet } from "react-helmet";
+import PageTitle from "../components/utilityComponents/PageTitle";
 
 function DoctorPage() {
+  PageTitle("Doctors");
+
   const {
     CityList,
     DoctorsByFilterList,
