@@ -78,7 +78,11 @@ function UserMenu() {
                 <h1 className="text-sm font-semibold text-gray-600">
                   {UserProfile?.name}
                 </h1>
-                <p className="text-sm text-gray-500 ">{UserProfile?.email}</p>
+                <p className="text-sm text-gray-500 ">
+                  {UserProfile?.email?.length >= 20
+                    ? UserProfile?.email?.slice(0, 20) + "..."
+                    : UserProfile?.email}
+                </p>
               </div>
             </Link>
             <hr className="border-gray-200" />

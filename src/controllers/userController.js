@@ -29,7 +29,8 @@ exports.UserLogin = async (req, res) => {
   if (result.status === "success") {
     // Cookie settings
     const cookieOption = {
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      // expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      expires: 0,
       httpOnly: false,
     };
     // Set Cookie to the Browser
