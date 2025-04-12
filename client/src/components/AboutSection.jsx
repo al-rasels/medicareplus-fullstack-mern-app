@@ -9,7 +9,7 @@ function AboutSection() {
       {/* Container */}
       <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-20">
         {/* Title */}
-        <h2 className="mb-4 text-[var(--themeColor2)] text-xl font-bold md:text-5xl md:mb-6">
+        <h2 className="mb-4 text-[var(--themeColor2)] text-xl font-bold md:text-5xl md:mb-6 ">
           Meet MediCare+
         </h2>
         <p className="mb-8 max-w-lg text-sm text-justify text-gray-500 sm:text-base md:mb-16">

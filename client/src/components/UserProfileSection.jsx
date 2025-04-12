@@ -3,6 +3,7 @@ import { FaEdit } from "react-icons/fa";
 import useUserAccessStore from "../store/userAccessStore";
 import { SuccessAlert } from "./../utilities/utility";
 import toast from "react-hot-toast";
+import TextLoading from "./microComponents/TextLoading";
 
 function UserProfileSection() {
   const { UserDetails, UpdateUserRequest, UserDetailsRequest } =
@@ -65,7 +66,7 @@ function UserProfileSection() {
         ) : profile ? (
           profile[fieldKey]
         ) : (
-          <p className="text-center text-gray-500">Loading ...</p>
+          <TextLoading />
         )}
       </div>
       <button

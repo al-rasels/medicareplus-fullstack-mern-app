@@ -2,33 +2,36 @@ import React from "react";
 
 function BookingCard() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-10">
-      <div className="bg-white shadow-md rounded-lg p-10 lg:w-[1024px]">
-        <p className="text-lg font-bold mb-10">Payment method</p>
-        <div className="bg-gray-100 rounded-lg p-10 flex justify-between md:items-center flex-col md:flex-row gap-6">
+    <div className="flex items-center justify-center py-5">
+      <div className="bg-white shadow-md rounded-xl p-10 lg:w-[1024px]">
+        <p className="text-lg font-bold text-[var(--themeColor2)]  mb-10">
+          Appointment IDX04541545
+        </p>
+        <div className="bg-[var(--themeColor2)]/5 rounded-lg p-10 flex justify-between md:items-center flex-col md:flex-row gap-6">
           <div className="flex md:items-center flex-col md:flex-row gap-6">
-            <svg
-              className="mr-6"
-              width="60"
-              height="40"
-              viewBox="0 0 60 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M56 40H4C1.79167 40 0 38.2083 0 36V4C0 1.79167 1.79167 0 4 0H56C58.2083 0 60 1.79167 60 4V36C60 38.2083 58.2083 40 56 40ZM29.7333 24.6033L29.135 28.3533C30.4517 28.9167 31.9833 29.245 33.5917 29.245C33.72 29.245 33.8467 29.2433 33.9733 29.2383H33.955C34.1017 29.2467 34.2717 29.2517 34.445 29.2517C36.2933 29.2517 38.0067 28.6717 39.4133 27.6833L39.385 27.7017C40.6617 26.755 41.4817 25.2533 41.4817 23.56C41.4817 23.5517 41.4817 23.5433 41.4817 23.535C41.4817 21.7017 40.255 20.18 37.8367 19.0033C37.1267 18.6567 36.52 18.2933 35.95 17.8833L35.9883 17.91C35.6583 17.6933 35.4383 17.335 35.4167 16.9233V16.92C35.4433 16.4867 35.6917 16.1167 36.0483 15.92L36.055 15.9167C36.525 15.6433 37.0883 15.4817 37.6917 15.4817C37.7617 15.4817 37.8317 15.4833 37.9017 15.4883H37.8917H38.025C38.0633 15.4883 38.1083 15.4867 38.1533 15.4867C39.2267 15.4867 40.245 15.7183 41.1633 16.1333L41.1167 16.115L41.5067 16.3233L42.105 12.705C40.98 12.26 39.675 12.0017 38.31 12.0017C38.2833 12.0017 38.255 12.0017 38.2283 12.0017H38.2333C38.1267 11.9967 38.0017 11.9933 37.8767 11.9933C36.05 11.9933 34.3567 12.5717 32.9717 13.555L32.9983 13.5367C31.745 14.43 30.9367 15.8767 30.9367 17.5133V17.5217C30.92 19.285 32.19 20.8083 34.7133 22.055C35.38 22.3467 35.955 22.7033 36.47 23.1317L36.4583 23.1217C36.75 23.3683 36.9383 23.73 36.9533 24.135V24.1383V24.1417C36.9533 24.6733 36.6367 25.13 36.18 25.335L36.1717 25.3383C35.6717 25.6017 35.0783 25.755 34.4483 25.755C34.4233 25.755 34.3967 25.755 34.3717 25.755H34.375C34.3383 25.755 34.2933 25.755 34.25 25.755C32.8217 25.755 31.4683 25.4383 30.255 24.8717L30.3133 24.8967L29.7417 24.61L29.7333 24.6033ZM46.6083 26.505H52.1333C52.2222 26.8861 52.3961 27.7194 52.655 29.005H56.6667L53.1767 12.2867H49.8433C49.785 12.2817 49.7167 12.2783 49.6467 12.2783C48.71 12.2783 47.9083 12.8583 47.5817 13.6783L47.5767 13.6933L41.1767 29.005H45.71L46.62 26.5067L46.6083 26.505ZM24.8183 12.2867L22.1083 29.005H26.4317L29.14 12.2867H24.8183ZM8.20333 15.6983L11.72 28.9783H16.2767L23.0683 12.2867H18.4917L14.2683 23.6933L13.825 21.375L12.3183 13.6933C12.1667 12.8783 11.4617 12.2683 10.6133 12.2683C10.5267 12.2683 10.44 12.275 10.3567 12.2867L10.3667 12.285H3.38833L3.33667 12.6233C8.71 13.9883 12.24 16.9333 13.83 21.3733C13.315 20.0533 12.5633 18.9283 11.62 18L11.6183 17.9983C10.6733 17.0283 9.53833 16.25 8.27333 15.7183L8.20667 15.6933L8.20333 15.6983ZM51.4317 23.0667H47.8317C48.075 22.4244 48.6483 20.8689 49.5517 18.4L49.6283 18.165C49.6983 17.9917 49.785 17.765 49.895 17.4883C50.005 17.2117 50.0783 16.985 50.1283 16.8117L50.4417 18.2433L51.43 23.06L51.4317 23.0667Z"
-                fill="black"
-              />
-            </svg>
+            <img
+              className="w-24 h-24 object-cover rounded-full"
+              src="https://placehold.co/150"
+              alt="Avatar"
+            />
 
             <div>
-              <p className=" font-semibold mb-2">Ending with 4242</p>
-              <p className="text-gray-500">
-                Expires 12/20 • Last updated on 22 Aug 2017
+              <p className=" font-semibold text-md text-gray-600 mb-2">
+                Appointment with Dr. Smith
+              </p>
+              <p className="text-gray-500 inline-flex gap-2">
+                <span className="font-semibold">Date:</span> 2023-08-15.
+                <span className="font-semibold">time:</span> 10:00 AM
               </p>
             </div>
+            <div className="pl-8">
+              <span class="inline-flex items-center rounded-md  mx-auto bg-green-50 px-3 py-2 text-xs font-medium  text-green-700 ring-1 ring-green-600/20 ring-inset">
+                Completed
+              </span>
+            </div>
           </div>
-          <button className="bg-white font-semibold border border-gray-400 py-2 px-4 rounded hover:bg-gray-100">
-            Edit
+          <button className="bg-white hover:text-[var(--themeColor2)] text-gray-600 outline-none font-semibold border hover:border-[var(--themeColor2)] border-gray-200 py-2 px-4 rounded hover:bg-white transition-colors duration-300">
+            <p className="">Edit</p>
           </button>
         </div>
       </div>

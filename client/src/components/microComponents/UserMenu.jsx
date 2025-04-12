@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import useWishStore from "../../store/useWishlistStore";
 import { MdSupportAgent } from "react-icons/md";
 function UserMenu() {
-  const { UserDetails, UserDetailsRequest } = useUserAccessStore();
   const { UserLogoutRequest, UserProfile } = useUserAccessStore();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = React.useRef();

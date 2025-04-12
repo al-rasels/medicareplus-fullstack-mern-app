@@ -4,6 +4,7 @@ import heroP from "../assets/images/hero-p.webp";
 import useDoctorsStore from "../store/useDoctorStore";
 import { Link } from "react-router-dom";
 
+
 function HeroSection() {
   const { SetSearchKeyword, SearchKeyword } = useDoctorsStore();
   return (
@@ -17,11 +18,11 @@ function HeroSection() {
         muted
         className="absolute top-0 left-0 w-full h-full object-cover contrast-75"></video>
       {/* Content Wrapper */}
-      <div className="relative z-10 flex flex-col items-center max-w-screen-xl px-4 mx-auto md:flex-row sm:px-6 p-8 text-white">
+      <div className="relative z-10 flex flex-col items-center max-w-screen-xl px-4 mx-auto md:flex-row sm:px-6 p-8 text-white ">
         {/* Left Section */}
         <div className="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pr-10 rounded-2xl bg-[var(--themeColor)]/10 border-x-10 border-y-1 px-10 ">
           <div className="text-left">
-            <h2 className="text-4xl font-extrabold leading-10 tracking-tight sm:text-5xl sm:leading-none md:text-6xl">
+            <h2 className="text-4xl font-extrabold leading-10 tracking-tight sm:text-5xl sm:leading-none md:text-6xl ">
               Search for your favorite
               <span className="font-bold text-[var(--themeColor2)] hover:text-[var(--themeColor)]  transition-colors duration-500">
                 {" "}

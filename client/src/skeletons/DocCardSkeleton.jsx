@@ -1,7 +1,7 @@
 function DocCardSkeleton() {
   return (
     <div>
-      <div className="animate-pulse">
+      <div className="animate-pulse ">
         <div className="flex flex-col items-center justify-center bg-gray-50  rounded-2xl min-h-[120px]">
           <div className="bg-white shadow-md overflow-hidden max-w-sm w-full border-gray-200 border-x-4 rounded-2xl">
             <div className="relative">

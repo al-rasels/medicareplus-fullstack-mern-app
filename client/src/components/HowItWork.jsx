@@ -65,7 +65,7 @@ function HowItWork() {
                 <p className="text-sm font-bold sm:text-base">3</p>
               </div>
               <div className="ml-4 flex flex-col gap-2">
-                <h5 className="text-xl font-bold">
+                <h5 className="text-xl font-bold ">
                   Select an Appointment Slot Fill the Details
                 </h5>
                 <p className="text-sm text-gray-500">

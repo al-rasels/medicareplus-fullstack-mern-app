@@ -24,38 +24,33 @@ function VerifyOTPSection() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-       if (formData.password.length < 8) {
+      
+       if (
+         ValidationHelper.IsEmpty(formData.password) &&
+         ValidationHelper.IsEmpty(formData.confirmPassword)
+       ) {
+         toast.error("Enter a valid password !");
+       } else if (formData.password.length < 8) {
          toast.error("Password must be at least 8 characters long");
+       } else if (ValidationHelper.IsEmpty(formData.otp)) {
+         toast.error("Enter OTP sent to your email address");
+       } else if (formData.confirmPassword !== formData.password) {
+         toast("Both passwords must be same !");
        }
-    if (
-      ValidationHelper.IsEmpty(formData.password) &&
-      ValidationHelper.IsEmpty(formData.confirmPassword)
-    ) {
-      toast.error("Enter a valid password !");
-    }
+       OTPFormChange("password", formData.password);
+       OTPFormChange("otp", formData.otp);
 
-    if (ValidationHelper.IsEmpty(formData.otp)) {
-      toast.error("Enter OTP sent to your email address");
-    }
-    if (formData.confirmPassword !== formData.password) {
-      toast("Both passwords must be same !");
-    } else {
-      OTPFormChange("password", formData.password);
-      navigate("/login");
-      OTPFormChange("otp", formData.otp);
-      OTPFormChange("otp", "");
-      OTPFormChange("password", "");
-      setFormData({
-        password: "",
-        confirmPassword: "",
-        otp: "",
-      });
-
-      const res = await UserVerificationRequest(OTPFormData);
-      if (res) {
-        SuccessAlert("User Registered Successfully, Try Loggin in");
-      }
-    }
+       console.log(OTPFormData);
+       const res = await UserVerificationRequest(OTPFormData);
+       if (res) {
+         SuccessAlert("User Registered Successfully, Try Loggin in");
+         navigate("/access");
+         setFormData({
+           password: "",
+           confirmPassword: "",
+           otp: "",
+         });
+       }
   };
 
   return (

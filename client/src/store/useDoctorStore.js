@@ -146,6 +146,49 @@ const useDoctorsStore = create((set) => ({
       set({ DoctorsLoading: false });
     }
   },
+
+  //Doctors Appointment
+  DoctorsAppointment: {
+    userID: "",
+    DoctorID: "",
+    fullName: "",
+    email: "",
+    phone: "",
+    date: "",
+    time: "",
+    address: "",
+    city: "",
+    postalCode: "",
+    country: "",
+    reasonForAppointment: "",
+    paymentAmount: "",
+    paymentMethod: "",
+    paymentStatus: "",
+    paymentId: "",
+    paymentCurrency: "",
+    paymentError: "",
+  },
+  AppointmentChange(name, value) {
+    set((state) => ({
+      DoctorsAppointment: { ...state.DoctorsAppointment, [name]: value },
+    }));
+  },
+
+  IsDoctorsAppointmentsLoading: false,
+  SaveDoctorsAppointmentsRequest: async (postBody) => {
+    try {
+      set({ IsDoctorsAppointmentsLoading: true });
+      const res = await axios.get(`/api/v1/doctors-appointments/${postBody}`);
+
+      if (res.data["status"] === "success") {
+        set({ DoctorsAppointments: res.data["data"] });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      set({ IsDoctorsAppointmentsLoading: false });
+    }
+  },
 }));
 
 export default useDoctorsStore;

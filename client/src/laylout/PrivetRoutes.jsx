@@ -4,7 +4,7 @@ import useUserAccessStore from "../store/userAccessStore";
 
 function PrivetRoutes() {
   const { IsLogin } = useUserAccessStore();
-  return IsLogin() ? <Outlet /> : <Navigate to="/acess" />;
+  return IsLogin() ? <Outlet /> : <Navigate to="/access" />;
 }
 
 export default PrivetRoutes;
