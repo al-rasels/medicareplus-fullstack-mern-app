@@ -104,7 +104,11 @@ function DoctorDetail({ DoctorsDetail, openForm, setOpenForm }) {
               onClick={() => {
                 setOpenForm(!openForm);
               }}
-              className="py-3 px-4 my-8 text-lg bg-[var(--themeColor2)] inline-flex items-center gap-2 hover:bg-[var(--themeColor)] transition-colors duration-300 rounded-full text-white">
+              className={` ${
+                openForm
+                  ? "hidden"
+                  : "py-3 px-4 my-8 text-md bg-[var(--themeColor2)] inline-flex items-center gap-2 hover:bg-[var(--themeColor)] transition-colors duration-300 rounded-full text-white"
+              } `}>
               <FaUserDoctor /> Make Appointment
             </button>
           </div>
