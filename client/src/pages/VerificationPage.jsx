@@ -7,7 +7,6 @@ function VerificationPage() {
   PageTitle("Verification");
   return (
     <Layout>
-      ""
       <RegistrationVerifySection />
     </Layout>
   );

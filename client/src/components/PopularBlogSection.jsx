@@ -9,7 +9,7 @@ import { FaArrowRight } from "react-icons/fa";
 function PopularBlogSection({ BlogList, buttonVisible }) {
   const { BlogListLoading } = useBlogStore();
   return (
-    <section className="relative border-y  border-gray-200">
+    <section className="relative border-y py-10  border-gray-200">
       <PatternBackground />
       {/* Container */}
       <div className="mx-auto max-w-screen-xl px-5 py-8 md:px-10 md:py-12 lg:py-20 ">
@@ -23,7 +23,7 @@ function PopularBlogSection({ BlogList, buttonVisible }) {
         </p>
         {/* Content */}
 
-        <div className="mx-auto grid justify-items-center gap-5 sm:grid-cols-1 sm:gap-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:justify-items-stretch">
+        <div className="mx-auto grid justify-items-center mb-10 md:mb-16 gap-5 sm:grid-cols-1 sm:gap-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:justify-items-stretch">
           {BlogListLoading === false
             ? BlogList?.slice(0, 3)?.map((item, i) => (
                 <BlogCard item={item} key={i} />
@@ -33,7 +33,7 @@ function PopularBlogSection({ BlogList, buttonVisible }) {
               ))}
         </div>
         <div
-          className={`flex flex-col ${buttonVisible} justify-center items-center `}>
+          className={`flex flex-col ${buttonVisible}  justify-center items-center `}>
           <Link to="/newsfeed">
             <PrimaryButton>
               <div className="transition-all flex gap-2 hover:gap-5 items-center duration-300">

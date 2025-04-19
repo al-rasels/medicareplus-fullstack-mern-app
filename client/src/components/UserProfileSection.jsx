@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import { MdEditSquare } from "react-icons/md";
 import useUserAccessStore from "../store/userAccessStore";
 import { SuccessAlert } from "./../utilities/utility";
 import toast from "react-hot-toast";
+import TextLoading from "./microComponents/TextLoading";
+import { IoSave } from "react-icons/io5";
 
 function UserProfileSection() {
   const { UserDetails, UpdateUserRequest, UserDetailsRequest } =
@@ -65,21 +67,21 @@ function UserProfileSection() {
         ) : profile ? (
           profile[fieldKey]
         ) : (
-          <p className="text-center text-gray-500">Loading ...</p>
+          <TextLoading />
         )}
       </div>
       <button
-        className="bg-[var(--themeColor2)] hover:bg-[var(--themeColor)] transition-colors duration-300 text-white font-semibold  rounded-full shadow py-2 px-4 "
+        className="max-w-2/3 bg-gray-500/80 hover:bg-[var(--themeColor2)] justify-end inline-block transition-colors duration-300 text-white font-semibold  rounded-md shadow py-2 px-1.5 "
         onClick={() => toggleEdit(fieldKey)}>
         {editingField === fieldKey ? (
           <span
             onClick={() => handleUpdate(fieldKey)}
             className="inline-flex justify-center items-center gap-2">
-            <FaEdit /> Save
+            <IoSave /> Save
           </span>
         ) : (
           <span className="inline-flex  justify-center items-center gap-2">
-            <FaEdit /> Update
+            <MdEditSquare /> Edit
           </span>
         )}
       </button>
@@ -104,7 +106,7 @@ function UserProfileSection() {
           />
           <label
             htmlFor="dropzone-file"
-            className="bg-[var(--themeColor2)] text-white px-4 py-2 rounded hover:bg-[var(--themeColor)] transition-colors duration-300 cursor-pointer"
+            className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-[var(--themeColor2)] transition-colors duration-300 cursor-pointer"
             disabled={""}>
             Upload image
           </label>

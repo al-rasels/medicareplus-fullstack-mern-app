@@ -22,7 +22,7 @@ function DoctorsSection({ Doctors }) {
           for your needs.
         </p>
         {/* Content */}
-        {DoctorsLoading === true && Doctors === null ? (
+        {DoctorsLoading === true || Doctors === null ? (
           <div className="mx-auto grid justify-items-center gap-5 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-4 lg:justify-items-stretch">
             {Array.from({ length: 8 }).map((_, i) => (
               <DocCardSkeleton key={i} />
@@ -45,6 +45,7 @@ function DoctorsSection({ Doctors }) {
             buttonText={"Go to Doctors Page"}
           />
         )}
+
         {/* Pagination */}
         {/* <div className="w-100 mx-auto md:my-20 my-10">
           <Pagination />

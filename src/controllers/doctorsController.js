@@ -10,6 +10,7 @@ const {
   ListedByFilterService,
 } = require("../services/doctorsService");
 
+
 exports.DoctorsSpecialites = async (req, res) => {
   const result = await DoctorsSpecialitiesService();
   return res.status(200).json(result);

@@ -25,7 +25,7 @@ function DoctorPage() {
       CityList === null ? await CityListRequest() : null;
       Doctors === null ? await DoctorsRequest() : null;
     })();
-  }, []);
+  }, [SpecialityList, CityList, Doctors]);
 
   return (
     <Layout>

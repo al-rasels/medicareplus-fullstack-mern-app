@@ -300,7 +300,6 @@ const DoctorsDetailsService = async (req) => {
       $project: {
         city: { _id: 0 },
         speciality: { _id: 0 },
-        doctor: { _id: 0 },
       },
     };
 

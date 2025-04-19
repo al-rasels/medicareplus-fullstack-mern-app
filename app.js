@@ -9,7 +9,7 @@ const hpp = require("hpp");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-// const path = require("path");
+const path = require("path");
 const router = require("./src/routes/route");
 
 const app = new express();
@@ -56,11 +56,11 @@ app.set("etag", WEB_CACHE);
 app.use("/api/v1", router);
 
 // Scaffolding with client-side
-// app.use(express.static(path.join(__dirname, "/client/dist")));
+app.use(express.static(path.join(__dirname, "/client/dist")));
 
 // Add React Front End Routing
-// app.get("*", function (req, res) {
-//   res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
-// });
+app.get("*", function (req, res) {
+  res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+});
 
 module.exports = app;

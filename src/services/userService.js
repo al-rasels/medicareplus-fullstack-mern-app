@@ -55,6 +55,7 @@ const UserDetailsService = async (req) => {
       address: 1,
       img: 1,
       password: 1,
+      role: 1,
     });
     return {
       status: "success",
@@ -144,6 +145,7 @@ const UserLoginService = async (req) => {
       email: 1,
       name: 1,
       img: 1,
+      role: 1,
     });
 
     if (user_data === null) {

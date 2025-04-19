@@ -6,7 +6,6 @@ import { FaHeartCirclePlus } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import useWishStore from "../../store/useWishlistStore";
 import useUserAccessStore from "../../store/userAccessStore";
-import { SuccessAlert } from "../../utilities/utility";
 import toast from "react-hot-toast";
 function DoctorsCard({ item }) {
   const navigate = useNavigate();

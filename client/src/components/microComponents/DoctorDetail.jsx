@@ -6,8 +6,27 @@ import { TbCurrencyTaka } from "react-icons/tb";
 
 import { LiaClinicMedicalSolid } from "react-icons/lia";
 import { FaHeartCirclePlus } from "react-icons/fa6";
+import { FaUserDoctor } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import useWishStore from "../../store/useWishlistStore";
+import useUserAccessStore from "../../store/userAccessStore";
+import toast from "react-hot-toast";
+function DoctorDetail({ DoctorsDetail, openForm, setOpenForm }) {
+  const navigate = useNavigate();
+  
+  const { WishSaveRequest } = useWishStore();
+  const { IsLogin } = useUserAccessStore();
+  const handleWishList = async (id) => {
+    if (!IsLogin()) {
+      navigate("/access");
+    } else {
+      const res = await WishSaveRequest(id);
+      if (res) {
+        toast.success("Added to wishlist");
+      }
+    }
+  };
 
-function DoctorDetail({ DoctorsDetail }) {
   return (
     <section className=" py-10 px-5">
       {/* Doctor Profile Section */}
@@ -29,7 +48,9 @@ function DoctorDetail({ DoctorsDetail }) {
             </p>
           </div>
           <button
-            onClick={() => console.log("clicked")}
+            onClick={() => {
+              handleWishList(DoctorsDetail?.doctor?._id);
+            }}
             className="absolute top-4 text-[var(--themeColor)] right-8 bg-white p-2 text-lg rounded-full shadow-md hover:bg-gray-100 hover:text-red-500 transition-colors duration-200">
             <FaHeartCirclePlus size={25} />
           </button>
@@ -42,7 +63,7 @@ function DoctorDetail({ DoctorsDetail }) {
               <h2 className="text-3xl font-bold text-gray-700 mb-2 ">
                 {DoctorsDetail?.doctor?.name}
               </h2>
-              <p className="text-gray-600 text-md =">
+              <p className="text-gray-600 text-md ">
                 {DoctorsDetail?.speciality?.["name"]}
               </p>
             </div>
@@ -80,6 +101,17 @@ function DoctorDetail({ DoctorsDetail }) {
                 <span> {DoctorsDetail?.doctor?.location}</span>
               </p>
             </div>
+            <button
+              onClick={() => {
+                setOpenForm(!openForm);
+              }}
+              className={` ${
+                openForm
+                  ? "hidden"
+                  : "py-3 px-4 my-8 text-md bg-[var(--themeColor2)] inline-flex items-center gap-2 hover:bg-[var(--themeColor)] transition-colors duration-300 rounded-full text-white"
+              } `}>
+              <FaUserDoctor /> Make Appointment
+            </button>
           </div>
         </div>
       </div>
