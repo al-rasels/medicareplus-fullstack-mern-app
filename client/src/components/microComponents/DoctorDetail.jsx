@@ -13,6 +13,7 @@ import useUserAccessStore from "../../store/userAccessStore";
 import toast from "react-hot-toast";
 function DoctorDetail({ DoctorsDetail, openForm, setOpenForm }) {
   const navigate = useNavigate();
+  
   const { WishSaveRequest } = useWishStore();
   const { IsLogin } = useUserAccessStore();
   const handleWishList = async (id) => {

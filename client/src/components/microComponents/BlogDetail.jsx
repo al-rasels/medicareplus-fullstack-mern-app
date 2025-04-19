@@ -27,7 +27,7 @@ const BlogDetails = ({ BlogDetail, BlogList }) => {
           <div
             className={`w-full md:w-8/12 mb-8 px-5 py-8 ${
               relatedBlogs?.length === 0 && "mx-auto"
-            }  md:px-8 backdrop-blur bg-white/50 rounded-2xl  shadow-sm`}>
+            }  md:px-8 backdrop-blur bg-white/50 rounded-2xl `}>
             <img
               src={BlogDetail?.img}
               alt="BlogDetail? Featured"

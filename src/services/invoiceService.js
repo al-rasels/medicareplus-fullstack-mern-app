@@ -1,241 +1,218 @@
-// const mongoose = require("mongoose");
-// const FormData = require("form-data");
-// const axios = require("axios");
+const mongoose = require("mongoose");
 
-// const CartModel = require("../models/CartModel");
-// const ProfileModel = require("../models/ProfileModel");
+const AppointmentModel = require("../models/appointmentModel");
+const SSLCommerzPayment = require("sslcommerz-lts");
+const InvoiceModel = require("../models/invoiceModel");
+const PaymentSettingModel = require("../models/PaymentSettingModel");
+const { v4: uuidv4 } = require("uuid");
+const ObjectID = mongoose.Types.ObjectId;
 
-// const InvoiceProductModel = require("../models/InvoiceProductModel");
-// const PaymentSettingModel = require("../models/PaymentSettingModel");
+const CreateInvoiceService = async (req, res) => {
+  try {
+    const doctorID = req.params.doctorID;
+    const userID = req.headers.user_id;
+    const {
+      store_id,
+      store_passwd,
+      currency,
+      success_url,
+      fail_url,
+      cancel_url,
+      ipn_url,
+      init_url,
+      islive,
+    } = await PaymentSettingModel.findOne();
+    const {
+      area,
+      city,
+      country,
+      postalCode,
+      date,
+      email,
+      fullName,
+      paymentAmount,
+      paymentCurrency,
+      paymentError,
+      paymentId,
+      paymentMethod,
+      paymentStatus,
+      phone,
 
-// const ObjectID = mongoose.Types.ObjectId;
+      status,
+    } = await AppointmentModel.findOne({
+      userID: userID,
+      doctorID: doctorID,
+    });
+    const tran_id = `TXN-${uuidv4().toUpperCase().slice(0, 12)}`;
+    const sslData = {
+      total_amount: paymentAmount,
+      currency: paymentCurrency || currency,
+      tran_id: tran_id, // use unique tran_id for each api call
+      success_url: success_url,
+      fail_url: fail_url,
+      cancel_url: cancel_url,
+      ipn_url: ipn_url,
+      shipping_method: "None",
+      product_name: "Consultation",
+      product_category: "Healthcare Sevice",
+      product_profile: "general",
 
-// const CreateInvoiceService = async (req) => {
-//   try {
-//     const user_id = new ObjectID(req.headers.user_id);
-//     const cus_email = req.headers.email;
-//     // Step-1: Calculate Total Payable & Vat
-//     const matchStage = { $match: { userID: user_id } };
-//     const JoinProductStage = {
-//       $lookup: {
-//         from: "products",
-//         localField: "productID",
-//         foreignField: "_id",
-//         as: "product",
-//       },
-//     };
-//     const UnwindProductStage = { $unwind: "$product" };
-//     // Finding Product from user Cart
-//     const CartProducts = await CartModel.aggregate([
-//       matchStage,
-//       JoinProductStage,
-//       UnwindProductStage,
-//     ]);
+      cus_name: fullName,
+      cus_email: email,
+      cus_add1: area,
+      cus_add2: area,
+      cus_city: city,
+      cus_state: city,
+      cus_postcode: postalCode,
+      cus_country: country,
+      cus_phone: phone,
+      cus_fax: phone,
+      ship_name: fullName,
+      ship_add1: area,
+      ship_add2: area,
+      ship_city: city,
+      ship_state: city,
+      ship_postcode: postalCode,
+      ship_country: country,
+    };
 
-//     let totalAmount = 0;
-//     CartProducts.forEach((element) => {
-//       let price;
-//       if (element.product.discount) {
-//         price = parseFloat(element.product.discountPrice);
-//       } else {
-//         price = parseFloat(element.product.price);
-//       }
+    const sslPaymentData = {
+      userID: userID, // Example ObjectId string
+      doctorID: doctorID, // Example ObjectId string
+      cus_details: `Name: ${fullName} \nEmail: ${email} \nPhone: ${phone} \nArea: ${area} \nCity: ${city} \nPostalCode: ${postalCode} \nCountry: ${country}`, // Example stringfullName,
 
-//       totalAmount = element.qty * price;
-//     });
+      ship_details: `Area: ${area} \nCity: ${city} \nPostalCode: ${postalCode} \nCountry: ${country}`,
+      tran_id: tran_id,
+      date: date,
+      payment_status: "pending",
+      total: paymentAmount,
+    };
+    await InvoiceModel.updateOne(
+      {
+        userID: userID,
+        doctorID: doctorID,
+      },
+      { $set: sslPaymentData },
 
-//     const vat = totalAmount * 0.05; // 5% VAT
-//     const payable = totalAmount + vat;
+      {
+        upsert: true,
+      }
+    );
+    const sslcz = new SSLCommerzPayment(store_id, store_passwd, false);
 
-//     // Step-2: Prepare Customer Details & Shipping Details
-//     const Profile = await ProfileModel.aggregate([matchStage]);
-//     const cus_details = `Name:${Profile[0]["cus_name"]},Email:${cus_email},Address:${Profile[0]["cus_add"]},Phone:${Profile[0]["cus_phone"]}`;
-//     const ship_details = `Name:${Profile[0]["ship_name"]},City:${Profile[0]["ship_city"]},Address:${Profile[0]["ship_add"]},Phone:${Profile[0]["ship_phone"]}`;
+    const apiResponse = await sslcz.init(sslData);
+    const GatewayPageURL = apiResponse.GatewayPageURL;
 
-//     // Step-3: Transaction & Other's ID
-//     let trans_id = Math.floor(10000000 + Math.random() * 90000000);
-//     let val_id = 0;
-//     let delivery_status = "pending";
-//     let payment_status = "pending";
+    if (GatewayPageURL) {
+      return res.status(200).json({
+        status: "success",
+        url: GatewayPageURL,
+      });
+    } else {
+      return res.status(500).json({
+        status: "fail",
+        message: "Payment URL not generated",
+      });
+    }
+  } catch (err) {
+    return { status: "fail", message: "Something Went Wrong" + err.message };
+  }
+};
 
-//     // Step-4: Create Invoice
-//     const CreateInvoice = await InvoiceModel.create({
-//       userID: user_id,
-//       payable: payable,
-//       cus_details: cus_details,
-//       ship_details: ship_details,
-//       trans_id: trans_id,
-//       val_id: val_id,
-//       delivery_status: delivery_status,
-//       payment_status: payment_status,
-//       total: totalAmount,
-//       vat: vat,
-//     });
+const PaymentCanceledService = async (req) => {
+  try {
+    const trxID = req.params.trxID;
+    await InvoiceModel.updateOne(
+      { tran_id: trxID },
+      { payment_status: "cancel" }
+    );
+    return { status: "success" };
+  } catch (err) {
+    return { status: "fail", message: "Something Went Wrong" + err.message };
+  }
+};
 
-//     // Step-5: Create Invoice Product
-//     const invoice_id = CreateInvoice["_id"];
+const PaymentIPNService = async (req) => {
+  try {
+    const trxID = req.params.trxID;
+    let status = req.body["status"];
+    await InvoiceModel.updateOne(
+      { tran_id: trxID },
+      { payment_status: status }
+    );
+    return { status: "success" };
+  } catch (err) {
+    return { status: "fail", message: "Something Went Wrong" + err.message };
+  }
+};
 
-//     CartProducts.forEach(async (element) => {
-//       await InvoiceProductModel.create({
-//         userID: user_id,
-//         productID: element.productID,
-//         invoiceID: invoice_id,
-//         qty: element.qty,
-//         price: element.product.discount
-//           ? parseFloat(element.product.discountPrice)
-//           : parseFloat(element.product.price),
-//         color: element.color,
-//         size: element.size,
-//       });
-//     });
-//     // Step-6: Remove Carts
-//     await CartModel.deleteMany({ userID: user_id });
+const PaymentSuccessService = async (req) => {
+  try {
+    const trxID = req.params.trxID;
+    await InvoiceModel.updateOne(
+      { tran_id: trxID },
+      { payment_status: "success" }
+    );
+    return { status: "success" };
+  } catch (err) {
+    return { status: "fail", message: "Something Went Wrong" + err.message };
+  }
+};
 
-//     // Step-7: Prepare SSL Payment
-//     let PaymentSettings = await PaymentSettingModel.find();
+const PaymentFailedService = async (req) => {
+  try {
+    const trxID = req.params.trxID;
+    await InvoiceModel.updateOne(
+      { tran_id: trxID },
+      { payment_status: "fail" }
+    );
+    return { status: "success" };
+  } catch (err) {
+    return { status: "fail", message: "Something Went Wrong" + err.message };
+  }
+};
+const InvoiceListService = async (req) => {
+  try {
+    const user_id = req.headers.user_id;
+    const invoice = await InvoiceModel.find({ userID: user_id });
+    return { status: "success", data: invoice };
+  } catch (err) {
+    return { status: "fail", message: "Something Went Wrong" + err.message };
+  }
+};
+const InvoiceProductListService = async (req) => {
+  try {
+    // const user_id = new ObjectID(req.headers.user_id);
+    const invoice_id = new ObjectID(req.params.invoice_id);
+    const matchStage = { $match: { invoiceID: invoice_id } };
+    // const matchStage = {$match: {userID: user_id, invoiceID: invoice_id}}
+    const JoinProductStage = {
+      $lookup: {
+        from: "products",
+        localField: "productID",
+        foreignField: "_id",
+        as: "product",
+      },
+    };
+    const UnwindProductStage = { $unwind: "$product" };
+    // Finding Product from user Cart
+    const products = await InvoiceProductModel.aggregate([
+      matchStage,
+      JoinProductStage,
+      UnwindProductStage,
+    ]);
+    return { status: "success", data: products };
+  } catch (err) {
+    return { status: "fail", message: "Something Went Wrong" + err.message };
+  }
+};
 
-//     const form = new FormData();
-//     form.append("store_id", PaymentSettings[0]["store_id"]);
-//     form.append("store_passwd", PaymentSettings[0]["store_passwd"]);
-//     form.append("total_amount", payable.toString());
-//     form.append("currency", PaymentSettings[0]["currency"]);
-//     form.append("tran_id", trans_id);
-
-//     // form.append('success_url', `${PaymentSettings[0]['success_url']}/${trans_id}`)
-//     form.append("success_url", `${PaymentSettings[0]["success_url"]}`);
-//     // form.append('fail_url', `${PaymentSettings[0]['fail_url']}/${trans_id}`)
-//     form.append("fail_url", `${PaymentSettings[0]["fail_url"]}`);
-//     // form.append('cancel_url', `${PaymentSettings[0]['cancel_url']}/${trans_id}`)
-//     form.append("cancel_url", `${PaymentSettings[0]["cancel_url"]}`);
-//     form.append("ipn_url", `${PaymentSettings[0]["ipn_url"]}/${trans_id}`);
-
-//     form.append("cus_name", Profile[0]["cus_name"]);
-//     form.append("cus_email", cus_email);
-//     form.append("cus_add1", Profile[0]["cus_add"]);
-//     form.append("cus_add2", Profile[0]["cus_add"]);
-//     form.append("cus_city", Profile[0]["cus_city"]);
-//     form.append("cus_state", Profile[0]["cus_state"]);
-//     form.append("cus_postcode", Profile[0]["cus_postcode"]);
-//     form.append("cus_country", Profile[0]["cus_country"]);
-//     form.append("cus_phone", Profile[0]["cus_phone"]);
-//     form.append("cus_fax", Profile[0]["cus_phone"]);
-
-//     form.append("shipping_method", "YES");
-//     form.append("ship_name", Profile[0]["ship_name"]);
-//     form.append("ship_add1", Profile[0]["ship_add"]);
-//     form.append("ship_add2", Profile[0]["ship_add"]);
-//     form.append("ship_city", Profile[0]["ship_city"]);
-//     form.append("ship_state", Profile[0]["ship_state"]);
-//     form.append("ship_country", Profile[0]["ship_country"]);
-//     form.append("ship_postcode", Profile[0]["ship_postcode"]);
-
-//     form.append("product_name", "According Invoice");
-//     form.append("product_category", "According Invoice");
-//     form.append("product_profile", "According Invoice");
-//     form.append("product_amount", "According Invoice");
-
-//     let SSLRes = await axios.post(PaymentSettings[0]["init_url"], form);
-
-//     return { status: "success", data: SSLRes.data };
-//   } catch (err) {
-//     return { status: "fail", message: "Something Went Wrong" + err.message };
-//   }
-// };
-
-// const PaymentCanceledService = async (req) => {
-//   try {
-//     const trxID = req.params.trxID;
-//     await InvoiceModel.updateOne(
-//       { tran_id: trxID },
-//       { payment_status: "cancel" }
-//     );
-//     return { status: "success" };
-//   } catch (err) {
-//     return { status: "fail", message: "Something Went Wrong" + err.message };
-//   }
-// };
-
-// const PaymentIPNService = async (req) => {
-//   try {
-//     const trxID = req.params.trxID;
-//     let status = req.body["status"];
-//     await InvoiceModel.updateOne(
-//       { tran_id: trxID },
-//       { payment_status: status }
-//     );
-//     return { status: "success" };
-//   } catch (err) {
-//     return { status: "fail", message: "Something Went Wrong" + err.message };
-//   }
-// };
-
-// const PaymentSuccessService = async (req) => {
-//   try {
-//     const trxID = req.params.trxID;
-//     await InvoiceModel.updateOne(
-//       { tran_id: trxID },
-//       { payment_status: "success" }
-//     );
-//     return { status: "success" };
-//   } catch (err) {
-//     return { status: "fail", message: "Something Went Wrong" + err.message };
-//   }
-// };
-
-// const PaymentFailedService = async (req) => {
-//   try {
-//     const trxID = req.params.trxID;
-//     await InvoiceModel.updateOne(
-//       { tran_id: trxID },
-//       { payment_status: "fail" }
-//     );
-//     return { status: "success" };
-//   } catch (err) {
-//     return { status: "fail", message: "Something Went Wrong" + err.message };
-//   }
-// };
-// const InvoiceListService = async (req) => {
-//   try {
-//     const user_id = req.headers.user_id;
-//     const invoice = await InvoiceModel.find({ userID: user_id });
-//     return { status: "success", data: invoice };
-//   } catch (err) {
-//     return { status: "fail", message: "Something Went Wrong" + err.message };
-//   }
-// };
-// const InvoiceProductListService = async (req) => {
-//   try {
-//     // const user_id = new ObjectID(req.headers.user_id);
-//     const invoice_id = new ObjectID(req.params.invoice_id);
-//     const matchStage = { $match: { invoiceID: invoice_id } };
-//     // const matchStage = {$match: {userID: user_id, invoiceID: invoice_id}}
-//     const JoinProductStage = {
-//       $lookup: {
-//         from: "products",
-//         localField: "productID",
-//         foreignField: "_id",
-//         as: "product",
-//       },
-//     };
-//     const UnwindProductStage = { $unwind: "$product" };
-//     // Finding Product from user Cart
-//     const products = await InvoiceProductModel.aggregate([
-//       matchStage,
-//       JoinProductStage,
-//       UnwindProductStage,
-//     ]);
-//     return { status: "success", data: products };
-//   } catch (err) {
-//     return { status: "fail", message: "Something Went Wrong" + err.message };
-//   }
-// };
-
-// module.exports = {
-//   CreateInvoiceService,
-//   PaymentFailedService,
-//   PaymentCanceledService,
-//   PaymentIPNService,
-//   PaymentSuccessService,
-//   InvoiceListService,
-//   InvoiceProductListService,
-// };
+module.exports = {
+  CreateInvoiceService,
+  PaymentFailedService,
+  PaymentCanceledService,
+  PaymentIPNService,
+  PaymentSuccessService,
+  InvoiceListService,
+  InvoiceProductListService,
+};

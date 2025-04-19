@@ -1,5 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
+
+
+import toast from "react-hot-toast";
 const useDoctorsStore = create((set) => ({
   // Filter Change
   FilterSelect: { specialityID: "", cityID: "", keyword: "" },
@@ -109,19 +112,18 @@ const useDoctorsStore = create((set) => ({
   },
   //DoctorsDetails
   DoctorsDetail: null,
+
   IsDoctorsDetailLoading: false,
   DoctorsDetailRequest: async (id) => {
     try {
       set({ IsDoctorsDetailsLoading: true });
       const res = await axios.get(`/api/v1/doctors-details/${id}`);
-
       if (res.data["status"] === "success") {
         set({ DoctorsDetail: res.data["data"][0] });
+        set({ IsDoctorsDetailLoading: false });
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      set({ IsDoctorsDetailLoading: false });
     }
   },
 
@@ -149,24 +151,17 @@ const useDoctorsStore = create((set) => ({
 
   //Doctors Appointment
   DoctorsAppointment: {
-    userID: "",
-    DoctorID: "",
+    doctorID: "",
     fullName: "",
-    email: "",
     phone: "",
+    email: "",
+    reason: "",
     date: "",
     time: "",
-    address: "",
+    area: "",
     city: "",
     postalCode: "",
     country: "",
-    reasonForAppointment: "",
-    paymentAmount: "",
-    paymentMethod: "",
-    paymentStatus: "",
-    paymentId: "",
-    paymentCurrency: "",
-    paymentError: "",
   },
   AppointmentChange(name, value) {
     set((state) => ({
@@ -178,15 +173,35 @@ const useDoctorsStore = create((set) => ({
   SaveDoctorsAppointmentsRequest: async (postBody) => {
     try {
       set({ IsDoctorsAppointmentsLoading: true });
-      const res = await axios.get(`/api/v1/doctors-appointments/${postBody}`);
+
+      const res = await axios.post(`/api/v1/create-appointment`, postBody);
 
       if (res.data["status"] === "success") {
-        set({ DoctorsAppointments: res.data["data"] });
+        return res.data["status"] === "success";
       }
     } catch (error) {
       console.error(error);
     } finally {
       set({ IsDoctorsAppointmentsLoading: false });
+    }
+  },
+  IsDoctorPaymentLoading: false,
+  DoctorPaymentRequest: async (id) => {
+    try {
+      set({ IsDoctorPaymentLoading: true });
+      console.log(id);
+      const res = await axios.get(`/api/v1/payment-appointment/${id}`);
+      console.log(res, "res");
+      if (res.data["status"] === "success") {
+        window.location.href = res.data["url"];
+        console.log(res.data["url"]);
+      } else {
+        toast.error(res.data["message"]);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      set({ IsDoctorPaymentLoading: false });
     }
   },
 }));

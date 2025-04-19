@@ -16,6 +16,9 @@ function HeroSection() {
         autoPlay
         loop
         muted
+        playsInline
+        preload="none"
+        loading="lazy"
         className="absolute top-0 left-0 w-full h-full object-cover contrast-75"></video>
       {/* Content Wrapper */}
       <div className="relative z-10 flex flex-col items-center max-w-screen-xl px-4 mx-auto md:flex-row sm:px-6 p-8 text-white ">

@@ -1,17 +1,79 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 import useDoctorsStore from "../../store/useDoctorStore";
-
+import toast from "react-hot-toast";
+import ValidationHelper from "../../utilities/ValidationHelper";
+import ButtonLoader from "./ButtonLoader";
+import { useParams } from "react-router-dom";
+import { SuccessAlert } from "../../utilities/utility";
 function BookingForm() {
+  const { id } = useParams();
   const {
     AppointmentChange,
     IsDoctorsAppointmentsLoading,
     SaveDoctorsAppointmentsRequest,
     DoctorsAppointment,
+    DoctorsDetailRequest,
+    DoctorPaymentRequest,
+    DoctorsDetail,
   } = useDoctorsStore();
-
+  useEffect(() => {
+    (async () => {
+      await DoctorsDetailRequest(id);
+    })();
+  }, []);
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    await SaveDoctorsAppointmentsRequest();
+
+    if (!ValidationHelper.IsLater(DoctorsAppointment.fullName)) {
+      toast.error("Valid Name Required");
+    } else if (!ValidationHelper.IsMobile(DoctorsAppointment.phone)) {
+      toast.error("Valid Phone Number Required");
+    } else if (!ValidationHelper.IsEmail(DoctorsAppointment.email)) {
+      toast.error("Valid Email Address Required");
+    } else if (ValidationHelper.IsEmpty(DoctorsAppointment.reason)) {
+      toast.error("Please fill all the fileds");
+    } else if (ValidationHelper.IsEmpty(DoctorsAppointment.date)) {
+      toast.error("Please fill all the fileds");
+    } else if (ValidationHelper.IsEmpty(DoctorsAppointment.time)) {
+      toast.error("Please fill all the fileds");
+    } else if (ValidationHelper.IsEmpty(DoctorsAppointment.city)) {
+      toast.error("Please fill all the fileds");
+    } else if (ValidationHelper.IsEmpty(DoctorsAppointment.country)) {
+      toast.error("Please fill all the fileds");
+    } else if (ValidationHelper.IsEmpty(DoctorsAppointment.area)) {
+      toast.error("Please fill all the fileds");
+    } else {
+      AppointmentChange("doctorID", DoctorsDetail?.doctor._id);
+      AppointmentChange("paymentAmount", DoctorsDetail?.consultingFee);
+
+      const res = await SaveDoctorsAppointmentsRequest(DoctorsAppointment);
+      if (res) {
+        SuccessAlert("Please make the payment to confirm your appointment");
+        await DoctorPaymentRequest(DoctorsDetail?.doctor._id);
+        AppointmentChange("fullName", "");
+        AppointmentChange("phone", "");
+        AppointmentChange("email", "");
+        AppointmentChange("reason", "");
+        AppointmentChange("date", "");
+        AppointmentChange("time", "");
+        AppointmentChange("area", "");
+        AppointmentChange("city", "");
+        AppointmentChange("postalCode", "");
+        AppointmentChange("country", "");
+      } else {
+        toast.error("Something went wrong try again");
+        AppointmentChange("fullName", "");
+        AppointmentChange("phone", "");
+        AppointmentChange("email", "");
+        AppointmentChange("reason", "");
+        AppointmentChange("date", "");
+        AppointmentChange("time", "");
+        AppointmentChange("area", "");
+        AppointmentChange("city", "");
+        AppointmentChange("postalCode", "");
+        AppointmentChange("country", "");
+      }
+    }
   };
 
   return (
@@ -27,7 +89,8 @@ function BookingForm() {
             </label>
             <input
               type="text"
-              onChange={(e) => AppointmentChange("name", e.target.value)}
+              value={DoctorsAppointment?.fullName}
+              onChange={(e) => AppointmentChange("fullName", e.target.value)}
               name="name"
               id="name"
               placeholder="Full Name"
@@ -42,6 +105,7 @@ function BookingForm() {
             </label>
             <input
               type="text"
+              value={DoctorsAppointment?.phone}
               name="phone"
               onChange={(e) => AppointmentChange("phone", e.target.value)}
               id="phone"
@@ -58,6 +122,7 @@ focus:scale-[102%] transition-transform duration-300"
             </label>
             <input
               type="email"
+              value={DoctorsAppointment?.email}
               name="email"
               onChange={(e) => AppointmentChange("email", e.target.value)}
               id="email"
@@ -67,7 +132,9 @@ focus:scale-[102%] transition-transform duration-300"
             />
           </div>
           <div className="mb-5 pt-3">
-            <label className="mb-5 block text-base font-medium text-gray-600 ">
+            <label
+              htmlFor="reason"
+              className="mb-5 block text-base font-medium text-gray-600 ">
               Reason for appointment
             </label>
             <div className="-mx-3 flex flex-wrap">
@@ -75,9 +142,12 @@ focus:scale-[102%] transition-transform duration-300"
                 <div className="mb-5">
                   <input
                     type="text"
-                    name="area"
-                    onChange={(e) => AppointmentChange("area", e.target.value)}
-                    id="area"
+                    value={DoctorsAppointment?.reason}
+                    name="reason"
+                    onChange={(e) =>
+                      AppointmentChange("reason", e.target.value)
+                    }
+                    id="reasonForAppointment"
                     placeholder="Information about patient condition"
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:shadow-md focus:border-[var(--themeColor2)]
 focus:scale-[102%] transition-transform duration-300"
@@ -97,11 +167,12 @@ focus:scale-[102%] transition-transform duration-300"
                 </label>
                 <input
                   type="date"
+                  value={DoctorsAppointment?.date}
                   name="date"
                   onChange={(e) => AppointmentChange("date", e.target.value)}
                   id="date"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:shadow-md focus:border-[var(--themeColor2)]
-focus:scale-[102%] transition-transform duration-300"
+                  className="w-full rounded-md bg-white py-3 px-6  text-base font-medium text-[#6B7280] outline-none focus:shadow-md focus:border-none
+focus:scale-[102%] transition-transform duration-300 "
                 />
               </div>
             </div>
@@ -114,10 +185,11 @@ focus:scale-[102%] transition-transform duration-300"
                 </label>
                 <input
                   type="time"
+                  value={DoctorsAppointment?.time}
                   onChange={(e) => AppointmentChange("time", e.target.value)}
                   name="time"
                   id="time"
-                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:shadow-md focus:border-[var(--themeColor2)]
+                  className="w-full rounded-md border border-none  bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:shadow-md 
 focus:scale-[102%] transition-transform duration-300"
                 />
               </div>
@@ -132,11 +204,12 @@ focus:scale-[102%] transition-transform duration-300"
                 <div className="mb-5">
                   <input
                     type="text"
+                    value={DoctorsAppointment?.area}
                     onChange={(e) => AppointmentChange("area", e.target.value)}
                     name="area"
                     id="area"
                     placeholder="Area"
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:shadow-md focus:border-[var(--themeColor2)]
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:shadow-md 
 focus:scale-[102%] transition-transform duration-300"
                   />
                 </div>
@@ -145,6 +218,7 @@ focus:scale-[102%] transition-transform duration-300"
                 <div className="mb-5">
                   <input
                     type="text"
+                    value={DoctorsAppointment?.city}
                     name="area"
                     onChange={(e) => AppointmentChange("city", e.target.value)}
                     id="area"
@@ -158,6 +232,7 @@ focus:scale-[102%] transition-transform duration-300"
                 <div className="mb-5">
                   <input
                     type="text"
+                    value={DoctorsAppointment?.postalCode}
                     name="area"
                     onChange={(e) =>
                       AppointmentChange("postalCode", e.target.value)
@@ -173,6 +248,7 @@ focus:scale-[102%] transition-transform duration-300"
                 <div className="mb-5">
                   <input
                     type="text"
+                    value={DoctorsAppointment?.country}
                     name="area"
                     onChange={(e) =>
                       AppointmentChange("country", e.target.value)
@@ -189,8 +265,13 @@ focus:scale-[102%] transition-transform duration-300"
           <div>
             <button
               onClick={(e) => handleFormSubmit(e)}
+              disabled={IsDoctorsAppointmentsLoading}
               className="hover:shadow-form w-full rounded-md bg-[var(--themeColor2)] hover:bg-[var(--themeColor)]  transition-transform duration-100 py-3 px-8 text-center text-base font-semibold text-white outline-none">
-              Request Appointment
+              {IsDoctorsAppointmentsLoading ? (
+                <ButtonLoader />
+              ) : (
+                "Request Appointment"
+              )}
             </button>
           </div>
         </form>

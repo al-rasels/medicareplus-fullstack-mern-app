@@ -53,15 +53,21 @@ router.post(
   Authenticator,
   AppointementController.SaveAppointment
 );
-router.post(
-  "/update-appointment/:appointmentID",
-  Authenticator,
-  AppointementController.UpdateAppointment
-);
+router.post("/success-appointment", AppointementController.UpdateAppointment);
 router.get(
   "/cancel-appointment/:appointmentID",
   Authenticator,
   AppointementController.RemoveAppointment
+);
+router.get(
+  "/payment-appointment/:doctorID",
+  Authenticator,
+  AppointementController.AppointmentPayment
+);
+router.get(
+  "/payment-failed/:tranID",
+  Authenticator,
+  AppointementController.AppointmentPayment
 );
 
 //Clinics
