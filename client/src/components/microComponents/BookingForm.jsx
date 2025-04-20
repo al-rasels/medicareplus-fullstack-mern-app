@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import useDoctorsStore from "../../store/useDoctorStore";
 import toast from "react-hot-toast";
 import ValidationHelper from "../../utilities/ValidationHelper";

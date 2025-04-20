@@ -137,53 +137,10 @@ const UpdateAppointmentService = async (req) => {
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Payment Receipt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediCare+ Payment Receipt</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-      background: #f9f9f9;
-    }
-    .receipt {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .receipt h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    .section {
-      margin-bottom: 15px;
-    }
-    .section-title {
-      font-weight: bold;
-      margin-bottom: 5px;
-      color: #555;
-    }
-    .section-content {
-      padding: 10px;
-      border: 1px solid #e0e0e0;
-      background-color: #fafafa;
-      border-radius: 5px;
-    }
-    .two-column {
-      display: flex;
-      justify-content: space-between;
-    }
-    .two-column div {
-      width: 48%;
-    }
-    .footer {
-      text-align: center;
-      font-size: 0.9em;
-      color: #888;
-      margin-top: 20px;
-    }
     @media print {
       #printBtn {
         display: none;
@@ -191,88 +148,92 @@ const UpdateAppointmentService = async (req) => {
     }
   </style>
 </head>
+<body class="bg-blue-50 font-sans p-6">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+    <h2 class="text-center text-2xl font-semibold text-blue-700 mb-6">MediCare+ Payment Receipt</h2>
 
-<body>
-  <div class="receipt">
-    <h2>Payment Receipt</h2>
-
-    <div class="section two-column">
+    <div class="grid grid-cols-2 gap-4 mb-4">
       <div>
-        <div class="section-title">Transaction ID:</div>
-        <div class="section-content">${reqBody.tran_id}</div>
+        <div class="text-gray-600 font-medium">Transaction ID</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.tran_id}</div>
       </div>
       <div>
-        <div class="section-title">Status:</div>
-        <div class="section-content">${reqBody.status}</div>
+        <div class="text-gray-600 font-medium">Status</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.status}</div>
       </div>
     </div>
 
-    <div class="section two-column">
+    <div class="grid grid-cols-2 gap-4 mb-4">
       <div>
-        <div class="section-title">Date:</div>
-        <div class="section-content">${reqBody.tran_date}</div>
+        <div class="text-gray-600 font-medium">Date</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.tran_date}</div>
       </div>
       <div>
-        <div class="section-title">Amount:</div>
-        <div class="section-content">৳${reqBody.amount}</div>
-      </div>
-    </div>
-
-    <div class="section two-column">
-      <div>
-        <div class="section-title">Store Amount:</div>
-        <div class="section-content">৳${reqBody.store_amount}</div>
-      </div>
-      <div>
-        <div class="section-title">Card Type:</div>
-        <div class="section-content">${reqBody.card_type}</div>
+        <div class="text-gray-600 font-medium">Amount</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">৳${reqBody.amount}</div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-title">Bank Transaction ID:</div>
-      <div class="section-content">${reqBody.bank_tran_id}</div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Card Issuer:</div>
-      <div class="section-content">${reqBody.card_issuer}</div>
-    </div>
-
-    <div class="section two-column">
+    <div class="grid grid-cols-2 gap-4 mb-4">
       <div>
-        <div class="section-title">Currency:</div>
-        <div class="section-content">${reqBody.currency}</div>
+        <div class="text-gray-600 font-medium">Store Amount</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">৳${reqBody.store_amount}</div>
       </div>
       <div>
-        <div class="section-title">Currency Rate:</div>
-        <div class="section-content">${reqBody.currency_rate}</div>
+        <div class="text-gray-600 font-medium">Card Type</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.card_type}</div>
       </div>
     </div>
 
-    <div class="section two-column">
+    <div class="mb-4">
+      <div class="text-gray-600 font-medium">Bank Transaction ID</div>
+      <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.bank_tran_id}</div>
+    </div>
+
+    <div class="mb-4">
+      <div class="text-gray-600 font-medium">Card Issuer</div>
+      <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.card_issuer}</div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mb-4">
       <div>
-        <div class="section-title">Issuer Country:</div>
-        <div class="section-content">${reqBody.card_issuer_country}</div>
+        <div class="text-gray-600 font-medium">Currency</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.currency}</div>
       </div>
       <div>
-        <div class="section-title">Risk Level:</div>
-        <div class="section-content">${reqBody.risk_title}</div>
+        <div class="text-gray-600 font-medium">Currency Rate</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.currency_rate}</div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-title">Store ID:</div>
-      <div class="section-content">${reqBody.store_id}</div>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div>
+        <div class="text-gray-600 font-medium">Issuer Country</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.card_issuer_country}</div>
+      </div>
+      <div>
+        <div class="text-gray-600 font-medium">Risk Level</div>
+        <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.risk_title}</div>
+      </div>
     </div>
-       <div class="footer">
-      Thank you for your payment!
+
+    <div class="mb-4">
+      <div class="text-gray-600 font-medium">Store ID</div>
+      <div class="bg-gray-100 rounded p-2 text-sm">${reqBody.store_id}</div>
+    </div>
+
+    <div class="text-center text-sm text-gray-500 mt-6">Thank you for your payment!</div>
+
+    <div class="mt-4 flex justify-between items-center">
+      <a href="#" target="_blank" download="book.pdf" class="text-blue-600 hover:underline text-sm">📥 Download Book</a>
+      <button id="printBtn" onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
+        🖨️ Print
+      </button>
     </div>
   </div>
-
-  
 </body>
 </html>
+
 `;
     await InvoiceModel.updateOne(
       {

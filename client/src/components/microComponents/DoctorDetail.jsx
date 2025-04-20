@@ -103,7 +103,10 @@ function DoctorDetail({ DoctorsDetail, openForm, setOpenForm }) {
             </div>
             <button
               onClick={() => {
-                setOpenForm(!openForm);
+               if (!IsLogin()) {
+                 navigate("/access");
+               }
+               setOpenForm(!openForm);
               }}
               className={` ${
                 openForm
