@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const AppointmentModel = require("../models/appointmentModel");
 const SSLCommerzPayment = require("sslcommerz-lts");
 const InvoiceModel = require("../models/invoiceModel");
-const PaymentSettingModel = require("../models/PaymentSettingModel");
+const PaymentSettingModel = require("../models/paymentSettingModel");
 const { v4: uuidv4 } = require("uuid");
 const ObjectID = mongoose.Types.ObjectId;
 
