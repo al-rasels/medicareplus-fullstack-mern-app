@@ -1,5 +1,5 @@
 # MediCare+ Project Documentation
-
+[[]](<img src="">)
 ## 1. Introduction
 
 MediCare+ is a healthcare application designed to connect patients with doctors, clinics, and emergency medical services. It provides users with easy access to medical assistance, including real-time doctor availability, clinic locations, and emergency response features.
