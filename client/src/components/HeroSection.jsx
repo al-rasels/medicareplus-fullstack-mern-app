@@ -1,5 +1,5 @@
 import React from "react";
-import bgVideo from "../assets/video/hero-bg.mp4";
+import bgVideo from "../assets/video/hero-bg.webm";
 import heroP from "../assets/images/hero-p.webp";
 import useDoctorsStore from "../store/useDoctorStore";
 import { Link } from "react-router-dom";

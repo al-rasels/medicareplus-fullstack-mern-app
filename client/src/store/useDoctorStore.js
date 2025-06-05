@@ -120,11 +120,14 @@ const useDoctorsStore = create((set) => ({
       const res = await axios.get(`/api/v1/doctors-details/${id}`);
       if (res.data["status"] === "success") {
         set({ DoctorsDetail: res.data["data"][0] });
-        set({ IsDoctorsDetailLoading: false });
+        return res.data["status"] === "success";
+       
       }
     } catch (error) {
       console.error(error);
-    }
+    }finally {
+      set({ IsDoctorsDetailsLoading: false });
+    } 
   },
 
   SearchKeyword: "",
@@ -175,7 +178,7 @@ const useDoctorsStore = create((set) => ({
       set({ IsDoctorsAppointmentsLoading: true });
 
       const res = await axios.post(`/api/v1/create-appointment`, postBody);
-
+console.log(res);
       if (res.data["status"] === "success") {
         return res.data["status"] === "success";
       }

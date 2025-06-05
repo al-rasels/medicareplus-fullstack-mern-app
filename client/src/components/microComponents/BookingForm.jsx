@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useDoctorsStore from "../../store/useDoctorStore";
 import toast from "react-hot-toast";
 import ValidationHelper from "../../utilities/ValidationHelper";
 import ButtonLoader from "./ButtonLoader";
-import { useParams } from "react-router-dom";
+
 import { SuccessAlert } from "../../utilities/utility";
 function BookingForm() {
-  const { id } = useParams();
   const {
     AppointmentChange,
     IsDoctorsAppointmentsLoading,
@@ -14,13 +13,10 @@ function BookingForm() {
     DoctorsAppointment,
     DoctorsDetailRequest,
     DoctorPaymentRequest,
+    IsDoctorsDetailLoading,
     DoctorsDetail,
   } = useDoctorsStore();
-  useEffect(() => {
-    (async () => {
-      await DoctorsDetailRequest(id);
-    })();
-  }, []);
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -43,9 +39,6 @@ function BookingForm() {
     } else if (ValidationHelper.IsEmpty(DoctorsAppointment.area)) {
       toast.error("Please fill all the fileds");
     } else {
-      AppointmentChange("doctorID", DoctorsDetail?.doctor._id);
-      AppointmentChange("paymentAmount", DoctorsDetail?.consultingFee);
-
       const res = await SaveDoctorsAppointmentsRequest(DoctorsAppointment);
       if (res) {
         SuccessAlert("Please make the payment to confirm your appointment");
@@ -62,16 +55,6 @@ function BookingForm() {
         AppointmentChange("country", "");
       } else {
         toast.error("Something went wrong try again");
-        AppointmentChange("fullName", "");
-        AppointmentChange("phone", "");
-        AppointmentChange("email", "");
-        AppointmentChange("reason", "");
-        AppointmentChange("date", "");
-        AppointmentChange("time", "");
-        AppointmentChange("area", "");
-        AppointmentChange("city", "");
-        AppointmentChange("postalCode", "");
-        AppointmentChange("country", "");
       }
     }
   };
@@ -90,7 +73,11 @@ function BookingForm() {
             <input
               type="text"
               value={DoctorsAppointment?.fullName}
-              onChange={(e) => AppointmentChange("fullName", e.target.value)}
+              onChange={(e) => {
+                AppointmentChange("fullName", e.target.value);
+                AppointmentChange("doctorID", DoctorsDetail.doctor._id);
+                AppointmentChange("paymentAmount", DoctorsDetail.consultingFee);
+              }}
               name="name"
               id="name"
               placeholder="Full Name"
@@ -265,9 +252,9 @@ focus:scale-[102%] transition-transform duration-300"
           <div>
             <button
               onClick={(e) => handleFormSubmit(e)}
-              disabled={IsDoctorsAppointmentsLoading}
+              disabled={IsDoctorsAppointmentsLoading && IsDoctorsDetailLoading}
               className="hover:shadow-form w-full rounded-md bg-[var(--themeColor2)] hover:bg-[var(--themeColor)]  transition-transform duration-100 py-3 px-8 text-center text-base font-semibold text-white outline-none">
-              {IsDoctorsAppointmentsLoading ? (
+              {IsDoctorsAppointmentsLoading && IsDoctorsDetailLoading ? (
                 <ButtonLoader />
               ) : (
                 "Request Appointment"
