@@ -22,3 +22,4 @@ const DecodeToken = (token) => {
 };
 
 module.exports = { EncodeToken, DecodeToken };
+

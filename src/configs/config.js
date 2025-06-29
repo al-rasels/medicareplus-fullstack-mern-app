@@ -21,6 +21,12 @@ const DB_URL =
   "mongodb+srv://<username>:<password>@cluster0.vidqntm.mongodb.net/medicareplus";
 const DBOption = { user: "rmshanto786", pass: "shanto786", autoIndex: true };
 
+const CONFIGCLOUDINARY = {
+  cloud_name: "dasymnwab",
+  api_key: "932925181268714",
+  api_secret: "XstnxcIpZwcY5dRMqlSX_jZEkDA",
+};
+
 module.exports = {
   PORT,
   WEB_CACHE,
@@ -31,4 +37,5 @@ module.exports = {
   JSON_LIMIT,
   DB_URL,
   DBOption,
+  CONFIGCLOUDINARY,
 };

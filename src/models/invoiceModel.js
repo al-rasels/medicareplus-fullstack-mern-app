@@ -9,7 +9,7 @@ const DataSchema = mongoose.Schema(
     date: { type: String, required: true },
     payment_status: { type: String, required: true },
     total: { type: String, required: true },
-    reciept: { type: String, required: true },
+    reciept: { type: String, required: true, default: "pending" },
   },
   {
     timestamps: true,

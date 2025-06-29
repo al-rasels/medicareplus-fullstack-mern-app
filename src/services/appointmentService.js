@@ -6,13 +6,13 @@ const ObjectID = mongoose.Types.ObjectId;
 const AppointmentListService = async (req) => {
   try {
     const user_id = new ObjectID(req.headers.user_id);
-    const matchState = { $match: { user: user_id } };
+    const matchState = { $match: { userID: user_id } };
 
     // Join with Doctors Collection
     const JoinWithDoctorsStage = {
       $lookup: {
         from: "doctors",
-        localField: "doctor", // Reference in the appointment collection
+        localField: "doctorID", // Reference in the appointment collection
         foreignField: "_id",
         as: "doctor",
       },
@@ -59,7 +59,7 @@ const AppointmentListService = async (req) => {
         "doctor.rating": 1,
         "doctor.location": 1,
         "doctor.remark": 1,
-        "doctor.city": 1, // Expanded city
+        // Expanded city
         "doctor.speciality": 1, // Expanded speciality
         user: 1,
         phone: 1,
@@ -75,8 +75,51 @@ const AppointmentListService = async (req) => {
       UnwindDoctorStage,
       JoinWithSpecialityStage,
       UnwindSpecialityStage,
-      JoinWithCityStage,
-      UnwindCityStage,
+      ProjectionStage,
+    ]);
+
+    return { status: "success", data: data };
+  } catch (error) {
+    console.error(error);
+    return { status: "error", message: error.message };
+  }
+};
+const AppointmentListDoctorService = async (req) => {
+  try {
+    const user_id = new ObjectID(req.headers.user_id);
+    const matchState = { $match: { doctorID: user_id } };
+
+    // Join with Doctors Collection
+    const JoinWithUsersStage = {
+      $lookup: {
+        from: "users",
+        localField: "userID", // Reference in the appointment collection
+        foreignField: "_id",
+        as: "user",
+      },
+    };
+
+    const UnwindUserStage = { $unwind: "$user" };
+
+    // Join with Specialities Collection (After unwinding doctor)
+
+    // Projection Stage (Only return necessary fields)
+    const ProjectionStage = {
+      $project: {
+        "user.password": 0,
+        "user.role": 0,
+        "user._id": 0,
+        "user.otp": 0,
+        "user.updatedAt": 0,
+
+        // Expanded speciality
+      },
+    };
+
+    const data = await AppointmentModel.aggregate([
+      matchState,
+      JoinWithUsersStage,
+      UnwindUserStage,
       ProjectionStage,
     ]);
 
@@ -142,14 +185,15 @@ const UpdateAppointmentService = async (req) => {
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     @media print {
-      #printBtn {
-        display: none;
-      }
-    }
+  #printBtn {
+    display: none;
+  }
+}
+
   </style>
 </head>
 <body class="bg-blue-50 font-sans p-6">
-  <div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+  <div id="receipt" class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
     <h2 class="text-center text-2xl font-semibold text-blue-700 mb-6">MediCare+ Payment Receipt</h2>
 
     <div class="grid grid-cols-2 gap-4 mb-4">
@@ -225,27 +269,28 @@ const UpdateAppointmentService = async (req) => {
     <div class="text-center text-sm text-gray-500 mt-6">Thank you for your payment!</div>
 
     <div class="mt-4 flex justify-between items-center">
-      <a href="#" target="_blank" download="book.pdf" class="text-blue-600 hover:underline text-sm">📥 Download Book</a>
-      <button id="printBtn" onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
-        🖨️ Print
-      </button>
-    </div>
+  
+ 
+  <a href="#" id="downloadBtn" download class="text-blue-600 hover:underline">Download Receipt</a>
+
+</div>
+
   </div>
+
+
+
+
 </body>
 </html>
 
 `;
+
     await InvoiceModel.updateOne(
+      { tran_id: reqBody.tran_id },
       {
-        tran_id: reqBody.tran_id,
-      },
-      {
-        set: {
-          payment_status: "success",
-          payment_details: receiptObject,
-        },
-      },
-      { upsert: true }
+        reciept: JSON.stringify(receiptObject),
+        payment_status: "successfully paid",
+      }
     );
     return { status: "success", data: html };
   } catch (err) {
@@ -277,6 +322,7 @@ const RemoveAppointmentService = async (req) => {
 
 module.exports = {
   AppointmentListService,
+  AppointmentListDoctorService,
   RemoveAppointmentService,
   SaveAppointmentService,
   UpdateAppointmentService,

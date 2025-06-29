@@ -115,8 +115,8 @@ function NavBarSection() {
       <nav className="bg-white py-3 shadow-xl  shadow-gray-200/10 border-gray-200 border-b-2">
         <div className="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
           <Link to="/" className="flex items-center">
-            <span className="self-center md:ml-5 text-[var(--themeColor2)] hover:border-[var(--themeColor)] border-[var(--themeColor2)] text-xl hover:text-[var(--themeColor)]  border-y-3  py-2 px-1 rounded-2xl font-semibold whitespace-nowrap transition-all duration-300 ">
-              <img src={logo} className="w-20" />
+            <span className="self-center md:ml-5 text-[var(--themeColor2)] hover:border-[var(--themeColor)] border-[var(--themeColor2)] text-xl hover:text-[var(--themeColor)]  py-1 px-1 rounded-2xl font-semibold whitespace-nowrap transition-all duration-300 ">
+              <img src={logo} className="w-24" />
             </span>
           </Link>
           <div className="flex items-center lg:order-2">

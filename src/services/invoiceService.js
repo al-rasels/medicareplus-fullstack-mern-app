@@ -9,7 +9,7 @@ const ObjectID = mongoose.Types.ObjectId;
 
 const CreateInvoiceService = async (req, res) => {
   try {
-    const doctorID = req.params.doctorID;
+    const doctorID = ObjectID(req.body.doctorID);
     const userID = req.headers.user_id;
     const {
       store_id,

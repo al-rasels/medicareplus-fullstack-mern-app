@@ -1,5 +1,6 @@
 const {
   AppointmentListService,
+  AppointmentListDoctorService,
   SaveAppointmentService,
   UpdateAppointmentService,
   RemoveAppointmentService,
@@ -11,6 +12,10 @@ exports.AppointmentPayment = async (req, res) => {
 
 exports.AppointmentList = async (req, res) => {
   const result = await AppointmentListService(req);
+  return res.status(200).json(result);
+};
+exports.AppointmentListDoctor = async (req, res) => {
+  const result = await AppointmentListDoctorService(req);
   return res.status(200).json(result);
 };
 

@@ -83,7 +83,7 @@ function UserMenu() {
       {
         label: "Manage Accounts",
         icon: <MdManageAccounts size={16} />,
-        to: "/manage-accounts",
+        to: "/user-management",
       },
       {
         label: "Manage Doctors",
@@ -101,22 +101,22 @@ function UserMenu() {
       {
         label: "Appointments",
         icon: <IoPeople size={16} />,
-        to: "doctor-appointment",
+        to: "/doctor-appointment",
       },
       {
         label: "Prescriptions",
         icon: <FaFilePrescription size={16} />,
-        to: "doctor-prescription",
+        to: "/prescription",
       },
       {
         label: "Blogs Posts",
         icon: <FaBlogger size={16} />,
-        to: "my-blogs",
+        to: "/doctor-blogs",
       },
       {
         label: "Patient Support",
         icon: <FaUserDoctor size={16} />,
-        to: "my-patients",
+        to: "/help-support",
       },
     ],
     // for future features Support

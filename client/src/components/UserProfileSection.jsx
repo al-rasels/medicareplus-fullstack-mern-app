@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MdEditSquare } from "react-icons/md";
 import useUserAccessStore from "../store/userAccessStore";
-import { SuccessAlert } from "./../utilities/utility";
+import { fileToBase64, SuccessAlert } from "./../utilities/utility";
 import toast from "react-hot-toast";
 import TextLoading from "./microComponents/TextLoading";
 import { IoSave } from "react-icons/io5";
@@ -10,6 +10,7 @@ function UserProfileSection() {
   const { UserDetails, UpdateUserRequest, UserDetailsRequest } =
     useUserAccessStore();
   const [profile, setProfile] = useState(null);
+
   useEffect(() => {
     if (UserDetails) {
       setProfile(UserDetails);
@@ -37,8 +38,6 @@ function UserProfileSection() {
         await UserDetailsRequest();
       }
     }
-    console.log(UserDetails[fieldKey] === profile[fieldKey]);
-
     setEditingField(null);
   };
 
@@ -76,17 +75,43 @@ function UserProfileSection() {
         {editingField === fieldKey ? (
           <span
             onClick={() => handleUpdate(fieldKey)}
-            className="inline-flex justify-center items-center gap-2">
-            <IoSave /> Save
+            className="inline-flex justify-center items-center p-2 gap-2">
+            <IoSave size={18} /> Save
           </span>
         ) : (
-          <span className="inline-flex  justify-center items-center gap-2">
-            <MdEditSquare /> Edit
+          <span className="inline-flex  justify-center items-center py-1 gap-2">
+            <MdEditSquare size={18} /> Edit
           </span>
         )}
       </button>
     </div>
   );
+
+  const handleProfileImage = async (file) => {
+    if (!file) return;
+
+    try {
+      const base64Img = await fileToBase64(file);
+
+      // 1. Update local state
+      const updatedProfile = { ...profile, img: base64Img };
+      setProfile(updatedProfile); // this is important so i can't update profile so from profile i created new object then updated the file
+      console.log(updatedProfile);
+      // 2. Update backend
+      const res = await UpdateUserRequest(updatedProfile);
+      console.log(res);
+      // 3. Show success and refresh profile
+      if (res) {
+        SuccessAlert("Profile image updated successfully");
+        await UserDetailsRequest();
+      } else {
+        toast.error("Failed to update image.");
+      }
+    } catch (error) {
+      console.error("Image upload failed", error);
+      toast.error("Something went wrong during image upload");
+    }
+  };
 
   return (
     <section>
@@ -100,7 +125,7 @@ function UserProfileSection() {
         </p>
         <div className="flex flex-col items-center gap-4">
           <img
-            src="https://placehold.co/150"
+            src={profile?.img}
             alt="Preview"
             className="w-32 h-32 rounded-full object-cover border-4 border-[var(--themeColor2)] hover:[var(--themeColor)] transition-colors duration-300"
           />
@@ -115,6 +140,9 @@ function UserProfileSection() {
             type="file"
             className="hidden"
             disabled={""}
+            onChange={(e) => {
+              handleProfileImage(e.target.files[0]);
+            }}
           />
         </div>
         {ToggleInputField("Full name", "name")}
