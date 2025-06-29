@@ -109,6 +109,7 @@ const useUserAccessStore = create((set) => ({
     try {
       console.log(postBody);
       set({ IsUpdateLoading: true });
+
       const res = await axios.post(`/api/v1/update-user`, postBody);
       console.log(res);
       set({ IsUpdateLoading: false });
@@ -124,6 +125,7 @@ const useUserAccessStore = create((set) => ({
     try {
       const res = await axios.get(`/api/v1/user-details`);
       set({ UserDetails: res.data["data"] });
+      set({ UserProfile: res.data["data"] });
       if (res.data["status"] === "success") {
         return res.data["data"];
       }

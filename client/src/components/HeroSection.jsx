@@ -1,17 +1,17 @@
 import React from "react";
-import bgVideo from "../assets/video/hero-bg.webm";
 import heroP from "../assets/images/hero-p.webp";
 import useDoctorsStore from "../store/useDoctorStore";
 import { Link } from "react-router-dom";
 
-
 function HeroSection() {
+  const bgvideo =
+    "https://res.cloudinary.com/dasymnwab/video/upload/v1744479476/dp7ewkkunut12lqhtxuz.mp4";
   const { SetSearchKeyword, SearchKeyword } = useDoctorsStore();
   return (
     <section className="relative bg-white w-full md:h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background Video */}
       <video
-        src={bgVideo}
+        src={bgvideo}
         type="video/mp4"
         autoPlay
         loop
@@ -21,9 +21,9 @@ function HeroSection() {
         loading="lazy"
         className="absolute top-0 left-0 w-full h-full object-cover contrast-75"></video>
       {/* Content Wrapper */}
-      <div className="relative z-10 flex flex-col items-center max-w-screen-xl px-4 mx-auto md:flex-row sm:px-6 p-8 text-white ">
+      <div className="relative z-10 flex flex-col items-center max-w-screen-xl px-4 mx-auto md:flex-row sm:px-6 p-8 text-white">
         {/* Left Section */}
-        <div className="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pr-10 rounded-2xl bg-[var(--themeColor)]/10 border-x-10 border-y-1 px-10 ">
+        <div className="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pr-10 rounded-2xl bg-gray-400/5 border-x-10 border-y-1 px-10 backdrop-blur-xs">
           <div className="text-left">
             <h2 className="text-4xl font-extrabold leading-10 tracking-tight sm:text-5xl sm:leading-none md:text-6xl ">
               Search for your favorite
@@ -77,11 +77,11 @@ function HeroSection() {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pl-10">
+        <div className="flex items-center py-5 md:w-1/2 md:pb-20 md:pt-10 md:pl-10 ">
           <img
             src={heroP}
             alt="doctor"
-            className="inset-shadow-white shadow-4xl border-y-10 border-x-1 px-2 border-white bg-[var(--themeColor2)]/15 rounded-2xl"
+            className="inset-shadow-white shadow-4xl border-y-10 border-x-1 px-2 border-white  backdrop-blur-sm bg-gray-600/5 rounded-2xl"
           />
         </div>
       </div>

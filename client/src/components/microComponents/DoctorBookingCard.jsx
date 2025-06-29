@@ -2,7 +2,7 @@ import React from "react";
 import { TiMessage } from "react-icons/ti";
 import { MdOutlineVideoCall } from "react-icons/md";
 import { Link } from "react-router-dom";
-function BookingCard({ booking }) {
+function DoctorBookingCard({ booking }) {
   return (
     <div className="flex items-center justify-center py-5">
       <div className="bg-[var(--themeColor2)]/10 shadow-md rounded-xl p-5 lg:w-[1024px]">
@@ -13,14 +13,14 @@ function BookingCard({ booking }) {
           <div className="flex md:items-center flex-col md:flex-row gap-6">
             <img
               className="w-24 h-24 object-cover rounded-full"
-              src={booking?.doctor?.img}
-              alt={booking?.doctor?.name}
+              src={booking?.user?.img}
+              alt={booking?.user?.name}
             />
             <div>
               <p className="font-semibold text-[var(--themeColor2)] text-lg  mb-2">
-                Appointment with {booking?.doctor?.name}
+                Appointment with {booking?.fullName}
               </p>
-              <p>{booking?.doctor?.speciality?.name} </p>
+              <p>{booking?.reason} </p>
               <p className="text-gray-500 inline-flex gap-2">
                 <span className="font-semibold">Date:</span> {booking?.date}
                 <span className="font-semibold">time:</span> {booking?.time}
@@ -28,7 +28,7 @@ function BookingCard({ booking }) {
             </div>
             <div className="pl-8">
               <button className="bg-white hover:text-[var(--themeColor)] text-gray-600 outline-none font-semibold border hover:border-[var(--themeColor)] border-gray-200 py-2 px-4 rounded hover:bg-white transition-colors duration-300 inline-flex gap-2">
-                <MdOutlineVideoCall size={22} /> <span>Join Meeting</span>
+                <MdOutlineVideoCall size={22} /> <span>Add Meeting</span>
               </button>
             </div>
           </div>
@@ -44,4 +44,4 @@ function BookingCard({ booking }) {
   );
 }
 
-export default BookingCard;
+export default DoctorBookingCard;

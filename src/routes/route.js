@@ -44,9 +44,14 @@ router.post("/create-review", Authenticator, DoctorsController.CreateReview);
 
 // Appointement
 router.get(
-  "/appointment-list",
+  "/user-appointment-list",
   Authenticator,
   AppointementController.AppointmentList
+);
+router.get(
+  "/doctor-appointment-list",
+  Authenticator,
+  AppointementController.AppointmentListDoctor
 );
 router.post(
   "/create-appointment",

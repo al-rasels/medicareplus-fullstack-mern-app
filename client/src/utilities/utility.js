@@ -68,3 +68,19 @@ export async  function InfoAlert(msg) {
     });
     return result.isConfirmed;
 }
+
+export async function fileToBase64  (file)  {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      resolve(reader.result); // base64 string with MIME type (data:image/png;base64,...)
+    };
+
+    reader.onerror = (error) => {
+      reject(error);
+    };
+
+    return reader.readAsDataURL(file); // this converts file to base64 encoded data URL
+  });
+};

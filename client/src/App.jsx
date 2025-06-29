@@ -20,13 +20,15 @@ import AppointmentPage from "./pages/AppointmentPage.jsx";
 import HelpAndSupportPage from "./pages/HelpAndSupportPage.jsx";
 import ReportAndPrescriptionPage from "./pages/ReportAndPrescriptionPage.jsx";
 import PrivetRoutes from "./laylout/PrivetRoutes.jsx";
+import DoctorAppointmentPage from "./pages/DoctorAppointmentPage.jsx";
+import DoctorBlogsPage from "./pages/DoctorBlogsPage.jsx";
+import UserManagementPage from "./pages/UserManagementPage.jsx";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" exact element={<HomePage />} />
         <Route path="/doctors" exact element={<DoctorPage />} />
-
         <Route path="/specialist" exact element={<SpecialistPage />} />
         <Route path="/contact" exact element={<ContactPage />} />
         <Route path="/access" exact element={<UserAccessPage />} />
@@ -39,6 +41,17 @@ function App() {
           <Route path="/wishlist" exact element={<WishlistPage />} />
           <Route path="/profile" exact element={<ProfilePage />} />
           <Route path="/appointment" exact element={<AppointmentPage />} />
+          <Route
+            path="/user-management"
+            exact
+            element={<UserManagementPage />}
+          />
+          <Route
+            path="/doctor-appointment"
+            exact
+            element={<DoctorAppointmentPage />}
+          />
+          <Route path="/doctor-blogs" exact element={<DoctorBlogsPage />} />
           <Route path="/help-support" exact element={<HelpAndSupportPage />} />
           <Route
             path="/prescription"

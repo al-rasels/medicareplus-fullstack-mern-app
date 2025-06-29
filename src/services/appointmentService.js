@@ -6,13 +6,13 @@ const ObjectID = mongoose.Types.ObjectId;
 const AppointmentListService = async (req) => {
   try {
     const user_id = new ObjectID(req.headers.user_id);
-    const matchState = { $match: { user: user_id } };
+    const matchState = { $match: { userID: user_id } };
 
     // Join with Doctors Collection
     const JoinWithDoctorsStage = {
       $lookup: {
         from: "doctors",
-        localField: "doctor", // Reference in the appointment collection
+        localField: "doctorID", // Reference in the appointment collection
         foreignField: "_id",
         as: "doctor",
       },
@@ -59,7 +59,7 @@ const AppointmentListService = async (req) => {
         "doctor.rating": 1,
         "doctor.location": 1,
         "doctor.remark": 1,
-        "doctor.city": 1, // Expanded city
+        // Expanded city
         "doctor.speciality": 1, // Expanded speciality
         user: 1,
         phone: 1,
@@ -75,8 +75,51 @@ const AppointmentListService = async (req) => {
       UnwindDoctorStage,
       JoinWithSpecialityStage,
       UnwindSpecialityStage,
-      JoinWithCityStage,
-      UnwindCityStage,
+      ProjectionStage,
+    ]);
+
+    return { status: "success", data: data };
+  } catch (error) {
+    console.error(error);
+    return { status: "error", message: error.message };
+  }
+};
+const AppointmentListDoctorService = async (req) => {
+  try {
+    const user_id = new ObjectID(req.headers.user_id);
+    const matchState = { $match: { doctorID: user_id } };
+
+    // Join with Doctors Collection
+    const JoinWithUsersStage = {
+      $lookup: {
+        from: "users",
+        localField: "userID", // Reference in the appointment collection
+        foreignField: "_id",
+        as: "user",
+      },
+    };
+
+    const UnwindUserStage = { $unwind: "$user" };
+
+    // Join with Specialities Collection (After unwinding doctor)
+
+    // Projection Stage (Only return necessary fields)
+    const ProjectionStage = {
+      $project: {
+        "user.password": 0,
+        "user.role": 0,
+        "user._id": 0,
+        "user.otp": 0,
+        "user.updatedAt": 0,
+
+        // Expanded speciality
+      },
+    };
+
+    const data = await AppointmentModel.aggregate([
+      matchState,
+      JoinWithUsersStage,
+      UnwindUserStage,
       ProjectionStage,
     ]);
 
@@ -279,6 +322,7 @@ const RemoveAppointmentService = async (req) => {
 
 module.exports = {
   AppointmentListService,
+  AppointmentListDoctorService,
   RemoveAppointmentService,
   SaveAppointmentService,
   UpdateAppointmentService,

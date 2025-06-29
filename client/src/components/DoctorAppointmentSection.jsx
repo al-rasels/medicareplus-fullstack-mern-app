@@ -1,24 +1,23 @@
 import PatternBackground from "../laylout/PatternBackground";
-import BookingCard from "./microComponents/BookingCard";
 import { useEffect } from "react";
 import useBookingStore from "../store/userBookingStore";
 import useUserAccessStore from "../store/userAccessStore";
-
 import ErrorSection from "./ErrorSection";
 import AppointmentSkeleton from "../skeletons/AppointmentSkeleton";
+import DoctorBookingCard from "./microComponents/DoctorBookingCard";
 
-function AppointmentSection() {
+function DoctorAppointmentSection() {
   const { UserProfile } = useUserAccessStore();
-  const { UserBookingList, BookingListRequest } = useBookingStore();
+  const { DoctorBookingList, DoctorBookingListRequest } = useBookingStore();
   useEffect(() => {
     (async () => {
-      if (UserBookingList === null) {
-        await BookingListRequest(UserProfile?._id);
+      if (DoctorBookingList === null) {
+        await DoctorBookingListRequest();
       }
     })();
-  }, [UserBookingList]);
-  console.log(UserBookingList, UserProfile._id);
-  if (UserBookingList === null) {
+  }, [DoctorBookingList]);
+  console.log(DoctorBookingList, UserProfile._id);
+  if (DoctorBookingList === null) {
     return (
       <div className="justify-center min-h-screen relative py-10 md:py-16">
         <PatternBackground />
@@ -28,7 +27,7 @@ function AppointmentSection() {
       </div>
     );
   }
-  if (UserBookingList.length === 0) {
+  if (DoctorBookingList?.length === 0) {
     return (
       <ErrorSection
         title="No Appointments"
@@ -41,12 +40,12 @@ function AppointmentSection() {
     return (
       <div className="justify-center min-h-screen relative py-10 md:py-16">
         <PatternBackground />
-        {UserBookingList?.map((booking, i) => (
-          <BookingCard booking={booking} key={i} />
+        {DoctorBookingList?.map((booking, i) => (
+          <DoctorBookingCard booking={booking} key={i} />
         ))}
       </div>
     );
   }
 }
 
-export default AppointmentSection;
+export default DoctorAppointmentSection;
