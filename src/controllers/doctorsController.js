@@ -8,8 +8,8 @@ const {
   CreateReviewService,
   DoctorsService,
   ListedByFilterService,
+  RemoveDoctorService,
 } = require("../services/doctorsService");
-
 
 exports.DoctorsSpecialites = async (req, res) => {
   const result = await DoctorsSpecialitiesService();
@@ -48,5 +48,9 @@ exports.DoctorsDetails = async (req, res) => {
 };
 exports.CreateReview = async (req, res) => {
   const result = await CreateReviewService(req);
+  return res.status(200).json(result);
+};
+exports.RemoveDoctor = async (req, res) => {
+  const result = await RemoveDoctorService(req);
   return res.status(200).json(result);
 };

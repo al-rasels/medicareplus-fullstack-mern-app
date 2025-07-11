@@ -337,6 +337,27 @@ const CreateReviewService = async (req) => {
     return { status: "fail", data: err }.toString();
   }
 };
+// Remove Doctor Service
+const RemoveDoctorService = async (req) => {
+  try {
+    const doctorID = new ObjectId(req.params.doctorID);
+    const data = await DoctorsModel.deleteOne({ _id: doctorID });
+    if(data.deletedCount === 1){
+      await DoctorsDetailsModel.deleteOne({ _id: doctorID });
+      await ReviewModel.deleteMany({ reviewFor: doctorID });
+    }
+    if (data.deletedCount === 0) {
+      return { status: "error", message: "Doctor not found" };
+    }
+    return { status: "success", message: "Doctor removed successfully" };
+  } catch (err) {
+    return {
+      status: "error",
+      message: "An error occurred while removing the doctor",
+      error: err.message,
+    };
+  }
+};
 
 module.exports = {
   DoctorsSpecialitiesService,
@@ -348,4 +369,5 @@ module.exports = {
   DoctorsDetailsService,
   CreateReviewService,
   DoctorsService,
+  RemoveDoctorService,
 };

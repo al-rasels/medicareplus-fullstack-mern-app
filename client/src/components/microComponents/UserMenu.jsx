@@ -88,7 +88,7 @@ function UserMenu() {
       {
         label: "Manage Doctors",
         icon: <MdManageAccounts size={16} />,
-        to: "/manage-doctors",
+        to: "/doctor-management",
       },
       {
         label: "Reports",

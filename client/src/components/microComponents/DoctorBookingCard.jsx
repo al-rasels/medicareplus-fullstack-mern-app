@@ -33,7 +33,7 @@ function DoctorBookingCard({ booking }) {
             </div>
           </div>
           <Link
-            to={`/help-support/${booking?.doctor?._id}`}
+            to={`/help-support/`}
             className="bg-white hover:text-[var(--themeColor2)] text-gray-600 outline-none font-semibold border hover:border-[var(--themeColor2)] border-gray-200 py-2 px-4 rounded hover:bg-white transition-colors duration-300 inline-flex gap-2">
             <TiMessage size={22} />
             <p className="">Message</p>

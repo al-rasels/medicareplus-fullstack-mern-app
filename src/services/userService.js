@@ -171,6 +171,47 @@ const UserLoginService = async (req) => {
     };
   }
 };
+const GetUsersService = async (req) => {
+  try {
+    const data = await UserModel.find().select({
+      _id: 1,
+      email: 1,
+      img: 1,
+      name: 1,
+      role: 1,
+    });
+    return {
+      status: "success",
+      data: data,
+    };
+  } catch (err) {
+    return {
+      status: "error",
+      message: err.message,
+    };
+  }
+};
+const RemoveUserService = async (req) => {
+  try {
+    const userId = req.params.id;
+    const data = await UserModel.deleteOne({ _id: userId });
+    if (data.deletedCount === 0) {
+      return {
+        status: "error",
+        message: "User not found",
+      };
+    }
+    return {
+      status: "success",
+      data: data,
+    };
+  } catch (err) {
+    return {
+      status: "error",
+      message: err.message,
+    };
+  }
+};
 
 module.exports = {
   UserRegisterOTPService,
@@ -178,4 +219,6 @@ module.exports = {
   UserLoginService,
   UpdateUserService,
   UserDetailsService,
+  GetUsersService,
+  RemoveUserService,
 };
