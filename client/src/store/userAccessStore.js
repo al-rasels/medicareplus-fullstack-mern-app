@@ -133,6 +133,39 @@ const useUserAccessStore = create((set) => ({
       console.error(error);
     }
   },
+
+  IsGetUsersLoading: false,
+  GetUsers: null,
+  GetUsersRequest: async () => {
+    try {
+      set({ IsGetUsersLoading: true });
+      const res = await axios.get(`/api/v1/get-users`);
+      set({ GetUsers: res.data["data"] });
+      set({ IsGetUsersLoading: false });
+
+      if (res.data["status"] === "success") {
+        return res.data["data"];
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      set({ IsGetUsersLoading: false });
+    }
+  },
+  RemoveUserRequest: async (id) => {
+    try {
+      set({ IsGetUsersLoading: true });
+      const res = await axios.get(`/api/v1/remove-user/${id}`);
+      set({ GetUsers: res.data["data"] });
+      set({ IsGetUsersLoading: false });
+
+      if (res.data["status"] === "success") {
+        return res.data["data"];
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
 }));
 
 

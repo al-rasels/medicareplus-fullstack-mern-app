@@ -1,5 +1,4 @@
 import DoctorBlogsSection from "../components/DoctorBlogsSection";
-import FAQSection from "../components/FAQSection";
 import PageTitle from "../components/utilityComponents/PageTitle";
 import Layout from "../laylout/Layout";
 
@@ -8,9 +7,10 @@ function DoctorBlogsPage() {
   return (
     <Layout>
       <DoctorBlogsSection />
-      <FAQSection />
     </Layout>
   );
 }
 
 export default DoctorBlogsPage;
+21602018037;
+2210054;

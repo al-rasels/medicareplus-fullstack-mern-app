@@ -23,6 +23,7 @@ import PrivetRoutes from "./laylout/PrivetRoutes.jsx";
 import DoctorAppointmentPage from "./pages/DoctorAppointmentPage.jsx";
 import DoctorBlogsPage from "./pages/DoctorBlogsPage.jsx";
 import UserManagementPage from "./pages/UserManagementPage.jsx";
+import DoctorManagementPage from "./pages/DoctorManagementPage.jsx";
 function App() {
   return (
     <BrowserRouter>
@@ -45,6 +46,11 @@ function App() {
             path="/user-management"
             exact
             element={<UserManagementPage />}
+          />
+          <Route
+            path="/doctor-management"
+            exact
+            element={<DoctorManagementPage />}
           />
           <Route
             path="/doctor-appointment"

@@ -74,6 +74,8 @@ router.get(
   Authenticator,
   AppointementController.AppointmentPayment
 );
+// Doctor Management
+router.get("/remove-doctor/:doctorID", Authenticator, DoctorsController.RemoveDoctor);
 
 //Clinics
 router.get("/blog-list", BlogController.BlogList);
@@ -87,6 +89,10 @@ router.post("/save-wish", Authenticator, WishController.SaveWish);
 router.post("/remove-wish", Authenticator, WishController.RemoveWish);
 router.get("/wish-list", Authenticator, WishController.WishList);
 
+
+// User Management Section
+router.get("/get-users", Authenticator, UserController.GetUsers);
+router.get("/remove-user/:id", Authenticator, UserController.RemoveUser);
 // // Service/ features
 // router.get("/service-list");
 // router.get("/legals/:type");

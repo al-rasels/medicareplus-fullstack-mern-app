@@ -292,7 +292,7 @@ const UpdateAppointmentService = async (req) => {
         payment_status: "successfully paid",
       }
     );
-    return { status: "success", data: html };
+    return { status: "success", data: data };
   } catch (err) {
     return {
       status: "fail",

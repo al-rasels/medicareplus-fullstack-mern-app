@@ -121,13 +121,12 @@ const useDoctorsStore = create((set) => ({
       if (res.data["status"] === "success") {
         set({ DoctorsDetail: res.data["data"][0] });
         return res.data["status"] === "success";
-       
       }
     } catch (error) {
       console.error(error);
-    }finally {
+    } finally {
       set({ IsDoctorsDetailsLoading: false });
-    } 
+    }
   },
 
   SearchKeyword: "",
@@ -178,7 +177,7 @@ const useDoctorsStore = create((set) => ({
       set({ IsDoctorsAppointmentsLoading: true });
 
       const res = await axios.post(`/api/v1/create-appointment`, postBody);
-console.log(res);
+
       if (res.data["status"] === "success") {
         return res.data["status"] === "success";
       }
@@ -205,6 +204,22 @@ console.log(res);
       console.error(error);
     } finally {
       set({ IsDoctorPaymentLoading: false });
+    }
+  },
+  RemoveDoctorRequest: async (doctorID) => {
+    try {
+      const res = await axios.get(`/api/v1/remove-doctor/${doctorID}`);
+      if (res.data["status"] === "success") {
+        toast.success("Doctor removed successfully");
+        return true;
+      } else {
+        toast.error(res.data["message"]);
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to remove doctor");
+      return false;
     }
   },
 }));

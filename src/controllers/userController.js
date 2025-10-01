@@ -4,6 +4,8 @@ const {
   UserLoginService,
   UpdateUserService,
   UserDetailsService,
+  GetUsersService,
+  RemoveUserService,
 } = require("../services/userService");
 exports.UserRegisterOTP = async (req, res) => {
   const result = await UserRegisterOTPService(req);
@@ -17,7 +19,6 @@ exports.UserDetails = async (req, res) => {
   const result = await UserDetailsService(req);
   return res.status(200).json(result);
 };
-
 
 exports.VerifyRegistration = async (req, res) => {
   const result = await UserRegisterVerifyService(req);
@@ -42,5 +43,17 @@ exports.UserLogin = async (req, res) => {
 
 exports.UserLogout = async (req, res) => {
   res.clearCookie("token");
+  return res.status(200).json({ status: "success" });
+};
+
+/// User Management Section
+exports.GetUsers = async (req, res) => {
+  const result = await GetUsersService(req);
+  return res.status(200).json(result);
+};
+exports.RemoveUser = async (req, res) => {
+  const result = await RemoveUserService(req);
+};
+exports.UpdateUser = async (req, res) => {
   return res.status(200).json({ status: "success" });
 };

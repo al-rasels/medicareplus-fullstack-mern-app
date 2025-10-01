@@ -17,9 +17,9 @@ function HomePage() {
   PageTitle("Home");
   useEffect(() => {
     (async () => {
-      SpecialityList === null && (await SpecialityListRequest());
-      Doctors === null && (await DoctorsRequest());
-      BlogList === null && (await BlogListRequest());
+      SpecialityList === null && SpecialityListRequest();
+      Doctors === null && DoctorsRequest();
+      BlogList === null && BlogListRequest();
     })();
   }, []);
 
