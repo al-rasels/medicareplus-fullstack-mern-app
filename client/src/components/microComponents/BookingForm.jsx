@@ -41,8 +41,9 @@ function BookingForm() {
     } else {
       const res = await SaveDoctorsAppointmentsRequest(DoctorsAppointment);
       if (res) {
-        SuccessAlert("Please make the payment to confirm your appointment");
-        await DoctorPaymentRequest(DoctorsDetail?.doctor._id);
+        console.log("Please make the payment to confirm your appointment", res);
+        console.log(await DoctorPaymentRequest(DoctorsDetail?.doctor._id));
+      
         AppointmentChange("fullName", "");
         AppointmentChange("phone", "");
         AppointmentChange("email", "");

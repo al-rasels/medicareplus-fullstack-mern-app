@@ -19,13 +19,13 @@ const useWishStore = create((set) => ({
     } catch (err) {
       unauthorized(err.response.status);
     } finally {
-      set({ isWishSubmit: false });
+      set({ isWishSubmit: false }); 
     }
   },
 
   WishList: null,
   WishCount: 0,
-  WishListRequest: async () => {
+  WishListRequest: async () => {  
     try {
       const res = await axios.get(`/api/v1/wish-list`);
       set({ WishList: res.data["data"] });

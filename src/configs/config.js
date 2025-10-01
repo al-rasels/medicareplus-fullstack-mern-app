@@ -6,8 +6,8 @@ const EMAIL_CREDENTIALS = {
   port: 465,
   secure: true,
   auth: {
-    user: "rm.shanto786@gmail.com",
-    pass: "wxwyrfhqpppbrfoa",
+    user: "dev.alrasels@gmail.com",
+    pass: "bxhxhinpkvdbnxr",
   },
   tls: {
     rejectUnauthorized: false,
